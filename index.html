@@ -325,9 +325,9 @@
         </header>
         <ul class="drill-list">
           <li class="drill-item">
-            <button class="drill-link" type="button" data-video-es="" data-video-en="" data-drill="videoReview">
+            <button class="drill-link" type="button" data-launch-url="greenlight://open" data-drill="videoReview">
               <span class="play" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 3.7v12.6c0 .8.9 1.3 1.6.8l9.1-6.3a1 1 0 0 0 0-1.6L6.6 2.9A1 1 0 0 0 5 3.7Z"/></svg></span>
-              <span><span class="drill-name" data-i18n="videoReview">Revisión de video / GreenLight</span><span class="drill-detail" data-i18n="auditorium">En el auditorio</span></span>
+              <span><span class="drill-name" data-i18n="videoReview">Revisión de video / GreenLight</span><span class="drill-detail" data-i18n="auditorium">Abrir GreenLight Player</span></span>
               <span class="chevron" aria-hidden="true">›</span>
             </button>
           </li>
@@ -418,7 +418,7 @@
         heavyTitle: "Día medio / pesado",
         heavyNote: "Trabajo competitivo y de mayor carga",
         videoReview: "Revisión de video / GreenLight",
-        auditorium: "En el auditorio",
+        auditorium: "Abrir GreenLight Player",
         standingReturns: "Regresos de pie en 1B",
         oddEven: "Momentum impar + par",
         oneMomentum: "Momentum 1 contra 1",
@@ -440,7 +440,7 @@
         heavyTitle: "Medium / heavy day",
         heavyNote: "Competitive, higher-load work",
         videoReview: "Video review / GreenLight",
-        auditorium: "In the auditorium",
+        auditorium: "Open GreenLight Player",
         standingReturns: "Standing returns at 1B",
         oddEven: "Odd + even momentum",
         oneMomentum: "1v1 momentum",
@@ -488,6 +488,11 @@
 
     document.querySelectorAll(".drill-link").forEach((button) => {
       button.addEventListener("click", () => {
+        const launchUrl = (button.dataset.launchUrl || "").trim();
+        if (launchUrl) {
+          window.location.href = launchUrl;
+          return;
+        }
         const url = (language === "es" ? button.dataset.videoEs : button.dataset.videoEn).trim();
         lastTrigger = button;
         resetVideo();
