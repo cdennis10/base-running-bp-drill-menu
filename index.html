@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0e2a52">
+  <title>Menú de Drills del Bloque de Corrido de Bases / Rotación de BP</title>
+  <style>
+    :root {
+      --navy: #0e2a52;
+      --navy-deep: #081a35;
+      --blue: #1659a6;
+      --red: #d9272e;
+      --cream: #f6f3ec;
+      --paper: #ffffff;
+      --ink: #12213a;
+      --muted: #637087;
+      --line: #dce2ea;
+      --light: #2d8b72;
+      --heavy: #d56a2f;
+      --shadow: 0 16px 45px rgba(8, 26, 53, .13);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 5%, rgba(22, 89, 166, .11), transparent 30%),
+        radial-gradient(circle at 88% 82%, rgba(217, 39, 46, .08), transparent 32%),
+        var(--cream);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+    }
+
+    button, a { font: inherit; }
+
+    .language-bar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 16px;
+      background: rgba(8, 26, 53, .96);
+      backdrop-filter: blur(12px);
+      border-bottom: 3px solid var(--red);
+    }
+
+    .language-button {
+      min-width: 124px;
+      padding: 10px 18px;
+      color: #dbe7f7;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 750;
+      letter-spacing: .02em;
+      transition: background .2s ease, color .2s ease, transform .2s ease;
+    }
+
+    .language-button:hover { transform: translateY(-1px); }
+    .language-button[aria-selected="true"] { color: var(--navy-deep); background: #fff; }
+    .language-button:focus-visible, .drill-link:focus-visible, .modal-close:focus-visible {
+      outline: 3px solid #f2c94c;
+      outline-offset: 3px;
+    }
+
+    main {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: clamp(38px, 6vw, 76px) 0 42px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 28px;
+      margin-bottom: 32px;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--red);
+      font-size: .79rem;
+      font-weight: 850;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 770px;
+      margin: 0;
+      color: var(--navy-deep);
+      font-size: clamp(2.15rem, 4.2vw, 3.9rem);
+      line-height: .98;
+      letter-spacing: -.045em;
+    }
+
+    .intro {
+      max-width: 680px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.17rem);
+      line-height: 1.62;
+    }
+
+    .mark {
+      display: grid;
+      place-items: center;
+      width: clamp(102px, 13vw, 154px);
+      aspect-ratio: 1;
+      color: #fff;
+      background: var(--navy);
+      border: 7px solid var(--red);
+      border-radius: 50%;
+      box-shadow: inset 0 0 0 5px #fff, var(--shadow);
+      font-size: clamp(1.65rem, 4vw, 3rem);
+      font-weight: 900;
+      letter-spacing: -.08em;
+      user-select: none;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .day-card {
+      overflow: hidden;
+      background: rgba(255,255,255,.91);
+      border: 1px solid rgba(14, 42, 82, .1);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 22px 24px;
+      color: #fff;
+      background: var(--navy);
+    }
+
+    .day-card.light .card-header { background: linear-gradient(130deg, #176752, var(--light)); }
+    .day-card.heavy .card-header { background: linear-gradient(130deg, #a84220, var(--heavy)); }
+
+    .day-icon {
+      display: grid;
+      place-items: center;
+      flex: 0 0 45px;
+      width: 45px;
+      height: 45px;
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 13px;
+    }
+
+    .day-icon svg { width: 25px; height: 25px; }
+    .card-title { margin: 0; font-size: 1.34rem; letter-spacing: -.02em; }
+    .card-note { margin: 3px 0 0; color: rgba(255,255,255,.76); font-size: .84rem; }
+
+    .drill-list { list-style: none; margin: 0; padding: 10px 24px 16px; }
+    .drill-item + .drill-item { border-top: 1px solid var(--line); }
+
+    .drill-link {
+      display: grid;
+      grid-template-columns: 34px 1fr auto;
+      align-items: center;
+      gap: 13px;
+      width: 100%;
+      padding: 17px 2px;
+      color: var(--ink);
+      text-align: left;
+      text-decoration: none;
+      background: none;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .drill-link:hover .drill-name { color: var(--blue); }
+    .play {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      color: #fff;
+      background: var(--red);
+      border-radius: 50%;
+      box-shadow: 0 5px 12px rgba(217,39,46,.22);
+    }
+
+    .play svg { width: 14px; height: 14px; margin-left: 2px; }
+    .drill-name { font-weight: 780; line-height: 1.3; transition: color .2s ease; }
+    .drill-detail { display: block; margin-top: 3px; color: var(--muted); font-size: .79rem; font-weight: 550; }
+    .chevron { color: #96a1b1; font-size: 1.35rem; }
+
+    .footnote {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 24px auto 0;
+      color: var(--muted);
+      font-size: .86rem;
+    }
+
+    .status-dot { width: 8px; height: 8px; background: #f2b544; border-radius: 50%; }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      background: rgba(4, 14, 30, .72);
+      backdrop-filter: blur(7px);
+    }
+
+    .modal-backdrop.open { display: grid; }
+    .modal {
+      position: relative;
+      width: min(470px, 100%);
+      padding: 34px;
+      text-align: center;
+      background: var(--paper);
+      border-radius: 22px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.3);
+    }
+
+    .modal.video-mode { width: min(900px, 100%); }
+
+    .video-stage {
+      display: none;
+      overflow: hidden;
+      width: 100%;
+      margin-top: 20px;
+      aspect-ratio: 16 / 9;
+      background: #050b14;
+      border-radius: 14px;
+    }
+
+    .video-stage.active { display: block; }
+    .video-stage iframe, .video-stage video { width: 100%; height: 100%; border: 0; }
+
+    .modal-symbol {
+      display: grid;
+      place-items: center;
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 18px;
+      color: var(--navy);
+      background: #e9eff7;
+      border-radius: 18px;
+      font-size: 1.7rem;
+    }
+
+    .modal h2 { margin: 0 28px 10px; color: var(--navy-deep); font-size: 1.45rem; }
+    .modal p { margin: 0; color: var(--muted); line-height: 1.55; }
+    .modal-close {
+      position: absolute;
+      top: 13px;
+      right: 13px;
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      color: var(--navy);
+      background: #eef2f6;
+      border: 0;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.35rem;
+    }
+
+    @media (max-width: 760px) {
+      .hero { grid-template-columns: 1fr; }
+      .mark { display: none; }
+      .menu-grid { grid-template-columns: 1fr; }
+      main { width: min(100% - 24px, 600px); padding-top: 36px; }
+      .language-bar { justify-content: stretch; }
+      .language-button { flex: 1; min-width: 0; }
+      .drill-list { padding-inline: 18px; }
+      .card-header { padding-inline: 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="language-bar" aria-label="Language / Idioma">
+    <button class="language-button" type="button" data-language="es" aria-selected="true">Español</button>
+    <button class="language-button" type="button" data-language="en" aria-selected="false">English</button>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <div>
+        <p class="eyebrow" data-i18n="eyebrow">Desarrollo de jugadores · República Dominicana</p>
+        <h1 data-i18n="title">Menú de drills del bloque de corrido de bases / rotación de BP</h1>
+        <p class="intro" data-i18n="intro">Selecciona el tipo de día y toca un drill para ver su demostración, explicación y propósito.</p>
+      </div>
+      <div class="mark" aria-hidden="true">PD</div>
+    </header>
+
+    <section class="menu-grid" aria-label="Drill menu">
+      <article class="day-card light">
+        <header class="card-header">
+          <span class="day-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/><circle cx="12" cy="12" r="4"/></svg>
+          </span>
+          <div>
+            <h2 class="card-title" data-i18n="lightTitle">Día liviano</h2>
+            <p class="card-note" data-i18n="lightNote">Revisión y trabajo de baja carga</p>
+          </div>
+        </header>
+        <ul class="drill-list">
+          <li class="drill-item">
+            <button class="drill-link" type="button" data-video-es="" data-video-en="" data-drill="videoReview">
+              <span class="play" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 3.7v12.6c0 .8.9 1.3 1.6.8l9.1-6.3a1 1 0 0 0 0-1.6L6.6 2.9A1 1 0 0 0 5 3.7Z"/></svg></span>
+              <span><span class="drill-name" data-i18n="videoReview">Revisión de video / GreenLight</span><span class="drill-detail" data-i18n="auditorium">En el auditorio</span></span>
+              <span class="chevron" aria-hidden="true">›</span>
+            </button>
+          </li>
+          <li class="drill-item">
+            <button class="drill-link" type="button" data-video-es="https://youtu.be/KQ2pEsqU-mo" data-video-en="https://youtu.be/Si9ZMB6Qupg" data-drill="standingReturns">
+              <span class="play" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 3.7v12.6c0 .8.9 1.3 1.6.8l9.1-6.3a1 1 0 0 0 0-1.6L6.6 2.9A1 1 0 0 0 5 3.7Z"/></svg></span>
+              <span class="drill-name" data-i18n="standingReturns">Regresos de pie en 1B</span>
+              <span class="chevron" aria-hidden="true">›</span>
+            </button>
+          </li>
+          <li class="drill-item">
+            <button class="drill-link" type="button" data-video-es="https://youtu.be/CJMairjYBQc" data-video-en="https://youtu.be/szvbfky62cU" data-drill="oddEven">
+              <span class="play" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 3.7v12.6c0 .8.9 1.3 1.6.8l9.1-6.3a1 1 0 0 0 0-1.6L6.6 2.9A1 1 0 0 0 5 3.7Z"/></svg></span>
+              <span class="drill-name" data-i18n="oddEven">Momentum impar + par</span>
+              <span class="chevron" aria-hidden="true">›</span>
+            </button>
+          </li>
+        </ul>
+      </article>
+
+      <article class="day-card heavy">
+        <header class="card-header">
+          <span class="day-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 9v6M19 9v6M8 7v10M16 7v10M8 12h8M3 10v4M21 10v4"/></svg>
+          </span>
+          <div>
+            <h2 class="card-title" data-i18n="heavyTitle">Día medio / pesado</h2>
+            <p class="card-note" data-i18n="heavyNote">Trabajo competitivo y de mayor carga</p>
+          </div>
+        </header>
+        <ul class="drill-list">
+          <li class="drill-item">
+            <button class="drill-link" type="button" data-video-es="https://youtu.be/3HS_t-pMccY" data-video-en="https://youtu.be/5zvo9eW_Ll8" data-drill="oneMomentum">
+              <span class="play" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 3.7v12.6c0 .8.9 1.3 1.6.8l9.1-6.3a1 1 0 0 0 0-1.6L6.6 2.9A1 1 0 0 0 5 3.7Z"/></svg></span>
+              <span class="drill-name" data-i18n="oneMomentum">Momentum 1 contra 1</span>
+              <span class="chevron" aria-hidden="true">›</span>
+            </button>
+          </li>
+          <li class="drill-item">
+            <button class="drill-link" type="button" data-video-es="https://youtu.be/dZeEr30j8As" data-video-en="https://youtu.be/STrBfIRw6bw" data-drill="tennisBall">
+              <span class="play" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 3.7v12.6c0 .8.9 1.3 1.6.8l9.1-6.3a1 1 0 0 0 0-1.6L6.6 2.9A1 1 0 0 0 5 3.7Z"/></svg></span>
+              <span class="drill-name" data-i18n="tennisBall">Atrapa la pelota de tenis</span>
+              <span class="chevron" aria-hidden="true">›</span>
+            </button>
+          </li>
+          <li class="drill-item">
+            <button class="drill-link" type="button" data-video-es="https://youtu.be/M6MZqeIMsSg" data-video-en="https://youtu.be/ofbNCOcSWfc" data-drill="twoBase">
+              <span class="play" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 3.7v12.6c0 .8.9 1.3 1.6.8l9.1-6.3a1 1 0 0 0 0-1.6L6.6 2.9A1 1 0 0 0 5 3.7Z"/></svg></span>
+              <span><span class="drill-name" data-i18n="twoBase">1 contra 1 en 2B con miradas</span><span class="drill-detail" data-i18n="crossover">Debe hacer el paso cruzado</span></span>
+              <span class="chevron" aria-hidden="true">›</span>
+            </button>
+          </li>
+          <li class="drill-item">
+            <button class="drill-link" type="button" data-video-es="https://youtu.be/OqeEnS2jLuY" data-video-en="https://youtu.be/_Ve_ZuajkRk" data-drill="liveReturns">
+              <span class="play" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 3.7v12.6c0 .8.9 1.3 1.6.8l9.1-6.3a1 1 0 0 0 0-1.6L6.6 2.9A1 1 0 0 0 5 3.7Z"/></svg></span>
+              <span class="drill-name" data-i18n="liveReturns">Regresos en vivo con lanzador</span>
+              <span class="chevron" aria-hidden="true">›</span>
+            </button>
+          </li>
+        </ul>
+      </article>
+    </section>
+
+    <p class="footnote"><span class="status-dot" aria-hidden="true"></span><span data-i18n="videoStatus">6 demostraciones disponibles en español e inglés.</span></p>
+  </main>
+
+  <div class="modal-backdrop" id="videoModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal" id="modalPanel">
+      <button class="modal-close" type="button" aria-label="Cerrar">×</button>
+      <div class="modal-symbol" id="modalSymbol" aria-hidden="true">▶</div>
+      <h2 id="modalTitle">Video disponible próximamente</h2>
+      <p id="modalMessage">La demostración y explicación de este drill se agregarán aquí.</p>
+      <div class="video-stage" id="videoStage">
+        <iframe id="videoFrame" title="Drill video" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        <video id="videoPlayer" controls playsinline></video>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const copy = {
+      es: {
+        eyebrow: "Desarrollo de jugadores · República Dominicana",
+        title: "Menú de drills del bloque de corrido de bases / rotación de BP",
+        intro: "Selecciona el tipo de día y toca un drill para ver su demostración, explicación y propósito.",
+        lightTitle: "Día liviano",
+        lightNote: "Revisión y trabajo de baja carga",
+        heavyTitle: "Día medio / pesado",
+        heavyNote: "Trabajo competitivo y de mayor carga",
+        videoReview: "Revisión de video / GreenLight",
+        auditorium: "En el auditorio",
+        standingReturns: "Regresos de pie en 1B",
+        oddEven: "Momentum impar + par",
+        oneMomentum: "Momentum 1 contra 1",
+        tennisBall: "Atrapa la pelota de tenis",
+        twoBase: "1 contra 1 en 2B con miradas",
+        crossover: "Debe hacer el paso cruzado",
+        liveReturns: "Regresos en vivo con lanzador",
+        videoStatus: "6 demostraciones disponibles en español e inglés.",
+        modalTitle: "Video disponible próximamente",
+        modalMessage: "La demostración y explicación de este drill se agregarán aquí.",
+        close: "Cerrar"
+      },
+      en: {
+        eyebrow: "Player Development · Dominican Republic",
+        title: "Base Running Block / BP Rotation Drill Menu",
+        intro: "Select the day type and tap a drill to view its demonstration, explanation, and purpose.",
+        lightTitle: "Light day",
+        lightNote: "Review and low-load work",
+        heavyTitle: "Medium / heavy day",
+        heavyNote: "Competitive, higher-load work",
+        videoReview: "Video review / GreenLight",
+        auditorium: "In the auditorium",
+        standingReturns: "Standing returns at 1B",
+        oddEven: "Odd + even momentum",
+        oneMomentum: "1v1 momentum",
+        tennisBall: "Catch the tennis ball",
+        twoBase: "1v1 at 2B with looks",
+        crossover: "Must do the crossover step",
+        liveReturns: "Live returns with pitcher",
+        videoStatus: "6 demonstrations available in Spanish and English.",
+        modalTitle: "Video coming soon",
+        modalMessage: "The demonstration and explanation for this drill will be added here.",
+        close: "Close"
+      }
+    };
+
+    let language = "es";
+    let lastTrigger = null;
+    const modal = document.getElementById("videoModal");
+    const modalPanel = document.getElementById("modalPanel");
+    const modalSymbol = document.getElementById("modalSymbol");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalMessage = document.getElementById("modalMessage");
+    const modalClose = modal.querySelector(".modal-close");
+    const videoStage = document.getElementById("videoStage");
+    const videoFrame = document.getElementById("videoFrame");
+    const videoPlayer = document.getElementById("videoPlayer");
+
+    function setLanguage(nextLanguage) {
+      language = nextLanguage;
+      document.documentElement.lang = language;
+      document.title = language === "es" ? "Menú de Drills del Bloque de Corrido de Bases / Rotación de BP" : "Base Running Block / BP Rotation Drill Menu";
+      document.querySelectorAll("[data-i18n]").forEach((element) => {
+        element.textContent = copy[language][element.dataset.i18n];
+      });
+      document.querySelectorAll(".language-button").forEach((button) => {
+        button.setAttribute("aria-selected", String(button.dataset.language === language));
+      });
+      modalClose.setAttribute("aria-label", copy[language].close);
+      modalTitle.textContent = copy[language].modalTitle;
+      modalMessage.textContent = copy[language].modalMessage;
+    }
+
+    document.querySelectorAll(".language-button").forEach((button) => {
+      button.addEventListener("click", () => setLanguage(button.dataset.language));
+    });
+
+    document.querySelectorAll(".drill-link").forEach((button) => {
+      button.addEventListener("click", () => {
+        const url = (language === "es" ? button.dataset.videoEs : button.dataset.videoEn).trim();
+        lastTrigger = button;
+        resetVideo();
+        if (url) {
+          modalTitle.textContent = button.querySelector(".drill-name").textContent;
+          modalMessage.hidden = true;
+          modalSymbol.hidden = true;
+          modalPanel.classList.add("video-mode");
+          videoStage.classList.add("active");
+          loadVideo(url);
+        } else {
+          modalTitle.textContent = copy[language].modalTitle;
+          modalMessage.textContent = copy[language].modalMessage;
+          modalMessage.hidden = false;
+          modalSymbol.hidden = false;
+        }
+        modal.classList.add("open");
+        modalClose.focus();
+      });
+    });
+
+    function loadVideo(rawUrl) {
+      let resolvedUrl = rawUrl;
+      try {
+        const url = new URL(rawUrl, window.location.href);
+        const host = url.hostname.replace(/^www\./, "");
+        if (host === "youtu.be") {
+          resolvedUrl = `https://www.youtube.com/embed/${url.pathname.slice(1)}?autoplay=1`;
+        } else if (host.endsWith("youtube.com")) {
+          const id = url.searchParams.get("v") || url.pathname.split("/").filter(Boolean).pop();
+          resolvedUrl = `https://www.youtube.com/embed/${id}?autoplay=1`;
+        } else if (host.endsWith("vimeo.com")) {
+          const id = url.pathname.split("/").filter(Boolean).pop();
+          resolvedUrl = `https://player.vimeo.com/video/${id}?autoplay=1`;
+        } else {
+          resolvedUrl = url.href;
+        }
+      } catch (error) {
+        resolvedUrl = rawUrl;
+      }
+
+      if (/\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(resolvedUrl)) {
+        videoFrame.hidden = true;
+        videoPlayer.hidden = false;
+        videoPlayer.src = resolvedUrl;
+        videoPlayer.play().catch(() => {});
+      } else {
+        videoPlayer.hidden = true;
+        videoFrame.hidden = false;
+        videoFrame.src = resolvedUrl;
+      }
+    }
+
+    function resetVideo() {
+      videoFrame.src = "about:blank";
+      videoPlayer.pause();
+      videoPlayer.removeAttribute("src");
+      videoPlayer.load();
+      videoFrame.hidden = false;
+      videoPlayer.hidden = true;
+      videoStage.classList.remove("active");
+      modalPanel.classList.remove("video-mode");
+    }
+
+    function closeModal() {
+      modal.classList.remove("open");
+      resetVideo();
+      if (lastTrigger) lastTrigger.focus();
+    }
+
+    modalClose.addEventListener("click", closeModal);
+    modal.addEventListener("click", (event) => { if (event.target === modal) closeModal(); });
+    document.addEventListener("keydown", (event) => { if (event.key === "Escape" && modal.classList.contains("open")) closeModal(); });
+  </script>
+</body>
+</html>
