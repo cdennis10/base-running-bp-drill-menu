@@ -271,6 +271,18 @@
       margin-top: 24px;
     }
     .greenlight-actions.active { display: grid; }
+    .install-steps {
+      display: none;
+      margin: 20px 0 0;
+      padding: 16px 16px 16px 38px;
+      color: var(--navy-deep);
+      background: #eef4fb;
+      border-radius: 12px;
+      text-align: left;
+      line-height: 1.5;
+    }
+    .install-steps.active { display: block; }
+    .install-steps li + li { margin-top: 7px; }
     .action-link {
       display: flex;
       min-height: 50px;
@@ -422,6 +434,12 @@
       <div class="modal-symbol" id="modalSymbol" aria-hidden="true">▶</div>
       <h2 id="modalTitle">Video disponible próximamente</h2>
       <p id="modalMessage">La demostración y explicación de este drill se agregarán aquí.</p>
+      <ol class="install-steps" id="installSteps">
+        <li data-i18n="installStep1">Toca Descargar GreenLight.</li>
+        <li data-i18n="installStep2">Abre GreenLight_Player_Setup.exe cuando termine la descarga.</li>
+        <li data-i18n="installStep3">Si Windows muestra una advertencia, toca Más información y luego Ejecutar de todas formas.</li>
+        <li data-i18n="installStep4">Espera un momento. GreenLight se abrirá solo.</li>
+      </ol>
       <div class="greenlight-actions" id="greenlightActions">
         <a class="action-link" id="openGreenlight" href="greenlight://open" data-i18n="openGreenlight">Abrir GreenLight</a>
         <a class="action-link secondary" id="downloadGreenlight" href="https://chcubs-my.sharepoint.com/:u:/g/personal/cdennis_cubs_com/IQDIBRkLHBjnRqR2XwOBDV2-AWcy4I7bnQd5xaIaA0IcEJo" target="_blank" rel="noopener" data-i18n="downloadGreenlight">Descargar GreenLight</a>
@@ -456,7 +474,11 @@
         modalTitle: "Video disponible próximamente",
         modalMessage: "La demostración y explicación de este drill se agregarán aquí.",
         greenlightTitle: "GreenLight Player",
-        greenlightMessage: "Si GreenLight ya está instalado, ábrelo. Si no, descarga el instalador privado desde OneDrive.",
+        greenlightMessage: "¿Ya tienes GreenLight? Ábrelo. ¿Es tu primera vez? Instálalo en tres pasos sencillos.",
+        installStep1: "Toca Descargar GreenLight.",
+        installStep2: "Abre GreenLight_Player_Setup.exe cuando termine la descarga.",
+        installStep3: "Si Windows muestra una advertencia, toca Más información y luego Ejecutar de todas formas.",
+        installStep4: "Espera un momento. GreenLight se abrirá solo.",
         openGreenlight: "Abrir GreenLight",
         downloadGreenlight: "Descargar GreenLight",
         close: "Cerrar"
@@ -482,7 +504,11 @@
         modalTitle: "Video coming soon",
         modalMessage: "The demonstration and explanation for this drill will be added here.",
         greenlightTitle: "GreenLight Player",
-        greenlightMessage: "If GreenLight is installed, open it. If not, download the private installer from OneDrive.",
+        greenlightMessage: "Already have GreenLight? Open it. First time? Install it in three simple steps.",
+        installStep1: "Tap Download GreenLight.",
+        installStep2: "Open GreenLight_Player_Setup.exe when the download finishes.",
+        installStep3: "If Windows shows a warning, tap More info, then Run anyway.",
+        installStep4: "Wait a moment. GreenLight opens automatically.",
         openGreenlight: "Open GreenLight",
         downloadGreenlight: "Download GreenLight",
         close: "Close"
@@ -502,6 +528,7 @@
     const videoPlayer = document.getElementById("videoPlayer");
     const greenlightTrigger = document.getElementById("greenlightTrigger");
     const greenlightActions = document.getElementById("greenlightActions");
+    const installSteps = document.getElementById("installSteps");
 
     function setLanguage(nextLanguage) {
       language = nextLanguage;
@@ -530,6 +557,7 @@
       modalMessage.textContent = copy[language].greenlightMessage;
       modalMessage.hidden = false;
       modalSymbol.hidden = false;
+      installSteps.classList.add("active");
       greenlightActions.classList.add("active");
       modal.classList.add("open");
       document.getElementById("openGreenlight").focus();
@@ -599,6 +627,7 @@
       videoPlayer.hidden = true;
       videoStage.classList.remove("active");
       modalPanel.classList.remove("video-mode");
+      installSteps.classList.remove("active");
       greenlightActions.classList.remove("active");
     }
 
