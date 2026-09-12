@@ -14,33 +14,34 @@ as coming soon until its videos are available.
 The shared site opens schedule.html as its landing page. That page adds:
 - The September 6 through October 31 DR instructional calendar
 - A base running block on every Low and High day
-- The complete approved drill menu for each block's Low or High workload
-- A four-step first-use walkthrough for coaches
+- Two recommended drill options for each block's Low or High workload
+- A skippable four-step first-use walkthrough that can be reopened at any time
 - A visual Choose > Run > Report progress guide on every session
-- Clear explanations of why only Low or High drills are shown
-- A 30-second coach completion report
+- Clear context for the Low or High workload shown by the calendar
+- A brief coach update with planned, adapted, and not-completed outcomes
 - A Wednesday availability card, shareable schedule link, and downloadable .ics calendar
 - Weekly report copy and CSV export
 
-COACH REPORTS AND MONITORING
-----------------------------
+COACH REPORTS AND SHARED CONTEXT
+--------------------------------
 The GitHub Pages schedule does not require a login. A local copy of each drill
-choice and completion report is saved in that device's browser so the calendar
-can show scheduled, completed, and unreported blocks. Coaches should also open
-the linked Microsoft Form and submit the central report. The form accepts
-anonymous responses without sign-in and gives the coordinator one response list.
+choice and update is saved in that device's browser so the calendar can show
+scheduled, logged, and unreported blocks. Older saved records automatically use
+"Completed as planned." Coaches may also open the linked Microsoft Form and add
+their update to the staff's shared record. The form accepts anonymous responses
+without sign-in.
 
 The local Share, Copy, and CSV tools remain available as fallbacks. The
 centralized report URL is configured in schedule-config.js.
 
-WEEKLY COACH CHAT
------------------
-The chat recurs every Wednesday. The website intentionally does not set a call
+WEEKLY STAFF CONVERSATION
+-------------------------
+The conversation recurs every Wednesday. The website intentionally does not set a call
 time or meeting URL. Coaches in the Dominican Republic supply the proposed time
 based on their availability and communicate it in Dominican Republic time
 (AST / UTC-4). During this program Chicago is one hour behind the DR, and
 Arizona is three hours behind. The .ics download includes Wednesday all-day
-chat reminders with this instruction.
+conversation reminders with this instruction.
 
 UPDATING THE PROGRAM
 --------------------

@@ -90,7 +90,7 @@
 
     .topbar-actions { display: flex; align-items: center; gap: 8px; }
     .menu-link {
-      min-height: 42px;
+      min-height: 44px;
       display: inline-flex;
       align-items: center;
       padding: 8px 13px;
@@ -104,7 +104,7 @@
 
     .language-toggle { display: flex; gap: 4px; }
     .language-button {
-      min-height: 42px;
+      min-height: 44px;
       padding: 8px 13px;
       color: #dbe7f7;
       background: transparent;
@@ -184,7 +184,7 @@
     #todayStatus { font-weight: 750; line-height: 1.35; }
     .today-strip button {
       flex: 0 0 auto;
-      min-height: 42px;
+      min-height: 44px;
       padding: 8px 14px;
       color: var(--navy-deep);
       background: #fff;
@@ -369,7 +369,7 @@
     .calendar-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 16px; }
     .calendar-toolbar h2 { margin: 0; color: var(--navy-deep); font-size: 1.35rem; }
     .month-controls { display: flex; gap: 7px; }
-    .month-button { min-width: 44px; min-height: 42px; padding: 8px 12px; color: var(--navy); background: #fff; border: 1px solid #bfc9d7; border-radius: 10px; cursor: pointer; font-weight: 850; }
+    .month-button { min-width: 44px; min-height: 44px; padding: 8px 12px; color: var(--navy); background: #fff; border: 1px solid #bfc9d7; border-radius: 10px; cursor: pointer; font-weight: 850; }
     .month-button:disabled { opacity: .38; cursor: not-allowed; }
     .calendar-legend { display: flex; flex-wrap: wrap; gap: 8px 14px; margin: 0 0 13px; padding: 0; color: var(--muted); font-size: .78rem; font-weight: 720; list-style: none; }
     .legend-item { display: inline-flex; align-items: center; gap: 6px; }
@@ -412,7 +412,7 @@
     .day-status.missed { background: var(--missed); }
     .calendar-caption { margin: 14px 0 0; color: var(--muted); font-size: .8rem; line-height: 1.45; }
 
-    .report-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; margin-bottom: 18px; }
+    .report-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 13px; margin-bottom: 18px; }
     .stat { padding: 18px; }
     .stat span { display: block; color: var(--muted); font-size: .79rem; font-weight: 760; }
     .stat strong { display: block; margin-top: 5px; color: var(--navy-deep); font-size: 1.9rem; line-height: 1; }
@@ -503,12 +503,12 @@
       .brand-link { padding-top: 4px; }
       .brand-text { display: none; }
       .topbar-actions { gap: 5px; }
-      .menu-link, .language-button { min-height: 40px; padding-inline: 10px; font-size: .79rem; }
+      .menu-link, .language-button { min-height: 44px; padding-inline: 10px; font-size: .79rem; }
       main { width: min(100% - 22px, 600px); padding-top: 30px; }
       h1 { font-size: clamp(2rem, 10vw, 3rem); }
       .today-strip { align-items: flex-start; flex-direction: column; }
       .today-strip-actions { width: 100%; justify-content: flex-start; }
-      .today-strip button { min-height: 38px; padding: 7px 10px; font-size: .78rem; }
+      .today-strip button { min-height: 44px; padding: 7px 10px; font-size: .78rem; }
       .tabbar { width: 100%; }
       .tab-button { flex: 1; padding-inline: 8px; font-size: .82rem; }
       .day-toolbar { align-items: stretch; flex-direction: column; }
@@ -535,10 +535,12 @@
     }
 
     @media (max-width: 410px) {
+      .topbar { flex-wrap: wrap; }
+      .topbar-actions { width: 100%; justify-content: space-between; }
       .menu-link { max-width: 94px; text-align: center; }
       .calendar-day { min-height: 84px; }
       .day-event { display: -webkit-box; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-      .month-button { min-width: 40px; padding-inline: 9px; }
+      .month-button { min-width: 44px; padding-inline: 9px; }
       .selected-line { align-items: flex-start; flex-direction: column; }
     }
 
@@ -597,7 +599,7 @@
     .brand-copy { display: grid; gap: 5px; }
     .season-label { color: #9fb7d6; font-size: .59rem; font-weight: 850; letter-spacing: .14em; }
     .help-button {
-      min-height: 42px;
+      min-height: 44px;
       display: inline-flex;
       align-items: center;
       gap: 7px;
@@ -994,8 +996,9 @@
     .tour-copy p { margin: 0; color: #cbd9e9; font-size: 1rem; line-height: 1.62; }
     .tour-callout { display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; padding: 8px 11px; color: #ffe797; background: rgba(246,211,107,.1); border: 1px solid rgba(246,211,107,.3); border-radius: 999px; font-size: .75rem; font-weight: 850; }
     .tour-callout::before { content: "✓"; display: grid; place-items: center; width: 20px; height: 20px; color: var(--navy-deep); background: #f6d36b; border-radius: 50%; font-size: .68rem; }
-    .tour-actions { display: flex; justify-content: space-between; gap: 10px; padding: 19px 29px 25px; background: rgba(0,0,0,.12); border-top: 1px solid rgba(255,255,255,.09); }
+    .tour-actions { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; padding: 19px 29px 25px; background: rgba(0,0,0,.12); border-top: 1px solid rgba(255,255,255,.09); }
     .tour-actions .btn { min-width: 120px; color: #fff; background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.2); }
+    .tour-actions .tour-skip { margin-left: auto; }
     .tour-actions .btn-primary { background: #fff; border-color: #fff; color: var(--navy-deep); }
 
     @media (max-width: 860px) {
@@ -1061,6 +1064,7 @@
       .load-badge { align-self: flex-start; }
       .tour-copy p { font-size: .92rem; }
       .tour-actions .btn { min-width: 0; flex: 1; }
+      .tour-actions .tour-skip { order: 3; flex-basis: 100%; margin-left: 0; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1092,7 +1096,7 @@
       <div>
         <p class="eyebrow" data-i18n="eyebrow">Calendario de instructiva · República Dominicana</p>
         <h1 data-i18n="title">Plan semanal de corrido de bases</h1>
-        <p class="intro" data-i18n="intro">El calendario fija la carga. El coach elige del menú completo aprobado para ese día, completa el bloque y comparte un reporte de 30 segundos.</p>
+        <p class="intro" data-i18n="intro">El calendario organiza la carga del día. Tú conoces al grupo: elige el drill que mejor responda a lo que ves, ejecuta el bloque y comparte una observación breve.</p>
       </div>
       <div class="hero-count" aria-hidden="true">
         <strong id="plannedBlockCount">16</strong>
@@ -1130,11 +1134,11 @@
           <section class="surface side-card" id="chatCard"></section>
           <section class="surface side-card">
             <h2 data-i18n="howItWorks">Cómo funciona</h2>
-            <p data-i18n="howIntro">La carga no cambia. La elección sí.</p>
+            <p data-i18n="howIntro">El calendario define la carga. Tu criterio guía la elección.</p>
             <ol class="agenda">
               <li data-i18n="how1">Abre la fecha del bloque.</li>
-              <li data-i18n="how2">Elige del menú completo aprobado para la carga del día.</li>
-              <li data-i18n="how3">Marca terminado y envía el reporte central.</li>
+              <li data-i18n="how2">Elige entre las opciones recomendadas para la carga del día.</li>
+              <li data-i18n="how3">Registra el resultado y comparte contexto con el staff.</li>
             </ol>
             <div class="privacy-note">
               <span aria-hidden="true">ⓘ</span>
@@ -1159,9 +1163,9 @@
           <li class="legend-item"><span class="legend-dot low"></span><span data-i18n="lightDay">Día liviano</span></li>
           <li class="legend-item"><span class="legend-dot high"></span><span data-i18n="heavyDay">Día medio / fuerte</span></li>
           <li class="legend-item"><span class="legend-dot scheduled"></span><span data-i18n="calendarScheduled">Programado</span></li>
-          <li class="legend-item"><span class="legend-dot complete"></span><span data-i18n="calendarCompleted">Terminado</span></li>
+          <li class="legend-item"><span class="legend-dot complete"></span><span data-i18n="calendarCompleted">Registrado</span></li>
           <li class="legend-item"><span class="legend-dot missed"></span><span data-i18n="calendarMissed">No reportado</span></li>
-          <li class="legend-item"><span class="legend-dot chat"></span><span data-i18n="weeklyChat">Charla semanal</span></li>
+          <li class="legend-item"><span class="legend-dot chat"></span><span data-i18n="weeklyChat">Conversación semanal del staff</span></li>
         </ul>
         <div class="calendar-rule">
           <span aria-hidden="true">!</span>
@@ -1175,14 +1179,14 @@
     <section class="panel" id="reportPanel" role="tabpanel" aria-labelledby="reportTab" hidden>
       <div class="report-grid" id="reportStats"></div>
       <div class="monitor-path">
-        <div><span>01</span><p><strong data-i18n="monitor1Title">El coach guarda</strong><small data-i18n="monitor1Body">Completa el reporte de 30 segundos.</small></p></div>
-        <div><span>02</span><p><strong data-i18n="monitor2Title">El coach envía</strong><small data-i18n="monitor2Body">Completa el formulario central aprobado.</small></p></div>
-        <div><span>03</span><p><strong data-i18n="monitor3Title">El coordinador revisa</strong><small data-i18n="monitor3Body">Revisa todas las respuestas en Microsoft Forms.</small></p></div>
+        <div><span>01</span><p><strong data-i18n="monitor1Title">El coach registra</strong><small data-i18n="monitor1Body">Comparte una observación breve.</small></p></div>
+        <div><span>02</span><p><strong data-i18n="monitor2Title">El staff comparte</strong><small data-i18n="monitor2Body">Añade contexto al registro compartido.</small></p></div>
+        <div><span>03</span><p><strong data-i18n="monitor3Title">El staff conversa</strong><small data-i18n="monitor3Body">Usa el contexto para ofrecer apoyo.</small></p></div>
       </div>
       <div class="report-layout">
         <section class="surface report-card">
-          <h2 data-i18n="completionReport">Reporte de cumplimiento</h2>
-          <p class="section-copy" data-i18n="reportIntro">Consulta los registros locales y usa el reporte central aprobado para que el coordinador vea las respuestas de todos los coaches.</p>
+          <h2 data-i18n="completionReport">Resumen de bloques</h2>
+          <p class="section-copy" data-i18n="reportIntro">Consulta los registros locales y comparte contexto con el staff para apoyar la conversación semanal.</p>
           <div class="report-tools">
             <div class="field">
               <label for="reportWeek" data-i18n="week">Semana</label>
@@ -1201,6 +1205,7 @@
                   <th data-i18n="playersShort">Jug.</th>
                   <th data-i18n="minutesShort">Min.</th>
                   <th data-i18n="execution">Ejecución</th>
+                  <th data-i18n="outcome">Resultado</th>
                 </tr>
               </thead>
               <tbody id="reportRows"></tbody>
@@ -1210,12 +1215,12 @@
         </section>
 
         <section class="surface report-card">
-          <h2 data-i18n="availabilityTitle">Disponibilidad para la charla del miércoles</h2>
+          <h2 data-i18n="availabilityTitle">Disponibilidad para la conversación del miércoles</h2>
           <p class="section-copy" data-i18n="availabilityIntro">Los coaches en RD deben proponer la hora de la llamada según su disponibilidad.</p>
           <div class="availability-callout">
             <strong data-i18n="drCoachesAction">Acción para los coaches en RD</strong>
             <p data-i18n="availabilityBody">Envíen su disponibilidad y expresen la hora propuesta en hora de República Dominicana (AST / UTC−4). El staff fuera de RD debe convertir desde esa zona horaria.</p>
-            <div class="timezone-row" aria-label="Time zone reference">
+            <div class="timezone-row" role="group" aria-label="Time zone reference">
               <span>RD · AST · UTC−4</span>
               <span data-i18n="chicagoTime">Chicago · CDT · UTC−5</span>
               <span data-i18n="arizonaTime">Arizona · MST · UTC−7</span>
@@ -1231,13 +1236,13 @@
       </div>
     </section>
 
-    <footer data-i18n="footer">Calendario transcrito de “DR Instructs 2026 Calendar”. Zona horaria de las charlas: República Dominicana (AST / UTC-4).</footer>
+    <footer data-i18n="footer">Calendario transcrito de “DR Instructs 2026 Calendar”. Zona horaria de las conversaciones: República Dominicana (AST / UTC-4).</footer>
   </main>
 
   <div class="modal-backdrop" id="completionBackdrop" role="dialog" aria-modal="true" aria-labelledby="completionTitle" hidden>
     <div class="modal">
       <button class="modal-close" id="completionClose" type="button" aria-label="Cerrar">×</button>
-      <h2 id="completionTitle" data-i18n="completeBlock">Completar bloque</h2>
+      <h2 id="completionTitle" data-i18n="completeBlock">Registrar bloque</h2>
       <p class="modal-intro" id="completionIntro"></p>
       <form id="completionForm">
         <div class="form-grid">
@@ -1262,13 +1267,21 @@
             <select id="executionSelect" name="execution" required></select>
           </div>
           <div class="field full">
-            <label for="notes" data-i18n="notes">Nota rápida</label>
-            <textarea id="notes" name="notes" data-i18n-placeholder="notesPlaceholder" placeholder="Qué salió bien / qué necesita atención"></textarea>
+            <label for="outcomeSelect" data-i18n="outcome">Resultado de la sesión</label>
+            <select id="outcomeSelect" name="outcome" required></select>
+          </div>
+          <div class="field full" id="outcomeReasonField" hidden>
+            <label for="outcomeReason" data-i18n="outcomeReason">Explicación breve</label>
+            <textarea id="outcomeReason" name="outcomeReason" data-i18n-placeholder="outcomeReasonPlaceholder" placeholder="Comparte brevemente por qué no se pudo realizar."></textarea>
+          </div>
+          <div class="field full">
+            <label for="notes" data-i18n="notes">Observación, ajuste o apoyo necesario</label>
+            <textarea id="notes" name="notes" data-i18n-placeholder="notesPlaceholder" placeholder="¿Qué viste? ¿Qué ajustaste? ¿Qué apoyo sería útil?"></textarea>
           </div>
         </div>
         <div class="modal-actions">
           <button class="btn" id="cancelCompletion" type="button" data-i18n="cancel">Cancelar</button>
-          <button class="btn btn-primary" type="submit" data-i18n="saveComplete">Guardar como terminado</button>
+          <button class="btn btn-primary" type="submit" data-i18n="saveComplete">Guardar actualización</button>
         </div>
       </form>
     </div>
@@ -1308,6 +1321,7 @@
       <div class="tour-content" id="tourContent"></div>
       <div class="tour-actions">
         <button class="btn" id="tourBack" type="button" data-i18n="back">Atrás</button>
+        <button class="btn tour-skip" id="tourSkip" type="button" data-i18n="skipGuide">Omitir guía</button>
         <button class="btn btn-primary" id="tourNext" type="button">Siguiente</button>
       </div>
     </div>
@@ -1315,7 +1329,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="schedule-config.js?v=2026.09.12.3"></script>
+  <script src="schedule-config.js?v=2026.09.12.4"></script>
   <script>
     const CONFIG = window.DR_SCHEDULE_CONFIG;
     const SITE_TIME_ZONE = CONFIG.timeZone;
@@ -1332,7 +1346,7 @@
         drillLibrary: "Menú de drills",
         eyebrow: "Calendario de instructiva · República Dominicana",
         title: "Plan semanal de corrido de bases",
-        intro: "El calendario fija la carga. El coach elige del menú completo aprobado para ese día, completa el bloque y comparte un reporte de 30 segundos.",
+        intro: "El calendario organiza la carga del día. Tú conoces al grupo: elige el drill que mejor responda a lo que ves, ejecuta el bloque y comparte una observación breve.",
         plannedBlocks: "bloques programados",
         openToday: "Abrir hoy",
         updated: "Actualizado",
@@ -1344,26 +1358,26 @@
         addProgramCalendar: "Añadir programa al calendario",
         lightDay: "Día liviano",
         heavyDay: "Día medio / fuerte",
-        weeklyChat: "Charla semanal",
+        weeklyChat: "Conversación semanal del staff",
         calendarRuleTitle: "¿Cuándo hacemos corrido de bases?",
         calendarRuleBody: "Solamente en las fechas con etiqueta Low o High. Juegos, Camp Days y días libres no generan un bloque.",
         calendarCaption: "Toca cualquier fecha para ver sus detalles. Los bloques de corrido aparecen solamente en los días marcados Low o High en el calendario original.",
         calendarScheduled: "Programado",
-        calendarCompleted: "Terminado",
+        calendarCompleted: "Registrado",
         calendarMissed: "No reportado",
-        completionReport: "Reporte de cumplimiento",
-        reportIntro: "Consulta los registros locales y usa el reporte central aprobado para que el coordinador vea las respuestas de todos los coaches.",
+        completionReport: "Resumen de bloques",
+        reportIntro: "Consulta los registros locales y comparte contexto con el staff para apoyar la conversación semanal.",
         centralReadyTitle: "Reporte central disponible",
-        centralReadyBody: "Envía el formulario sin iniciar sesión. La respuesta llega al registro compartido del coordinador.",
+        centralReadyBody: "Envía el formulario sin iniciar sesión para sumar contexto al registro compartido del staff.",
         centralReadyAction: "Abrir reporte central",
         centralPendingTitle: "Envío central pendiente de conexión",
-        centralPendingBody: "Mientras se conecta el sistema aprobado, usa Compartir reporte o descarga el CSV. Los reportes siguen guardados en este dispositivo.",
-        monitor1Title: "El coach guarda",
-        monitor1Body: "Completa el reporte de 30 segundos.",
-        monitor2Title: "El coach envía",
-        monitor2Body: "Completa el formulario central aprobado.",
-        monitor3Title: "El coordinador revisa",
-        monitor3Body: "Revisa todas las respuestas en Microsoft Forms.",
+        centralPendingBody: "Mientras se conecta el registro compartido, usa Compartir reporte o descarga el CSV. Los reportes siguen guardados en este dispositivo.",
+        monitor1Title: "El coach registra",
+        monitor1Body: "Comparte una observación breve.",
+        monitor2Title: "El staff comparte",
+        monitor2Body: "Añade contexto al registro compartido.",
+        monitor3Title: "El staff conversa",
+        monitor3Body: "Usa el contexto para ofrecer apoyo.",
         week: "Semana",
         copyReport: "Copiar reporte",
         downloadCsv: "Descargar CSV",
@@ -1373,7 +1387,7 @@
         playersShort: "Jug.",
         minutesShort: "Min.",
         execution: "Ejecución",
-        availabilityTitle: "Disponibilidad para la charla del miércoles",
+        availabilityTitle: "Disponibilidad para la conversación del miércoles",
         availabilityIntro: "Los coaches en RD deben proponer la hora de la llamada según su disponibilidad.",
         drCoachesAction: "Acción para los coaches en RD",
         availabilityBody: "Envíen su disponibilidad y expresen la hora propuesta en hora de República Dominicana (AST / UTC−4). El staff fuera de RD debe convertir desde esa zona horaria.",
@@ -1384,29 +1398,36 @@
         availabilityNote: "La fecha es cada miércoles. La página no fija la hora: los coaches en RD la suministran según su disponibilidad.",
         day: "Día",
         downloadCalendar: "Descargar calendario (.ics)",
-        staffLinkNote: "El enlace compartido incluye la configuración de la charla, no los reportes privados guardados en el teléfono.",
-        footer: "Calendario transcrito de “DR Instructs 2026 Calendar”. Zona horaria de las charlas: República Dominicana (AST / UTC-4).",
-        completeBlock: "Completar bloque",
+        staffLinkNote: "El enlace compartido incluye la configuración de la conversación, no los reportes privados guardados en el teléfono.",
+        footer: "Calendario transcrito de “DR Instructs 2026 Calendar”. Zona horaria de las conversaciones: República Dominicana (AST / UTC-4).",
+        completeBlock: "Registrar bloque",
         coachName: "Nombre del coach",
         groupName: "Grupo / equipo",
         playerCount: "Jugadores",
         minutes: "Minutos",
-        notes: "Nota rápida",
-        notesPlaceholder: "Qué salió bien / qué necesita atención",
+        notes: "Observación, ajuste o apoyo necesario",
+        notesPlaceholder: "¿Qué viste? ¿Qué ajustaste? ¿Qué apoyo sería útil?",
+        outcome: "Resultado de la sesión",
+        planned: "Completado según el plan",
+        adapted: "Adaptado a las necesidades del grupo",
+        notCompleted: "No se pudo realizar",
+        outcomeReason: "Explicación breve",
+        outcomeReasonPlaceholder: "Comparte brevemente por qué no se pudo realizar.",
+        outcomeReasonRequired: "Añade una explicación breve cuando el bloque no se pudo realizar.",
         cancel: "Cancelar",
-        saveComplete: "Guardar como terminado",
+        saveComplete: "Guardar actualización",
         install1: "Toca Instalar GreenLight.",
         install2: "Si Edge muestra una advertencia, elige Conservar y luego Conservar de todas formas.",
         install3: "Abre GreenLight_Player_Setup.exe y permite Ejecutar de todas formas si Windows lo solicita.",
         openGreenlight: "Ejecutar GreenLight",
         downloadGreenlight: "Instalar GreenLight",
         howItWorks: "Cómo funciona",
-        howIntro: "La carga no cambia. La elección sí.",
+        howIntro: "El calendario define la carga. Tu criterio guía la elección.",
         how1: "Abre la fecha del bloque.",
-        how2: "Elige del menú completo aprobado para la carga del día.",
-        how3: "Marca terminado y envía el reporte central.",
+        how2: "Elige entre las opciones recomendadas para la carga del día.",
+        how3: "Registra el resultado y comparte contexto con el staff.",
         deviceOnlyTitle: "Guardado en este dispositivo",
-        deviceOnlyBody: "La copia local ayuda con el calendario; envía también el formulario central para que el coordinador la reciba.",
+        deviceOnlyBody: "La copia local ayuda con el calendario; comparte también el formulario central para sumar contexto al registro del staff.",
         reopenGuide: "Ver la guía otra vez",
         workflowChoose: "Elegir",
         workflowChooseHint: "del menú",
@@ -1414,45 +1435,45 @@
         workflowRunHint: "con el grupo",
         workflowReport: "Reportar",
         workflowReportHint: "30 segundos",
-        loadLocked: "FIJO",
-        calendarDecision: "Decisión del calendario:",
-        lightDefinition: "día de revisión y trabajo de baja carga. Por eso solamente aparecen drills livianos.",
-        heavyDefinition: "día competitivo y de mayor carga. Por eso solamente aparecen drills medio/fuertes.",
+        loadLocked: "CARGA DEL DÍA",
+        calendarDecision: "Definida por el calendario:",
+        lightDefinition: "Día de revisión y trabajo de baja carga. Estas opciones mantienen el objetivo del día.",
+        heavyDefinition: "Día competitivo y de mayor carga. Estas opciones mantienen el objetivo del día.",
         upNext: "Siguiente paso",
         runSelectedTitle: "Mira el video si hace falta y ejecuta el drill",
-        runSelectedBody: "Usa la demostración como estándar. Al terminar, registra quién dirigió el bloque, cuántos jugadores participaron y una observación corta.",
+        runSelectedBody: "Usa el video como referencia común cuando sea útil. Aplica tu criterio para organizar el drill según el grupo.",
         openSelectedVideo: "Abrir video seleccionado",
         greenlightAction: "Ejecutar/instalar GreenLight",
-        shareReminder: "Último paso: comparte este reporte para que el coordinador pueda verlo.",
-        centralSubmitReminder: "Último paso: abre y envía el reporte central para que el coordinador lo reciba.",
+        shareReminder: "Último paso: comparte contexto con el staff.",
+        centralSubmitReminder: "Último paso: abre y envía el resumen para sumar contexto al registro compartido.",
         todayPrefix: "Hoy en RD",
         noCalendarToday: "no hay actividad en el calendario",
         outsideProgram: "fuera del período de instructiva",
-        chooseOne: "Elección del coach",
-        chooseInstruction: "Elige el drill que mejor responda a lo que necesita el grupo. Todo el menú respeta la carga asignada para hoy.",
-        option: "Opción",
+        chooseOne: "Decisión del coach",
+        chooseInstruction: "Tú conoces al grupo. Elige la opción que mejor responda a lo que necesitan los jugadores hoy.",
+        option: "Opción recomendada",
         watch: "Ver video",
         choose: "Elegir",
         chosen: "Elegido",
         selectedDrill: "Drill seleccionado",
         markComplete: "Marcar bloque terminado",
-        completed: "Bloque terminado",
+        completed: "Actualización registrada",
         shareUpdate: "Compartir reporte",
         editReport: "Editar reporte",
         nextBlock: "Ver próximo bloque",
         noBlock: "No hay bloque de corrido de bases",
         noBlockBody: "Los bloques se programan únicamente en días Low y High. Usa el calendario para ver la próxima sesión.",
-        meetingTitle: "Charla semanal con coaches",
-        nextMeeting: "Próxima charla",
+        meetingTitle: "Conversación semanal del staff",
+        nextMeeting: "Próxima conversación",
         timeTbd: "Hora por confirmar por coaches RD",
         drTimeOwner: "Los coaches en RD suministran la hora según su disponibilidad.",
         setMeeting: "Configurar en Reporte",
-        joinMeeting: "Entrar a la charla",
-        addMeeting: "Añadir charla al calendario",
+        joinMeeting: "Entrar a la conversación",
+        addMeeting: "Añadir conversación al calendario",
         copyAgenda: "Copiar agenda",
-        agenda1: "Bloques completados y omitidos",
+        agenda1: "Qué se trabajó esta semana",
         agenda2: "Una tendencia positiva de los jugadores",
-        agenda3: "Un punto que necesita video o seguimiento",
+        agenda3: "Un ajuste, pregunta o apoyo necesario",
         off: "Día libre del equipo",
         practice: "Práctica",
         camp: "Día de campamento",
@@ -1460,9 +1481,11 @@
         conditionalGame: "Juego si es necesario",
         baseBlock: "Bloque de corrido de bases",
         allWeeks: "Todas las semanas",
-        scheduled: "Programados",
-        completedStat: "Terminados",
-        completionRate: "Cumplimiento",
+        scheduled: "Bloques programados",
+        blocksRun: "Bloques realizados",
+        updatesLogged: "Actualizaciones registradas",
+        completedStat: "Registrados",
+        completionRate: "Progreso del plan",
         noReports: "Todavía no hay reportes guardados para este período.",
         saved: "Reporte guardado.",
         copied: "Copiado.",
@@ -1475,33 +1498,34 @@
         high: "High",
         minutesWord: "minutos",
         playersWord: "jugadores",
-        notesWord: "Nota",
+        notesWord: "Observación",
         weekOf: "Semana del",
-        sourceChoice: "Menú completo aprobado",
+        sourceChoice: "Opciones recomendadas",
         videoIntro: "Demostración y explicación del drill.",
         greenlightIntro: "Ejecuta GreenLight si ya está instalado o instálalo si es la primera vez.",
         programCalendarName: "DR Instructs 2026 · Corrido de Bases",
-        chatCalendarName: "Charla semanal · Coaches DR",
+        chatCalendarName: "Conversación semanal del staff · Coaches DR",
         reportGenerated: "Reporte generado desde el plan DR 2026",
         tourEyebrow: "GUÍA RÁPIDA PARA COACHES",
         back: "Atrás",
+        skipGuide: "Omitir guía",
         next: "Siguiente",
         start: "Ver el plan de hoy",
-        tour1Title: "El calendario toma la primera decisión",
-        tour1Body: "Abre esta página cualquier día. Si el calendario marca Low o High, la carga correcta aparecerá automáticamente. No tienes que recordar qué menú corresponde.",
-        tour1Callout: "La carga del día está bloqueada",
+        tour1Title: "La carga del día ya está organizada",
+        tour1Body: "El calendario muestra automáticamente si corresponde un día Low o High para agilizar la preparación del staff.",
+        tour1Callout: "Menos preparación, más tiempo con los jugadores",
         tour1Visual: "LOW / HIGH",
-        tour2Title: "Tú eliges el mejor drill para el grupo",
-        tour2Body: "Verás el menú completo aprobado para la carga del día. Elige el drill que mejor responda a lo que necesita el grupo; todas las opciones respetan la carga asignada.",
-        tour2Callout: "Todo el menú correcto para el día",
+        tour2Title: "Tu criterio guía la elección",
+        tour2Body: "Tú conoces al grupo. Verás dos drills recomendados para la carga del día; elige el que mejor responda a lo que observas.",
+        tour2Callout: "Dos buenas opciones, una decisión del coach",
         tour2Visual: "MENÚ",
-        tour3Title: "Ejecuta el bloque con un estándar claro",
-        tour3Body: "Abre el video para ver la demostración y escuchar el propósito. Luego corre el drill con el grupo. La pantalla te mantiene en el paso correcto.",
-        tour3Callout: "Elegir → Ejecutar → Reportar",
+        tour3Title: "Un estándar común, con espacio para enseñar",
+        tour3Body: "El video sirve como referencia para la demostración y el propósito. El coach aplica ese estándar de acuerdo con las necesidades del grupo.",
+        tour3Callout: "Elegir → Ejecutar → Registrar",
         tour3Visual: "PLAY",
-        tour4Title: "Cierra el ciclo en 30 segundos",
-        tour4Body: "Marca el bloque terminado, agrega jugadores, minutos y una nota. Luego abre el reporte central y envíalo para que el coordinador vea la respuesta junto con las de los demás coaches.",
-        tour4Callout: "La charla semanal también vive aquí",
+        tour4Title: "Comparte una observación breve",
+        tour4Body: "Registra lo que se trabajó, qué observaste y cualquier ajuste o apoyo necesario. Esa información alimenta la conversación semanal del staff.",
+        tour4Callout: "El reporte crea contexto, no vigilancia",
         tour4Visual: "✓"
       },
       en: {
@@ -1510,7 +1534,7 @@
         drillLibrary: "Drill menu",
         eyebrow: "Instructional calendar · Dominican Republic",
         title: "Weekly base running plan",
-        intro: "The calendar fixes the workload. The coach chooses from the full approved menu for that day, completes the block, and shares a 30-second report.",
+        intro: "The calendar organizes the day’s workload. You know the group: choose the drill that best matches what you see, run the block, and share a brief observation.",
         plannedBlocks: "scheduled blocks",
         openToday: "Open today",
         updated: "Updated",
@@ -1522,26 +1546,26 @@
         addProgramCalendar: "Add program to calendar",
         lightDay: "Light day",
         heavyDay: "Medium / heavy day",
-        weeklyChat: "Weekly chat",
+        weeklyChat: "Weekly staff conversation",
         calendarRuleTitle: "When do we run a base running block?",
         calendarRuleBody: "Only on dates labeled Low or High. Games, Camp Days, and team off-days do not generate a block.",
         calendarCaption: "Tap any date to see its details. Base running blocks appear only on days marked Low or High in the original calendar.",
         calendarScheduled: "Scheduled",
-        calendarCompleted: "Completed",
+        calendarCompleted: "Logged",
         calendarMissed: "Not reported",
-        completionReport: "Completion report",
-        reportIntro: "Review local records and use the approved central report so the coordinator can see every coach's response.",
+        completionReport: "Block summary",
+        reportIntro: "Review local records and share context with the staff to support the weekly conversation.",
         centralReadyTitle: "Central reporting available",
-        centralReadyBody: "Submit the form without signing in. The response goes to the coordinator's shared record.",
+        centralReadyBody: "Submit the form without signing in to add context to the staff’s shared record.",
         centralReadyAction: "Open central report",
         centralPendingTitle: "Central reporting connection pending",
-        centralPendingBody: "Until the approved system is connected, use Share report or download the CSV. Reports remain saved on this device.",
-        monitor1Title: "Coach saves",
-        monitor1Body: "Completes the 30-second report.",
-        monitor2Title: "Coach submits",
-        monitor2Body: "Completes the approved central form.",
-        monitor3Title: "Coordinator reviews",
-        monitor3Body: "Reviews every response in Microsoft Forms.",
+        centralPendingBody: "Until the shared record is connected, use Share report or download the CSV. Reports remain saved on this device.",
+        monitor1Title: "Coach logs",
+        monitor1Body: "Shares a brief observation.",
+        monitor2Title: "Staff shares",
+        monitor2Body: "Adds context to the shared record.",
+        monitor3Title: "Staff discusses",
+        monitor3Body: "Uses the context to offer support.",
         week: "Week",
         copyReport: "Copy report",
         downloadCsv: "Download CSV",
@@ -1551,7 +1575,7 @@
         playersShort: "Players",
         minutesShort: "Min.",
         execution: "Execution",
-        availabilityTitle: "Wednesday chat availability",
+        availabilityTitle: "Wednesday conversation availability",
         availabilityIntro: "The DR coaches should propose the call time based on their availability.",
         drCoachesAction: "Action for DR coaches",
         availabilityBody: "Send your availability and state the proposed time in Dominican Republic time (AST / UTC−4). Staff outside the DR should convert from that time zone.",
@@ -1562,29 +1586,36 @@
         availabilityNote: "The date is every Wednesday. The page does not set the time; DR coaches supply it based on their availability.",
         day: "Day",
         downloadCalendar: "Download calendar (.ics)",
-        staffLinkNote: "The shared link includes the chat setup, not the private reports saved on the phone.",
-        footer: "Calendar transcribed from “DR Instructs 2026 Calendar.” Weekly chat time zone: Dominican Republic (AST / UTC-4).",
-        completeBlock: "Complete block",
+        staffLinkNote: "The shared link includes the conversation setup, not the private reports saved on the phone.",
+        footer: "Calendar transcribed from “DR Instructs 2026 Calendar.” Weekly conversation time zone: Dominican Republic (AST / UTC-4).",
+        completeBlock: "Log block",
         coachName: "Coach name",
         groupName: "Group / team",
         playerCount: "Players",
         minutes: "Minutes",
-        notes: "Quick note",
-        notesPlaceholder: "What went well / what needs attention",
+        notes: "Observation, adjustment, or support needed",
+        notesPlaceholder: "What did you see? What did you adjust? What support would help?",
+        outcome: "Session outcome",
+        planned: "Completed as planned",
+        adapted: "Adapted to the group’s needs",
+        notCompleted: "Could not be completed",
+        outcomeReason: "Brief explanation",
+        outcomeReasonPlaceholder: "Briefly share why the block could not be completed.",
+        outcomeReasonRequired: "Add a brief explanation when the block could not be completed.",
         cancel: "Cancel",
-        saveComplete: "Save as complete",
+        saveComplete: "Save update",
         install1: "Select Install GreenLight.",
         install2: "If Edge displays a warning, choose Keep, then Keep anyway.",
         install3: "Open GreenLight_Player_Setup.exe and allow Run anyway if Windows asks.",
         openGreenlight: "Run GreenLight",
         downloadGreenlight: "Install GreenLight",
         howItWorks: "How it works",
-        howIntro: "The workload does not change. The choice does.",
+        howIntro: "The calendar defines the workload. Your judgment guides the choice.",
         how1: "Open the block date.",
-        how2: "Choose from the full menu approved for the day's workload.",
-        how3: "Mark it complete and submit the central report.",
+        how2: "Choose from the recommended options for the day’s workload.",
+        how3: "Log the outcome and share context with the staff.",
         deviceOnlyTitle: "Saved on this device",
-        deviceOnlyBody: "The local copy updates this calendar; also submit the central form so the coordinator receives it.",
+        deviceOnlyBody: "The local copy updates this calendar; also share the central form to add context to the staff record.",
         reopenGuide: "View the guide again",
         workflowChoose: "Choose",
         workflowChooseHint: "from menu",
@@ -1592,45 +1623,45 @@
         workflowRunHint: "with the group",
         workflowReport: "Report",
         workflowReportHint: "30 seconds",
-        loadLocked: "LOCKED",
-        calendarDecision: "Calendar decision:",
-        lightDefinition: "review and low-load work. That is why only light drills appear.",
-        heavyDefinition: "competitive, higher-load work. That is why only medium/heavy drills appear.",
+        loadLocked: "DAILY WORKLOAD",
+        calendarDecision: "Defined by the calendar:",
+        lightDefinition: "Review and low-load work day. These options maintain the day’s objective.",
+        heavyDefinition: "Competitive, higher-load day. These options maintain the day’s objective.",
         upNext: "Next step",
         runSelectedTitle: "Watch the video if needed, then run the drill",
-        runSelectedBody: "Use the demonstration as the standard. When finished, record who led the block, how many players participated, and one short observation.",
+        runSelectedBody: "Use the video as a shared reference when helpful. Apply your judgment to organize the drill for the group.",
         openSelectedVideo: "Open selected video",
         greenlightAction: "Run/Install GreenLight",
-        shareReminder: "Final step: share this report so the coordinator can see it.",
-        centralSubmitReminder: "Final step: open and submit the central report so the coordinator receives it.",
+        shareReminder: "Final step: share context with the staff.",
+        centralSubmitReminder: "Final step: open and submit the summary to add context to the shared record.",
         todayPrefix: "Today in the DR",
         noCalendarToday: "no calendar activity",
         outsideProgram: "outside the instructional period",
-        chooseOne: "Coach choice",
-        chooseInstruction: "Choose the drill that best matches what the group needs. Every option shown fits today's assigned workload.",
-        option: "Option",
+        chooseOne: "Coach’s decision",
+        chooseInstruction: "You know the group. Choose the option that best matches what the players need today.",
+        option: "Recommended option",
         watch: "Watch video",
         choose: "Choose",
         chosen: "Chosen",
         selectedDrill: "Selected drill",
         markComplete: "Mark block complete",
-        completed: "Block complete",
+        completed: "Update logged",
         shareUpdate: "Share report",
         editReport: "Edit report",
         nextBlock: "View next block",
         noBlock: "No base running block",
         noBlockBody: "Blocks are scheduled only on Low and High days. Use the calendar to see the next session.",
-        meetingTitle: "Weekly coach chat",
-        nextMeeting: "Next chat",
+        meetingTitle: "Weekly staff conversation",
+        nextMeeting: "Next conversation",
         timeTbd: "Time to be confirmed by DR coaches",
         drTimeOwner: "DR coaches supply the time based on their availability.",
         setMeeting: "Set up in Report",
-        joinMeeting: "Join chat",
-        addMeeting: "Add chat to calendar",
+        joinMeeting: "Join conversation",
+        addMeeting: "Add conversation to calendar",
         copyAgenda: "Copy agenda",
-        agenda1: "Completed and missed blocks",
+        agenda1: "What the staff worked on this week",
         agenda2: "One positive player trend",
-        agenda3: "One item needing video or follow-up",
+        agenda3: "One adjustment, question, or support need",
         off: "Team off-day",
         practice: "Practice",
         camp: "Camp day",
@@ -1638,9 +1669,11 @@
         conditionalGame: "Game if necessary",
         baseBlock: "Base running block",
         allWeeks: "All weeks",
-        scheduled: "Scheduled",
-        completedStat: "Completed",
-        completionRate: "Completion",
+        scheduled: "Scheduled blocks",
+        blocksRun: "Blocks run",
+        updatesLogged: "Updates logged",
+        completedStat: "Logged",
+        completionRate: "Plan progress",
         noReports: "No reports have been saved for this period yet.",
         saved: "Report saved.",
         copied: "Copied.",
@@ -1653,33 +1686,34 @@
         high: "High",
         minutesWord: "minutes",
         playersWord: "players",
-        notesWord: "Note",
+        notesWord: "Observation",
         weekOf: "Week of",
-        sourceChoice: "Full approved menu",
+        sourceChoice: "Recommended options",
         videoIntro: "Drill demonstration and explanation.",
         greenlightIntro: "Run GreenLight if it is installed, or install it if this is your first time.",
         programCalendarName: "DR Instructs 2026 · Base Running",
-        chatCalendarName: "Weekly chat · DR coaches",
+        chatCalendarName: "Weekly staff conversation · DR coaches",
         reportGenerated: "Report generated from the DR 2026 plan",
         tourEyebrow: "QUICK COACH GUIDE",
+        skipGuide: "Skip guide",
         back: "Back",
         next: "Next",
         start: "View today’s plan",
-        tour1Title: "The calendar makes the first decision",
-        tour1Body: "Open this page on any day. If the calendar says Low or High, the correct workload appears automatically. You never have to remember which menu to use.",
-        tour1Callout: "The day’s workload is locked",
+        tour1Title: "The day’s workload is already organized",
+        tour1Body: "The calendar automatically shows whether the day is Low or High, making staff preparation faster.",
+        tour1Callout: "Less preparation, more time with players",
         tour1Visual: "LOW / HIGH",
-        tour2Title: "You choose the best drill for the group",
-        tour2Body: "You will see the full menu approved for the day's workload. Choose the drill that best matches what the group needs; every option fits the assigned workload.",
-        tour2Callout: "The full correct menu for the day",
+        tour2Title: "Your judgment guides the choice",
+        tour2Body: "You know the group. You will see two drills recommended for the day’s workload; choose the one that best matches what you observe.",
+        tour2Callout: "Two strong options, one coach’s decision",
         tour2Visual: "MENU",
-        tour3Title: "Run the block with one clear standard",
-        tour3Body: "Open the video to see the demonstration and hear the purpose. Then run the drill with the group. The screen keeps you on the correct step.",
-        tour3Callout: "Choose → Run → Report",
+        tour3Title: "One shared standard, with room to coach",
+        tour3Body: "The video provides a reference for the demonstration and purpose. The coach applies that standard according to the group’s needs.",
+        tour3Callout: "Choose → Run → Record",
         tour3Visual: "PLAY",
-        tour4Title: "Close the loop in 30 seconds",
-        tour4Body: "Mark the block complete, add players, minutes, and one note. Then open and submit the central report so the coordinator sees it with every coach's responses.",
-        tour4Callout: "The weekly coach chat lives here too",
+        tour4Title: "Share one brief observation",
+        tour4Body: "Record what was covered, what you observed, and any adjustment or support needed. That information informs the weekly staff conversation.",
+        tour4Callout: "The report creates context, not surveillance",
         tour4Visual: "✓"
       }
     };
@@ -1774,11 +1808,19 @@
         const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
         if (!saved || typeof saved !== "object") return fallback;
         const settings = { ...fallback.settings, ...(saved.settings || {}) };
+        const records = Object.fromEntries(Object.entries(saved.records || {}).map(([date, record]) => [
+          date,
+          {
+            ...record,
+            outcome: record?.outcome || "planned",
+            outcomeReason: record?.outcomeReason || ""
+          }
+        ]));
         return {
           ...fallback,
           ...saved,
           plans: saved.plans || {},
-          records: saved.records || {},
+          records,
           settings
         };
       } catch (error) {
@@ -1807,6 +1849,9 @@
     const completionBackdrop = document.getElementById("completionBackdrop");
     const videoBackdrop = document.getElementById("videoBackdrop");
     const completionForm = document.getElementById("completionForm");
+    const outcomeSelect = document.getElementById("outcomeSelect");
+    const outcomeReasonField = document.getElementById("outcomeReasonField");
+    const outcomeReason = document.getElementById("outcomeReason");
     const reportWeek = document.getElementById("reportWeek");
     const toast = document.getElementById("toast");
     const tourBackdrop = document.getElementById("tourBackdrop");
@@ -1845,9 +1890,12 @@
 
     function choicesFor(entry) {
       if (!entry || !entry.load) return [];
-      return Object.entries(drills)
+      const matching = Object.entries(drills)
         .filter(([, drill]) => drill.load === entry.load)
         .map(([id]) => id);
+      const blockIndex = Math.max(0, eligibleEntries.findIndex((item) => item.date === entry.date));
+      const first = blockIndex % matching.length;
+      return [matching[first], matching[(first + 1) % matching.length]];
     }
 
     function drillName(id) { return drills[id] ? drills[id][state.language] : id; }
@@ -1927,6 +1975,7 @@
       renderReportControls();
       renderReport();
       renderExecutionOptions();
+      renderOutcomeOptions();
     }
 
     function renderTodayStatus() {
@@ -1986,13 +2035,17 @@
       let actionMarkup = "";
       if (record) {
         const note = record.notes ? `<br>${escapeHtml(t("notesWord"))}: ${escapeHtml(record.notes)}` : "";
+        const reason = record.outcomeReason ? `<br>${escapeHtml(t("outcomeReason"))}: ${escapeHtml(record.outcomeReason)}` : "";
+        const outcome = recordOutcome(record);
+        const outcomeSymbol = outcome === "notCompleted" ? "○" : "✓";
         const centralAction = isSafeHttpUrl(CONFIG.centralReportUrl)
           ? `<a class="btn" href="${escapeHtml(CONFIG.centralReportUrl)}" target="_blank" rel="noopener">${escapeHtml(t("centralReadyAction"))}</a>`
           : "";
         actionMarkup = `
           <div class="complete-card">
-            <strong>✓ ${escapeHtml(t("completed"))}</strong>
-            <p>${escapeHtml(record.coach)} · ${escapeHtml(record.players)} ${escapeHtml(t("playersWord"))} · ${escapeHtml(record.minutes)} ${escapeHtml(t("minutesWord"))} · ${escapeHtml(executionLabel(record.execution))}${note}</p>
+            <strong>${outcomeSymbol} ${escapeHtml(t("completed"))}</strong>
+            <p><strong>${escapeHtml(t("outcome"))}:</strong> ${escapeHtml(outcomeLabel(outcome))}</p>
+            <p>${escapeHtml(record.coach)} · ${escapeHtml(record.players)} ${escapeHtml(t("playersWord"))} · ${escapeHtml(record.minutes)} ${escapeHtml(t("minutesWord"))} · ${escapeHtml(executionLabel(record.execution))}${reason}${note}</p>
             <p class="complete-prompt">${escapeHtml(t(isSafeHttpUrl(CONFIG.centralReportUrl) ? "centralSubmitReminder" : "shareReminder"))}</p>
             <div class="complete-actions">
               <button class="btn btn-primary" type="button" data-share-record>${escapeHtml(t("shareUpdate"))}</button>
@@ -2149,16 +2202,17 @@
     function renderReport() {
       const relevantEntries = entriesForFilter();
       const records = recordsForFilter();
-      const completed = records.length;
-      const rate = relevantEntries.length ? Math.round((completed / relevantEntries.length) * 100) : 0;
+      const blocksRun = records.filter(([, record]) => recordOutcome(record) !== "notCompleted").length;
+      const progress = relevantEntries.length ? Math.round((blocksRun / relevantEntries.length) * 100) : 0;
       document.getElementById("reportStats").innerHTML = `
         <div class="surface stat"><span>${escapeHtml(t("scheduled"))}</span><strong>${relevantEntries.length}</strong></div>
-        <div class="surface stat"><span>${escapeHtml(t("completedStat"))}</span><strong>${completed}</strong></div>
-        <div class="surface stat"><span>${escapeHtml(t("completionRate"))}</span><strong>${rate}%</strong></div>`;
+        <div class="surface stat"><span>${escapeHtml(t("blocksRun"))}</span><strong>${blocksRun}</strong></div>
+        <div class="surface stat"><span>${escapeHtml(t("updatesLogged"))}</span><strong>${records.length}</strong></div>
+        <div class="surface stat"><span>${escapeHtml(t("completionRate"))}</span><strong>${progress}%</strong></div>`;
       renderCentralReport();
       const rows = document.getElementById("reportRows");
       if (!records.length) {
-        rows.innerHTML = `<tr><td class="empty-row" colspan="6">${escapeHtml(t("noReports"))}</td></tr>`;
+        rows.innerHTML = `<tr><td class="empty-row" colspan="7">${escapeHtml(t("noReports"))}</td></tr>`;
         return;
       }
       rows.innerHTML = records.map(([date, record]) => `
@@ -2169,6 +2223,7 @@
           <td>${escapeHtml(record.players)}</td>
           <td>${escapeHtml(record.minutes)}</td>
           <td>${escapeHtml(executionLabel(record.execution))}</td>
+          <td>${escapeHtml(outcomeLabel(recordOutcome(record)))}</td>
         </tr>`).join("");
     }
 
@@ -2188,6 +2243,25 @@
       executionSelect.value = current;
     }
 
+    function recordOutcome(record) { return record?.outcome || "planned"; }
+    function outcomeLabel(value) { return t(value || "planned"); }
+
+    function syncOutcomeReason() {
+      const needsReason = outcomeSelect.value === "notCompleted";
+      outcomeReasonField.hidden = !needsReason;
+      outcomeReason.required = needsReason;
+      const missingReason = needsReason && !outcomeReason.value.trim();
+      outcomeReason.setCustomValidity(missingReason ? t("outcomeReasonRequired") : "");
+    }
+
+    function renderOutcomeOptions() {
+      const current = outcomeSelect.value || "planned";
+      const options = ["planned", "adapted", "notCompleted"];
+      outcomeSelect.innerHTML = options.map((value) => `<option value="${value}">${escapeHtml(t(value))}</option>`).join("");
+      outcomeSelect.value = options.includes(current) ? current : "planned";
+      syncOutcomeReason();
+    }
+
     function showPanel(panel) {
       activePanel = panel;
       document.querySelectorAll(".tab-button").forEach((button) => {
@@ -2201,6 +2275,7 @@
         renderReportControls();
         renderReport();
         renderExecutionOptions();
+        renderOutcomeOptions();
       }
     }
 
@@ -2217,13 +2292,16 @@
       completionDate = date;
       lastModalTrigger = trigger;
       const record = state.records[date];
-      const drillId = state.plans[date];
+      const drillId = state.plans[date] || record?.drillId;
       document.getElementById("completionIntro").textContent = `${fullDate(date)} · ${drillName(drillId)}`;
       document.getElementById("coachName").value = record?.coach || state.settings.coach || "";
       document.getElementById("groupName").value = record?.group || state.settings.group || "";
       document.getElementById("playerCount").value = record?.players || "";
       document.getElementById("minutes").value = record?.minutes || 10;
       document.getElementById("executionSelect").value = record?.execution || "onTrack";
+      outcomeSelect.value = recordOutcome(record);
+      outcomeReason.value = record?.outcomeReason || "";
+      syncOutcomeReason();
       document.getElementById("notes").value = record?.notes || "";
       completionBackdrop.hidden = false;
       document.body.style.overflow = "hidden";
@@ -2248,8 +2326,10 @@
         `${t("coach")}: ${record.coach}${record.group ? ` · ${record.group}` : ""}`,
         `${t("drill")}: ${drillName(record.drillId)}`,
         `${record.players} ${t("playersWord")} · ${record.minutes} ${t("minutesWord")}`,
-        `${t("execution")}: ${executionLabel(record.execution)}`
+        `${t("execution")}: ${executionLabel(record.execution)}`,
+        `${t("outcome")}: ${outcomeLabel(recordOutcome(record))}`
       ];
+      if (record.outcomeReason) lines.push(`${t("outcomeReason")}: ${record.outcomeReason}`);
       if (record.notes) lines.push(`${t("notesWord")}: ${record.notes}`);
       return lines.join("\n");
     }
@@ -2273,9 +2353,12 @@
       const entries = entriesForFilter();
       const records = recordsForFilter();
       const title = filter === "all" ? t("shareTitle") : `${t("shareTitle")} · ${t("weekOf")} ${shortDate(filter)}`;
-      const lines = [title, `${t("completedStat")}: ${records.length}/${entries.length}`];
+      const blocksRun = records.filter(([, record]) => recordOutcome(record) !== "notCompleted").length;
+      const lines = [title, `${t("scheduled")}: ${entries.length} · ${t("blocksRun")}: ${blocksRun} · ${t("updatesLogged")}: ${records.length}`];
       records.forEach(([date, record]) => {
-        lines.push(`• ${shortDate(date)} · ${record.coach} · ${drillName(record.drillId)} · ${record.players} ${t("playersWord")} · ${executionLabel(record.execution)}`);
+        let line = `• ${shortDate(date)} · ${record.coach} · ${drillName(record.drillId)} · ${record.players} ${t("playersWord")} · ${executionLabel(record.execution)} · ${outcomeLabel(recordOutcome(record))}`;
+        if (record.outcomeReason) line += ` · ${t("outcomeReason")}: ${record.outcomeReason}`;
+        lines.push(line);
       });
       if (!records.length) lines.push(t("noReports"));
       lines.push(t("reportGenerated"));
@@ -2306,7 +2389,7 @@
     function copyAvailabilityRequest() {
       const chatDate = nextChatDate(realToday);
       const text = state.language === "es"
-        ? `Coaches en RD: por favor envíen su disponibilidad para la charla del ${fullDate(chatDate)} y propongan la hora en hora de República Dominicana (${CONFIG.timeZoneLabel}). Durante este programa, Chicago está 1 hora detrás y Arizona 3 horas detrás.`
+        ? `Coaches en RD: por favor envíen su disponibilidad para la conversación del ${fullDate(chatDate)} y propongan la hora en hora de República Dominicana (${CONFIG.timeZoneLabel}). Durante este programa, Chicago está 1 hora detrás y Arizona 3 horas detrás.`
         : `DR coaches: please send your availability for the ${fullDate(chatDate)} call and propose the time in Dominican Republic time (${CONFIG.timeZoneLabel}). During this program, Chicago is 1 hour behind and Arizona is 3 hours behind.`;
       copyText(text).then(() => showToast(t("copied")));
     }
@@ -2323,8 +2406,8 @@
     }
 
     function downloadCsv() {
-      const headers = [t("date"), t("coach"), t("groupName"), t("drill"), t("playersShort"), t("minutesShort"), t("execution"), t("notes")];
-      const rows = recordsForFilter().map(([date, record]) => [date, record.coach, record.group, drillName(record.drillId), record.players, record.minutes, executionLabel(record.execution), record.notes]);
+      const headers = [t("date"), t("coach"), t("groupName"), t("drill"), t("playersShort"), t("minutesShort"), t("execution"), t("outcome"), t("outcomeReason"), t("notes")];
+      const rows = recordsForFilter().map(([date, record]) => [date, record.coach, record.group, drillName(record.drillId), record.players, record.minutes, executionLabel(record.execution), outcomeLabel(recordOutcome(record)), record.outcomeReason || "", record.notes]);
       const csv = "\uFEFF" + [headers, ...rows].map((row) => row.map(csvEscape).join(",")).join("\r\n");
       downloadBlob(csv, `dr-base-running-report-${reportWeek.value || "all"}.csv`, "text/csv;charset=utf-8");
       showToast(t("downloadReady"));
@@ -2525,11 +2608,16 @@
     document.getElementById("downloadCalendarTop").addEventListener("click", downloadCalendar);
     document.getElementById("copyAvailability").addEventListener("click", copyAvailabilityRequest);
     document.getElementById("copyScheduleLink").addEventListener("click", copyScheduleLink);
+    outcomeSelect.addEventListener("change", syncOutcomeReason);
+    outcomeReason.addEventListener("input", syncOutcomeReason);
 
     completionForm.addEventListener("submit", (event) => {
       event.preventDefault();
+      syncOutcomeReason();
+      if (!completionForm.reportValidity()) return;
       const form = new FormData(completionForm);
-      const drillId = state.plans[completionDate];
+      const drillId = state.plans[completionDate] || state.records[completionDate]?.drillId;
+      const outcome = String(form.get("outcome") || "planned");
       state.records[completionDate] = {
         drillId,
         coach: String(form.get("coach") || "").trim(),
@@ -2537,6 +2625,8 @@
         players: Number(form.get("players")),
         minutes: Number(form.get("minutes")),
         execution: String(form.get("execution")),
+        outcome,
+        outcomeReason: outcome === "notCompleted" ? String(form.get("outcomeReason") || "").trim() : "",
         notes: String(form.get("notes") || "").trim(),
         savedAt: new Date().toISOString()
       };
@@ -2558,6 +2648,7 @@
       button.addEventListener("click", (event) => openTour(event.currentTarget));
     });
     document.getElementById("tourClose").addEventListener("click", () => closeTour(true));
+    document.getElementById("tourSkip").addEventListener("click", () => closeTour(true));
     tourBackdrop.addEventListener("click", (event) => { if (event.target === tourBackdrop) closeTour(true); });
     document.getElementById("tourBack").addEventListener("click", () => {
       if (tourIndex > 0) {

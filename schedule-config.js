@@ -1,12 +1,12 @@
 /*
   DR Base Running configuration
-  Edit this file to update the program dates, Low/High workloads, weekly chat
-  day, site version, or the approved centralized-report destination.
+  Edit this file to update the program dates, Low/High workloads, weekly conversation
+  day, site version, or the shared-report destination.
 
   Weekdays use JavaScript numbering: 0=Sunday, 1=Monday, 3=Wednesday.
 */
 window.DR_SCHEDULE_CONFIG = {
-  version: "2026.09.12.3",
+  version: "2026.09.12.4",
   updatedDate: "2026-09-12",
   timeZone: "America/Santo_Domingo",
   timeZoneLabel: "AST / UTC−4",
@@ -14,7 +14,7 @@ window.DR_SCHEDULE_CONFIG = {
   programEnd: "2026-10-31",
   defaultChatDay: 3,
 
-  // Public Microsoft Form used as the shared coordinator record; no sign-in required.
+  // Public Microsoft Form used as the staff's shared record; no sign-in required.
   centralReportUrl: "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=RuumN88yyUG9MLIz_mc-rDw-v2Vf9XBGmurfIGVhBEhUOE5NNUozUTZNUTZBSFRJT0tZVVBXRFhFNS4u",
 
   schedule: [

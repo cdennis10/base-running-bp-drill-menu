@@ -1,0 +1,7 @@
+{
+  "name": "base-running-bp-drill-menu",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/schedule-behavior.test.mjs"
+  }
+}
