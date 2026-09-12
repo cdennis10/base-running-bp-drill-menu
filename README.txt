@@ -1,8 +1,9 @@
 BASE RUNNING BLOCK / BP ROTATION DRILL MENU
 ===========================================
 
-Open index.html in any modern browser. An internet connection is required to
-stream the linked YouTube drill videos.
+Open index.html in any modern browser to go directly to today's schedule.
+Use drills.html for the full bilingual drill library. An internet connection
+is required to stream the linked YouTube drill videos.
 
 WEBSITE CONTENTS
 ----------------
@@ -10,7 +11,7 @@ The site is a single-page bilingual drill menu. Six drills include separate
 English and Spanish YouTube videos. Video Review / GreenLight remains marked
 as coming soon until its videos are available.
 
-The "Daily plan and 2026 calendar" button opens schedule.html. That page adds:
+The shared site opens schedule.html as its landing page. That page adds:
 - The September 6 through October 31 DR instructional calendar
 - A base running block on every Low and High day
 - The complete approved drill menu for each block's Low or High workload
@@ -18,29 +19,35 @@ The "Daily plan and 2026 calendar" button opens schedule.html. That page adds:
 - A visual Choose > Run > Report progress guide on every session
 - Clear explanations of why only Low or High drills are shown
 - A 30-second coach completion report
-- A weekly meeting card, shareable staff link, and downloadable .ics calendar
+- A Wednesday availability card, shareable schedule link, and downloadable .ics calendar
 - Weekly report copy and CSV export
 
 COACH REPORTS AND MONITORING
 ----------------------------
-The GitHub Pages version does not require a login or database. A coach's drill
-choice and completion report are saved in that device's browser. After saving,
-the coach should tap "Share report" and send the update through WhatsApp,
-Teams, email, or another installed sharing app. The Report tab can also copy a
-weekly summary or download a CSV.
+The GitHub Pages schedule does not require a login. A local copy of each drill
+choice and completion report is saved in that device's browser so the calendar
+can show scheduled, completed, and unreported blocks. Coaches should also open
+the linked Microsoft Form and submit the central report. The form accepts
+anonymous responses without sign-in and gives the coordinator one response list.
 
-This device-only model is intentional for the first release: it works on a
-static GitHub Pages site and does not expose player-development notes publicly.
-For a live multi-device coordinator dashboard, connect the completion form to
-an approved shared system such as Microsoft Forms/Excel or Google Forms/Sheets.
+The local Share, Copy, and CSV tools remain available as fallbacks. The
+centralized report URL is configured in schedule-config.js.
 
 WEEKLY COACH CHAT
 -----------------
-Open schedule.html, choose Report, and enter the day, DR time, and meeting URL.
-"Copy staff link" creates a shareable calendar URL containing those meeting
-settings. "Download calendar (.ics)" creates all 16 base running blocks plus
-the weekly chats (when a time has been entered). Meeting times are interpreted
-in Dominican Republic time (AST / UTC-4).
+The chat recurs every Wednesday. The website intentionally does not set a call
+time or meeting URL. Coaches in the Dominican Republic supply the proposed time
+based on their availability and communicate it in Dominican Republic time
+(AST / UTC-4). During this program Chicago is one hour behind the DR, and
+Arizona is three hours behind. The .ics download includes Wednesday all-day
+chat reminders with this instruction.
+
+UPDATING THE PROGRAM
+--------------------
+Edit schedule-config.js to change the program dates, Low/High workloads,
+default Wednesday setting, displayed version, or centralized report URL.
+Increment the version and update the script version in schedule.html whenever
+the configuration changes so browsers fetch the latest file.
 
 CALENDAR SOURCE
 ---------------
@@ -50,7 +57,7 @@ dates marked Low or High in that source calendar.
 
 UPDATING VIDEO LINKS
 --------------------
-Open index.html in a text editor and search for data-video-es or data-video-en.
+Open drills.html in a text editor and search for data-video-es or data-video-en.
 
 Each drill has separate Spanish and English video fields. Paste the complete
 video URLs between the matching quotation marks, for example:

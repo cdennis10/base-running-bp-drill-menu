@@ -24,6 +24,8 @@
       --heavy-soft: #fae8df;
       --complete: #196a53;
       --warning: #9a6414;
+      --scheduled: #c17b0a;
+      --missed: #b3261e;
       --shadow: 0 16px 45px rgba(8, 26, 53, .12);
     }
 
@@ -176,6 +178,8 @@
       box-shadow: 0 9px 28px rgba(8, 26, 53, .14);
     }
     .today-strip-copy { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .today-strip-actions { position: relative; z-index: 1; display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px; }
+    .version-badge { padding: 6px 9px; color: #cfe0f5; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); border-radius: 999px; font-size: .68rem; font-weight: 780; white-space: nowrap; }
     .live-dot { flex: 0 0 auto; width: 10px; height: 10px; background: #52d49c; border-radius: 50%; box-shadow: 0 0 0 5px rgba(82,212,156,.14); }
     #todayStatus { font-weight: 750; line-height: 1.35; }
     .today-strip button {
@@ -373,6 +377,9 @@
     .legend-dot.low { background: var(--light); }
     .legend-dot.high { background: var(--heavy); }
     .legend-dot.chat { background: var(--blue); border-radius: 50%; }
+    .legend-dot.scheduled { background: var(--scheduled); border-radius: 50%; }
+    .legend-dot.complete { background: var(--complete); border-radius: 50%; }
+    .legend-dot.missed { background: var(--missed); border-radius: 50%; }
     .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
     .weekday { padding: 9px 4px; color: var(--muted); background: var(--soft); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: center; font-size: .72rem; font-weight: 880; text-transform: uppercase; }
     .calendar-day {
@@ -391,12 +398,18 @@
     .calendar-day.outside { background: rgba(237,242,248,.42); }
     .calendar-day.today { box-shadow: inset 0 0 0 3px var(--navy); }
     .calendar-day.complete::after { content: "✓"; position: absolute; top: 8px; right: 8px; display: grid; place-items: center; width: 22px; height: 22px; color: #fff; background: var(--complete); border-radius: 50%; font-size: .72rem; font-weight: 900; }
+    .calendar-day.scheduled { background: #fffaf0; }
+    .calendar-day.missed { background: #fff2f1; border-color: rgba(179,38,30,.45); }
     .day-number { display: block; color: var(--navy-deep); font-weight: 900; }
     .day-event { display: block; margin-top: 9px; color: var(--ink); font-size: .79rem; font-weight: 780; line-height: 1.3; }
     .day-load { display: inline-block; margin-top: 7px; padding: 3px 7px; border-radius: 999px; font-size: .66rem; font-weight: 900; text-transform: uppercase; }
     .day-load.low { color: #15533f; background: var(--light-soft); }
     .day-load.high { color: #853517; background: var(--heavy-soft); }
     .chat-marker { display: block; margin-top: 7px; color: var(--blue); font-size: .68rem; font-weight: 820; line-height: 1.2; }
+    .day-status { display: inline-flex; margin-top: 6px; padding: 3px 7px; color: #fff; border-radius: 999px; font-size: .58rem; font-weight: 900; letter-spacing: .02em; text-transform: uppercase; }
+    .day-status.scheduled { background: var(--scheduled); }
+    .day-status.complete { background: var(--complete); }
+    .day-status.missed { background: var(--missed); }
     .calendar-caption { margin: 14px 0 0; color: var(--muted); font-size: .8rem; line-height: 1.45; }
 
     .report-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; margin-bottom: 18px; }
@@ -450,6 +463,14 @@
     .greenlight-box { margin-top: 17px; padding: 17px; background: var(--soft); border-radius: 13px; }
     .greenlight-box ol { margin: 0 0 15px; padding-left: 22px; color: var(--ink); font-size: .88rem; line-height: 1.48; }
     .greenlight-box li + li { margin-top: 5px; }
+    .availability-callout, .central-report-banner { margin-top: 15px; padding: 16px; border-radius: 14px; line-height: 1.5; }
+    .availability-callout { color: var(--navy-deep); background: #eef6ff; border: 1px solid #bfd8f1; }
+    .availability-callout strong, .central-report-banner strong { display: block; margin-bottom: 5px; }
+    .availability-callout p, .central-report-banner p { margin: 0; color: var(--muted); font-size: .86rem; }
+    .timezone-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .timezone-row span { padding: 5px 8px; color: var(--navy); background: #fff; border: 1px solid #cedbea; border-radius: 999px; font-size: .7rem; font-weight: 800; }
+    .central-report-banner { background: #f1f8f5; border: 1px solid #bddfd1; }
+    .central-report-banner.pending { background: #fff8ea; border-color: #ead09b; }
 
     .toast {
       position: fixed;
@@ -485,7 +506,8 @@
       .menu-link, .language-button { min-height: 40px; padding-inline: 10px; font-size: .79rem; }
       main { width: min(100% - 22px, 600px); padding-top: 30px; }
       h1 { font-size: clamp(2rem, 10vw, 3rem); }
-      .today-strip { align-items: flex-start; }
+      .today-strip { align-items: flex-start; flex-direction: column; }
+      .today-strip-actions { width: 100%; justify-content: flex-start; }
       .today-strip button { min-height: 38px; padding: 7px 10px; font-size: .78rem; }
       .tabbar { width: 100%; }
       .tab-button { flex: 1; padding-inline: 8px; font-size: .82rem; }
@@ -1022,7 +1044,8 @@
       .day-number { grid-row: 1 / span 2; font-size: 1.08rem; text-align: center; }
       .day-event { grid-column: 2; margin: 0; font-size: .83rem; }
       .day-load { grid-column: 3; grid-row: 1; margin: 0; font-size: .64rem; }
-      .chat-marker { grid-column: 2 / 4; margin: -2px 0 0; font-size: .68rem; }
+      .day-status { grid-column: 3; grid-row: 2; justify-self: end; margin: 0; }
+      .chat-marker { grid-column: 2 / 4; margin: 3px 0 0; font-size: .68rem; }
       .chat-marker::before { content: none; }
       .calendar-day.complete::after { top: auto; right: 10px; bottom: 8px; }
       .tour-topline { padding-inline: 20px; }
@@ -1056,7 +1079,7 @@
     </a>
     <div class="topbar-actions">
       <button class="help-button" id="openTour" type="button"><span aria-hidden="true">?</span><span data-i18n="guide">Guía</span></button>
-      <a class="menu-link" id="menuLink" href="index.html" data-i18n="drillLibrary">Menú de drills</a>
+      <a class="menu-link" id="menuLink" href="drills.html" data-i18n="drillLibrary">Menú de drills</a>
       <div class="language-toggle" role="group" aria-label="Language / Idioma">
         <button class="language-button" type="button" data-language="es" aria-selected="true">ES</button>
         <button class="language-button" type="button" data-language="en" aria-selected="false">EN</button>
@@ -1072,15 +1095,19 @@
         <p class="intro" data-i18n="intro">El calendario fija la carga. El coach elige del menú completo aprobado para ese día, completa el bloque y comparte un reporte de 30 segundos.</p>
       </div>
       <div class="hero-count" aria-hidden="true">
-        <strong>16</strong>
+        <strong id="plannedBlockCount">16</strong>
         <span data-i18n="plannedBlocks">bloques programados</span>
       </div>
-      <span class="sr-only">16 <span data-i18n="plannedBlocks">bloques programados</span></span>
+      <span class="sr-only"><span id="plannedBlockCountA11y">16</span> <span data-i18n="plannedBlocks">bloques programados</span></span>
     </header>
 
     <section class="today-strip" aria-live="polite">
       <div class="today-strip-copy"><span class="live-dot" aria-hidden="true"></span><span id="todayStatus"></span></div>
-      <button id="jumpToday" type="button" data-i18n="openToday">Abrir hoy</button>
+      <div class="today-strip-actions">
+        <span class="version-badge" id="siteVersion"></span>
+        <button id="refreshSite" type="button" data-i18n="refreshSite">Actualizar</button>
+        <button id="jumpToday" type="button" data-i18n="openToday">Abrir hoy</button>
+      </div>
     </section>
 
     <div class="tabbar" role="tablist" aria-label="Views / Vistas">
@@ -1107,11 +1134,11 @@
             <ol class="agenda">
               <li data-i18n="how1">Abre la fecha del bloque.</li>
               <li data-i18n="how2">Elige del menú completo aprobado para la carga del día.</li>
-              <li data-i18n="how3">Marca terminado y comparte el reporte.</li>
+              <li data-i18n="how3">Marca terminado y envía el reporte central.</li>
             </ol>
             <div class="privacy-note">
               <span aria-hidden="true">ⓘ</span>
-              <span><strong data-i18n="deviceOnlyTitle">Guardado en este dispositivo</strong><span data-i18n="deviceOnlyBody">Usa “Compartir reporte” para enviarlo al coordinador.</span></span>
+              <span><strong data-i18n="deviceOnlyTitle">Guardado en este dispositivo</strong><span data-i18n="deviceOnlyBody">La copia local ayuda con el calendario; envía también el formulario central para que el coordinador la reciba.</span></span>
             </div>
             <button class="btn btn-block guide-replay" type="button" data-open-tour data-i18n="reopenGuide">Ver la guía otra vez</button>
           </section>
@@ -1131,6 +1158,9 @@
         <ul class="calendar-legend">
           <li class="legend-item"><span class="legend-dot low"></span><span data-i18n="lightDay">Día liviano</span></li>
           <li class="legend-item"><span class="legend-dot high"></span><span data-i18n="heavyDay">Día medio / fuerte</span></li>
+          <li class="legend-item"><span class="legend-dot scheduled"></span><span data-i18n="calendarScheduled">Programado</span></li>
+          <li class="legend-item"><span class="legend-dot complete"></span><span data-i18n="calendarCompleted">Terminado</span></li>
+          <li class="legend-item"><span class="legend-dot missed"></span><span data-i18n="calendarMissed">No reportado</span></li>
           <li class="legend-item"><span class="legend-dot chat"></span><span data-i18n="weeklyChat">Charla semanal</span></li>
         </ul>
         <div class="calendar-rule">
@@ -1146,13 +1176,13 @@
       <div class="report-grid" id="reportStats"></div>
       <div class="monitor-path">
         <div><span>01</span><p><strong data-i18n="monitor1Title">El coach guarda</strong><small data-i18n="monitor1Body">Completa el reporte de 30 segundos.</small></p></div>
-        <div><span>02</span><p><strong data-i18n="monitor2Title">El coach comparte</strong><small data-i18n="monitor2Body">Lo envía por WhatsApp, Teams o email.</small></p></div>
-        <div><span>03</span><p><strong data-i18n="monitor3Title">El coordinador revisa</strong><small data-i18n="monitor3Body">Usa los reportes en la charla semanal.</small></p></div>
+        <div><span>02</span><p><strong data-i18n="monitor2Title">El coach envía</strong><small data-i18n="monitor2Body">Completa el formulario central aprobado.</small></p></div>
+        <div><span>03</span><p><strong data-i18n="monitor3Title">El coordinador revisa</strong><small data-i18n="monitor3Body">Revisa todas las respuestas en Microsoft Forms.</small></p></div>
       </div>
       <div class="report-layout">
         <section class="surface report-card">
           <h2 data-i18n="completionReport">Reporte de cumplimiento</h2>
-          <p class="section-copy" data-i18n="reportIntro">Filtra una semana, copia el resumen o descarga el CSV para monitoreo.</p>
+          <p class="section-copy" data-i18n="reportIntro">Consulta los registros locales y usa el reporte central aprobado para que el coordinador vea las respuestas de todos los coaches.</p>
           <div class="report-tools">
             <div class="field">
               <label for="reportWeek" data-i18n="week">Semana</label>
@@ -1176,33 +1206,27 @@
               <tbody id="reportRows"></tbody>
             </table>
           </div>
+          <div class="central-report-banner" id="centralReportBanner"></div>
         </section>
 
         <section class="surface report-card">
-          <h2 data-i18n="weeklySetup">Configurar charla semanal</h2>
-          <p class="section-copy" data-i18n="setupIntro">Guarda el día, hora y enlace. Luego comparte el enlace del calendario con los coaches.</p>
-          <form class="setup-form" id="settingsForm">
-            <div class="two-fields">
-              <div class="field">
-                <label for="chatDay" data-i18n="day">Día</label>
-                <select id="chatDay"></select>
-              </div>
-              <div class="field">
-                <label for="chatTime" data-i18n="timeDr">Hora DR</label>
-                <input id="chatTime" type="time">
-              </div>
+          <h2 data-i18n="availabilityTitle">Disponibilidad para la charla del miércoles</h2>
+          <p class="section-copy" data-i18n="availabilityIntro">Los coaches en RD deben proponer la hora de la llamada según su disponibilidad.</p>
+          <div class="availability-callout">
+            <strong data-i18n="drCoachesAction">Acción para los coaches en RD</strong>
+            <p data-i18n="availabilityBody">Envíen su disponibilidad y expresen la hora propuesta en hora de República Dominicana (AST / UTC−4). El staff fuera de RD debe convertir desde esa zona horaria.</p>
+            <div class="timezone-row" aria-label="Time zone reference">
+              <span>RD · AST · UTC−4</span>
+              <span data-i18n="chicagoTime">Chicago · CDT · UTC−5</span>
+              <span data-i18n="arizonaTime">Arizona · MST · UTC−7</span>
             </div>
-            <div class="field">
-              <label for="chatUrl" data-i18n="meetingLink">Enlace de Teams / Zoom / Meet</label>
-              <input id="chatUrl" type="url" inputmode="url" placeholder="https://...">
-            </div>
-            <button class="btn btn-primary btn-block" type="submit" data-i18n="saveMeeting">Guardar charla</button>
-          </form>
+          </div>
           <div class="side-actions top-gap">
-            <button class="btn btn-block" id="copyStaffLink" type="button" data-i18n="copyStaffLink">Copiar enlace para el staff</button>
+            <button class="btn btn-primary btn-block" id="copyAvailability" type="button" data-i18n="copyAvailability">Copiar solicitud de disponibilidad</button>
+            <button class="btn btn-block" id="copyScheduleLink" type="button" data-i18n="copyScheduleLink">Copiar enlace del calendario</button>
             <button class="btn btn-block" id="downloadCalendar" type="button" data-i18n="downloadCalendar">Descargar calendario (.ics)</button>
           </div>
-          <p class="setup-note" data-i18n="staffLinkNote">El enlace compartido incluye la configuración de la charla, no los reportes privados guardados en el teléfono.</p>
+          <p class="setup-note" data-i18n="availabilityNote">La fecha es cada miércoles. La página no fija la hora: los coaches en RD la suministran según su disponibilidad.</p>
         </section>
       </div>
     </section>
@@ -1291,13 +1315,15 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
+  <script src="schedule-config.js?v=2026.09.12.2"></script>
   <script>
-    const SITE_TIME_ZONE = "America/Santo_Domingo";
+    const CONFIG = window.DR_SCHEDULE_CONFIG;
+    const SITE_TIME_ZONE = CONFIG.timeZone;
     const STORAGE_KEY = "dr-base-running-schedule-v1";
-    const CHAT_DAY_DEFAULT_VERSION = 3;
-    const DEFAULT_CHAT_DAY = 3;
-    const PROGRAM_START = "2026-09-06";
-    const PROGRAM_END = "2026-10-31";
+    const DEFAULT_CHAT_DAY = CONFIG.defaultChatDay;
+    const PROGRAM_START = CONFIG.programStart;
+    const PROGRAM_END = CONFIG.programEnd;
+    const SITE_VERSION = CONFIG.version;
 
     const copy = {
       es: {
@@ -1309,6 +1335,8 @@
         intro: "El calendario fija la carga. El coach elige del menú completo aprobado para ese día, completa el bloque y comparte un reporte de 30 segundos.",
         plannedBlocks: "bloques programados",
         openToday: "Abrir hoy",
+        updated: "Actualizado",
+        refreshSite: "Actualizar",
         todayTab: "Hoy",
         calendarTab: "Calendario",
         reportTab: "Reporte",
@@ -1320,14 +1348,22 @@
         calendarRuleTitle: "¿Cuándo hacemos corrido de bases?",
         calendarRuleBody: "Solamente en las fechas con etiqueta Low o High. Juegos, Camp Days y días libres no generan un bloque.",
         calendarCaption: "Toca cualquier fecha para ver sus detalles. Los bloques de corrido aparecen solamente en los días marcados Low o High en el calendario original.",
+        calendarScheduled: "Programado",
+        calendarCompleted: "Terminado",
+        calendarMissed: "No reportado",
         completionReport: "Reporte de cumplimiento",
-        reportIntro: "Filtra una semana, copia el resumen o descarga el CSV para monitoreo.",
+        reportIntro: "Consulta los registros locales y usa el reporte central aprobado para que el coordinador vea las respuestas de todos los coaches.",
+        centralReadyTitle: "Reporte central disponible",
+        centralReadyBody: "Envía el formulario sin iniciar sesión. La respuesta llega al registro compartido del coordinador.",
+        centralReadyAction: "Abrir reporte central",
+        centralPendingTitle: "Envío central pendiente de conexión",
+        centralPendingBody: "Mientras se conecta el sistema aprobado, usa Compartir reporte o descarga el CSV. Los reportes siguen guardados en este dispositivo.",
         monitor1Title: "El coach guarda",
         monitor1Body: "Completa el reporte de 30 segundos.",
-        monitor2Title: "El coach comparte",
-        monitor2Body: "Lo envía por WhatsApp, Teams o email.",
+        monitor2Title: "El coach envía",
+        monitor2Body: "Completa el formulario central aprobado.",
         monitor3Title: "El coordinador revisa",
-        monitor3Body: "Usa los reportes en la charla semanal.",
+        monitor3Body: "Revisa todas las respuestas en Microsoft Forms.",
         week: "Semana",
         copyReport: "Copiar reporte",
         downloadCsv: "Descargar CSV",
@@ -1337,13 +1373,16 @@
         playersShort: "Jug.",
         minutesShort: "Min.",
         execution: "Ejecución",
-        weeklySetup: "Configurar charla semanal",
-        setupIntro: "Guarda el día, hora y enlace. Luego comparte el enlace del calendario con los coaches.",
+        availabilityTitle: "Disponibilidad para la charla del miércoles",
+        availabilityIntro: "Los coaches en RD deben proponer la hora de la llamada según su disponibilidad.",
+        drCoachesAction: "Acción para los coaches en RD",
+        availabilityBody: "Envíen su disponibilidad y expresen la hora propuesta en hora de República Dominicana (AST / UTC−4). El staff fuera de RD debe convertir desde esa zona horaria.",
+        chicagoTime: "Chicago · CDT · UTC−5",
+        arizonaTime: "Arizona · MST · UTC−7",
+        copyAvailability: "Copiar solicitud de disponibilidad",
+        copyScheduleLink: "Copiar enlace del calendario",
+        availabilityNote: "La fecha es cada miércoles. La página no fija la hora: los coaches en RD la suministran según su disponibilidad.",
         day: "Día",
-        timeDr: "Hora DR",
-        meetingLink: "Enlace de Teams / Zoom / Meet",
-        saveMeeting: "Guardar charla",
-        copyStaffLink: "Copiar enlace para el staff",
         downloadCalendar: "Descargar calendario (.ics)",
         staffLinkNote: "El enlace compartido incluye la configuración de la charla, no los reportes privados guardados en el teléfono.",
         footer: "Calendario transcrito de “DR Instructs 2026 Calendar”. Zona horaria de las charlas: República Dominicana (AST / UTC-4).",
@@ -1365,9 +1404,9 @@
         howIntro: "La carga no cambia. La elección sí.",
         how1: "Abre la fecha del bloque.",
         how2: "Elige del menú completo aprobado para la carga del día.",
-        how3: "Marca terminado y comparte el reporte.",
+        how3: "Marca terminado y envía el reporte central.",
         deviceOnlyTitle: "Guardado en este dispositivo",
-        deviceOnlyBody: "Usa “Compartir reporte” para enviarlo al coordinador.",
+        deviceOnlyBody: "La copia local ayuda con el calendario; envía también el formulario central para que el coordinador la reciba.",
         reopenGuide: "Ver la guía otra vez",
         workflowChoose: "Elegir",
         workflowChooseHint: "del menú",
@@ -1384,6 +1423,7 @@
         runSelectedBody: "Usa la demostración como estándar. Al terminar, registra quién dirigió el bloque, cuántos jugadores participaron y una observación corta.",
         openSelectedVideo: "Abrir video seleccionado",
         shareReminder: "Último paso: comparte este reporte para que el coordinador pueda verlo.",
+        centralSubmitReminder: "Último paso: abre y envía el reporte central para que el coordinador lo reciba.",
         todayPrefix: "Hoy en RD",
         noCalendarToday: "no hay actividad en el calendario",
         outsideProgram: "fuera del período de instructiva",
@@ -1403,7 +1443,8 @@
         noBlockBody: "Los bloques se programan únicamente en días Low y High. Usa el calendario para ver la próxima sesión.",
         meetingTitle: "Charla semanal con coaches",
         nextMeeting: "Próxima charla",
-        timeTbd: "Hora por definir",
+        timeTbd: "Hora por confirmar por coaches RD",
+        drTimeOwner: "Los coaches en RD suministran la hora según su disponibilidad.",
         setMeeting: "Configurar en Reporte",
         joinMeeting: "Entrar a la charla",
         addMeeting: "Añadir charla al calendario",
@@ -1423,7 +1464,6 @@
         completionRate: "Cumplimiento",
         noReports: "Todavía no hay reportes guardados para este período.",
         saved: "Reporte guardado.",
-        meetingSaved: "Charla semanal guardada.",
         copied: "Copiado.",
         downloadReady: "Descarga preparada.",
         shareTitle: "Reporte de corrido de bases",
@@ -1439,8 +1479,6 @@
         sourceChoice: "Menú completo aprobado",
         videoIntro: "Demostración y explicación del drill.",
         greenlightIntro: "Abre GreenLight Player o instálalo si es la primera vez.",
-        invalidMeetingLink: "Agrega un enlace válido que comience con http:// o https://.",
-        meetingNeedsTime: "Configura la hora de la charla antes de añadirla al calendario.",
         programCalendarName: "DR Instructs 2026 · Corrido de Bases",
         chatCalendarName: "Charla semanal · Coaches DR",
         reportGenerated: "Reporte generado desde el plan DR 2026",
@@ -1461,7 +1499,7 @@
         tour3Callout: "Elegir → Ejecutar → Reportar",
         tour3Visual: "PLAY",
         tour4Title: "Cierra el ciclo en 30 segundos",
-        tour4Body: "Marca el bloque terminado, agrega jugadores, minutos y una nota. El reporte queda en este teléfono hasta que pulses Compartir para enviarlo por WhatsApp, Teams o email.",
+        tour4Body: "Marca el bloque terminado, agrega jugadores, minutos y una nota. Luego abre el reporte central y envíalo para que el coordinador vea la respuesta junto con las de los demás coaches.",
         tour4Callout: "La charla semanal también vive aquí",
         tour4Visual: "✓"
       },
@@ -1474,6 +1512,8 @@
         intro: "The calendar fixes the workload. The coach chooses from the full approved menu for that day, completes the block, and shares a 30-second report.",
         plannedBlocks: "scheduled blocks",
         openToday: "Open today",
+        updated: "Updated",
+        refreshSite: "Refresh",
         todayTab: "Today",
         calendarTab: "Calendar",
         reportTab: "Report",
@@ -1485,14 +1525,22 @@
         calendarRuleTitle: "When do we run a base running block?",
         calendarRuleBody: "Only on dates labeled Low or High. Games, Camp Days, and team off-days do not generate a block.",
         calendarCaption: "Tap any date to see its details. Base running blocks appear only on days marked Low or High in the original calendar.",
+        calendarScheduled: "Scheduled",
+        calendarCompleted: "Completed",
+        calendarMissed: "Not reported",
         completionReport: "Completion report",
-        reportIntro: "Filter a week, copy the summary, or download the CSV for monitoring.",
+        reportIntro: "Review local records and use the approved central report so the coordinator can see every coach's response.",
+        centralReadyTitle: "Central reporting available",
+        centralReadyBody: "Submit the form without signing in. The response goes to the coordinator's shared record.",
+        centralReadyAction: "Open central report",
+        centralPendingTitle: "Central reporting connection pending",
+        centralPendingBody: "Until the approved system is connected, use Share report or download the CSV. Reports remain saved on this device.",
         monitor1Title: "Coach saves",
         monitor1Body: "Completes the 30-second report.",
-        monitor2Title: "Coach shares",
-        monitor2Body: "Sends it through WhatsApp, Teams, or email.",
+        monitor2Title: "Coach submits",
+        monitor2Body: "Completes the approved central form.",
         monitor3Title: "Coordinator reviews",
-        monitor3Body: "Uses the reports in the weekly chat.",
+        monitor3Body: "Reviews every response in Microsoft Forms.",
         week: "Week",
         copyReport: "Copy report",
         downloadCsv: "Download CSV",
@@ -1502,13 +1550,16 @@
         playersShort: "Players",
         minutesShort: "Min.",
         execution: "Execution",
-        weeklySetup: "Set up weekly chat",
-        setupIntro: "Save the day, time, and link. Then share the calendar link with the coaches.",
+        availabilityTitle: "Wednesday chat availability",
+        availabilityIntro: "The DR coaches should propose the call time based on their availability.",
+        drCoachesAction: "Action for DR coaches",
+        availabilityBody: "Send your availability and state the proposed time in Dominican Republic time (AST / UTC−4). Staff outside the DR should convert from that time zone.",
+        chicagoTime: "Chicago · CDT · UTC−5",
+        arizonaTime: "Arizona · MST · UTC−7",
+        copyAvailability: "Copy availability request",
+        copyScheduleLink: "Copy schedule link",
+        availabilityNote: "The date is every Wednesday. The page does not set the time; DR coaches supply it based on their availability.",
         day: "Day",
-        timeDr: "DR time",
-        meetingLink: "Teams / Zoom / Meet link",
-        saveMeeting: "Save chat",
-        copyStaffLink: "Copy staff link",
         downloadCalendar: "Download calendar (.ics)",
         staffLinkNote: "The shared link includes the chat setup, not the private reports saved on the phone.",
         footer: "Calendar transcribed from “DR Instructs 2026 Calendar.” Weekly chat time zone: Dominican Republic (AST / UTC-4).",
@@ -1530,9 +1581,9 @@
         howIntro: "The workload does not change. The choice does.",
         how1: "Open the block date.",
         how2: "Choose from the full menu approved for the day's workload.",
-        how3: "Mark it complete and share the report.",
+        how3: "Mark it complete and submit the central report.",
         deviceOnlyTitle: "Saved on this device",
-        deviceOnlyBody: "Use “Share report” to send it to the coordinator.",
+        deviceOnlyBody: "The local copy updates this calendar; also submit the central form so the coordinator receives it.",
         reopenGuide: "View the guide again",
         workflowChoose: "Choose",
         workflowChooseHint: "from menu",
@@ -1549,6 +1600,7 @@
         runSelectedBody: "Use the demonstration as the standard. When finished, record who led the block, how many players participated, and one short observation.",
         openSelectedVideo: "Open selected video",
         shareReminder: "Final step: share this report so the coordinator can see it.",
+        centralSubmitReminder: "Final step: open and submit the central report so the coordinator receives it.",
         todayPrefix: "Today in the DR",
         noCalendarToday: "no calendar activity",
         outsideProgram: "outside the instructional period",
@@ -1568,7 +1620,8 @@
         noBlockBody: "Blocks are scheduled only on Low and High days. Use the calendar to see the next session.",
         meetingTitle: "Weekly coach chat",
         nextMeeting: "Next chat",
-        timeTbd: "Time to be set",
+        timeTbd: "Time to be confirmed by DR coaches",
+        drTimeOwner: "DR coaches supply the time based on their availability.",
         setMeeting: "Set up in Report",
         joinMeeting: "Join chat",
         addMeeting: "Add chat to calendar",
@@ -1588,7 +1641,6 @@
         completionRate: "Completion",
         noReports: "No reports have been saved for this period yet.",
         saved: "Report saved.",
-        meetingSaved: "Weekly chat saved.",
         copied: "Copied.",
         downloadReady: "Download ready.",
         shareTitle: "Base running report",
@@ -1604,8 +1656,6 @@
         sourceChoice: "Full approved menu",
         videoIntro: "Drill demonstration and explanation.",
         greenlightIntro: "Open GreenLight Player, or install it if this is your first time.",
-        invalidMeetingLink: "Add a valid link beginning with http:// or https://.",
-        meetingNeedsTime: "Set the weekly chat time before adding it to the calendar.",
         programCalendarName: "DR Instructs 2026 · Base Running",
         chatCalendarName: "Weekly chat · DR coaches",
         reportGenerated: "Report generated from the DR 2026 plan",
@@ -1626,16 +1676,12 @@
         tour3Callout: "Choose → Run → Report",
         tour3Visual: "PLAY",
         tour4Title: "Close the loop in 30 seconds",
-        tour4Body: "Mark the block complete, add players, minutes, and one note. The report stays on this phone until you tap Share to send it through WhatsApp, Teams, or email.",
+        tour4Body: "Mark the block complete, add players, minutes, and one note. Then open and submit the central report so the coordinator sees it with every coach's responses.",
         tour4Callout: "The weekly coach chat lives here too",
         tour4Visual: "✓"
       }
     };
 
-    const weekdayNames = {
-      es: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
-      en: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-    };
     const weekdayShort = {
       es: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
       en: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
@@ -1706,64 +1752,7 @@
       }
     };
 
-    const schedule = [
-      { date: "2026-09-06", type: "off" },
-      { date: "2026-09-07", type: "practice", load: "low" },
-      { date: "2026-09-08", type: "practice", load: "low" },
-      { date: "2026-09-09", type: "practice", load: "high" },
-      { date: "2026-09-10", type: "practice", load: "low" },
-      { date: "2026-09-11", type: "practice", load: "high" },
-      { date: "2026-09-12", type: "practice", load: "low" },
-      { date: "2026-09-13", type: "off" },
-      { date: "2026-09-14", type: "practice", load: "high" },
-      { date: "2026-09-15", type: "practice", load: "high" },
-      { date: "2026-09-16", type: "practice", load: "low" },
-      { date: "2026-09-17", type: "practice", load: "high" },
-      { date: "2026-09-18", type: "practice", load: "high" },
-      { date: "2026-09-19", type: "practice", load: "low" },
-      { date: "2026-09-20", type: "off" },
-      { date: "2026-09-21", type: "practice", load: "high" },
-      { date: "2026-09-22", type: "game", detail: "Game 1 · Blue vs Gray" },
-      { date: "2026-09-23", type: "camp" },
-      { date: "2026-09-24", type: "game", detail: "Game 2 · Blue vs Gray" },
-      { date: "2026-09-25", type: "game", detail: "Game 3 · Blue vs Gray" },
-      { date: "2026-09-26", type: "off" },
-      { date: "2026-09-27", type: "off" },
-      { date: "2026-09-28", type: "practice", load: "high" },
-      { date: "2026-09-29", type: "conditionalGame", detail: "Game 4 · Blue vs Gray" },
-      { date: "2026-09-30", type: "camp" },
-      { date: "2026-10-01", type: "conditionalGame", detail: "Game 5 · Blue vs Gray" },
-      { date: "2026-10-02", type: "practice", load: "high" },
-      { date: "2026-10-03", type: "practice", load: "low" },
-      { date: "2026-10-04", type: "off" },
-      { date: "2026-10-05", type: "camp" },
-      { date: "2026-10-06", type: "game", detail: "11:00 AM · @ Pirates" },
-      { date: "2026-10-07", type: "camp" },
-      { date: "2026-10-08", type: "game", detail: "11:00 AM · @ Kansas City" },
-      { date: "2026-10-09", type: "game", detail: "11:00 AM · Pirates" },
-      { date: "2026-10-10", type: "camp" },
-      { date: "2026-10-11", type: "off" },
-      { date: "2026-10-12", type: "camp" },
-      { date: "2026-10-13", type: "game", detail: "11:00 AM · @ Dodgers" },
-      { date: "2026-10-14", type: "camp" },
-      { date: "2026-10-15", type: "game", detail: "11:00 AM · Pirates" },
-      { date: "2026-10-16", type: "game", detail: "10:30 AM · @ D-Backs" },
-      { date: "2026-10-17", type: "camp" },
-      { date: "2026-10-18", type: "off" },
-      { date: "2026-10-19", type: "camp" },
-      { date: "2026-10-20", type: "game", detail: "11:00 AM · @ Texas" },
-      { date: "2026-10-21", type: "camp" },
-      { date: "2026-10-22", type: "game", detail: "11:00 AM · @ Pirates" },
-      { date: "2026-10-23", type: "game", detail: "11:00 AM · Texas" },
-      { date: "2026-10-24", type: "camp" },
-      { date: "2026-10-25", type: "off" },
-      { date: "2026-10-26", type: "camp" },
-      { date: "2026-10-27", type: "game", detail: "11:00 AM · @ Texas" },
-      { date: "2026-10-28", type: "camp" },
-      { date: "2026-10-29", type: "game", detail: "11:00 AM · Texas" },
-      { date: "2026-10-30", type: "game", detail: "10:30 AM · @ D-Backs" },
-      { date: "2026-10-31", type: "camp" }
-    ];
+    const schedule = CONFIG.schedule;
 
     const scheduleByDate = Object.fromEntries(schedule.map((entry) => [entry.date, entry]));
     const eligibleEntries = schedule.filter((entry) => entry.load);
@@ -1773,7 +1762,7 @@
         onboardingSeen: false,
         plans: {},
         records: {},
-        settings: { coach: "", group: "", chatDay: DEFAULT_CHAT_DAY, chatDayDefaultVersion: CHAT_DAY_DEFAULT_VERSION, chatTime: "", chatUrl: "" }
+        settings: { coach: "", group: "" }
       };
     }
 
@@ -1783,10 +1772,6 @@
         const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
         if (!saved || typeof saved !== "object") return fallback;
         const settings = { ...fallback.settings, ...(saved.settings || {}) };
-        if (saved.settings?.chatDayDefaultVersion !== CHAT_DAY_DEFAULT_VERSION) {
-          settings.chatDay = DEFAULT_CHAT_DAY;
-          settings.chatDayDefaultVersion = CHAT_DAY_DEFAULT_VERSION;
-        }
         return {
           ...fallback,
           ...saved,
@@ -1802,13 +1787,11 @@
     let state = loadState();
     const query = new URLSearchParams(window.location.search);
     if (query.get("lang") === "en" || query.get("lang") === "es") state.language = query.get("lang");
-    if (/^[0-6]$/.test(query.get("chatDay") || "")) state.settings.chatDay = Number(query.get("chatDay"));
-    if (/^\d{2}:\d{2}$/.test(query.get("chatTime") || "")) state.settings.chatTime = query.get("chatTime");
-    if (isSafeHttpUrl(query.get("chatUrl") || "")) state.settings.chatUrl = query.get("chatUrl");
 
     const realToday = todayInDr();
     let selectedDate = realToday >= PROGRAM_START && realToday <= PROGRAM_END ? realToday : eligibleEntries[0].date;
-    let calendarMonth = selectedDate.startsWith("2026-10") ? 9 : 8;
+    const programMonths = [...new Set(schedule.map((entry) => entry.date.slice(0, 7)))];
+    let calendarMonthIndex = Math.max(0, programMonths.indexOf(selectedDate.slice(0, 7)));
     let activePanel = "today";
     let completionDate = null;
     let lastModalTrigger = null;
@@ -1920,7 +1903,8 @@
       document.querySelectorAll(".language-button").forEach((button) => {
         button.setAttribute("aria-selected", String(button.dataset.language === language));
       });
-      document.getElementById("menuLink").href = `index.html?lang=${language}`;
+      document.getElementById("menuLink").href = `drills.html?lang=${language}`;
+      document.getElementById("siteVersion").textContent = `${t("updated")} ${dateLabel(CONFIG.updatedDate, { month: "short", day: "numeric" })} · v${SITE_VERSION}`;
       document.getElementById("completionClose").setAttribute("aria-label", t("cancel"));
       document.getElementById("videoClose").setAttribute("aria-label", t("cancel"));
       document.getElementById("tourClose").setAttribute("aria-label", t("cancel"));
@@ -1929,6 +1913,10 @@
     }
 
     function renderEverything() {
+      document.getElementById("plannedBlockCount").textContent = String(eligibleEntries.length);
+      document.getElementById("plannedBlockCountA11y").textContent = String(eligibleEntries.length);
+      datePicker.min = PROGRAM_START;
+      datePicker.max = PROGRAM_END;
       datePicker.value = selectedDate;
       renderTodayStatus();
       renderSession();
@@ -1936,7 +1924,7 @@
       renderCalendar();
       renderReportControls();
       renderReport();
-      renderSettings();
+      renderExecutionOptions();
     }
 
     function renderTodayStatus() {
@@ -1996,13 +1984,17 @@
       let actionMarkup = "";
       if (record) {
         const note = record.notes ? `<br>${escapeHtml(t("notesWord"))}: ${escapeHtml(record.notes)}` : "";
+        const centralAction = isSafeHttpUrl(CONFIG.centralReportUrl)
+          ? `<a class="btn" href="${escapeHtml(CONFIG.centralReportUrl)}" target="_blank" rel="noopener">${escapeHtml(t("centralReadyAction"))}</a>`
+          : "";
         actionMarkup = `
           <div class="complete-card">
             <strong>✓ ${escapeHtml(t("completed"))}</strong>
             <p>${escapeHtml(record.coach)} · ${escapeHtml(record.players)} ${escapeHtml(t("playersWord"))} · ${escapeHtml(record.minutes)} ${escapeHtml(t("minutesWord"))} · ${escapeHtml(executionLabel(record.execution))}${note}</p>
-            <p class="complete-prompt">${escapeHtml(t("shareReminder"))}</p>
+            <p class="complete-prompt">${escapeHtml(t(isSafeHttpUrl(CONFIG.centralReportUrl) ? "centralSubmitReminder" : "shareReminder"))}</p>
             <div class="complete-actions">
               <button class="btn btn-primary" type="button" data-share-record>${escapeHtml(t("shareUpdate"))}</button>
+              ${centralAction}
               <button class="btn" type="button" data-edit-record>${escapeHtml(t("editReport"))}</button>
             </div>
           </div>`;
@@ -2050,56 +2042,63 @@
     }
 
     function nextChatDate(fromDate) {
-      const candidates = schedule.map((entry) => entry.date).filter((date) => weekdayOf(date) === Number(state.settings.chatDay));
+      const candidates = schedule.map((entry) => entry.date).filter((date) => weekdayOf(date) === DEFAULT_CHAT_DAY);
       return candidates.find((date) => date >= fromDate) || candidates[0] || PROGRAM_START;
     }
 
     function renderChat() {
-      const chatDate = nextChatDate(selectedDate);
-      const hasUrl = isSafeHttpUrl(state.settings.chatUrl);
-      const time = state.settings.chatTime || t("timeTbd");
+      const chatDate = nextChatDate(realToday);
       chatCard.innerHTML = `
         <h2>${escapeHtml(t("meetingTitle"))}</h2>
         <p>${escapeHtml(t("nextMeeting"))}</p>
-        <div class="chat-date"><strong>${escapeHtml(fullDate(chatDate))}</strong><span>${escapeHtml(time)} · AST / UTC-4</span></div>
+        <div class="chat-date"><strong>${escapeHtml(fullDate(chatDate))}</strong><span>${escapeHtml(t("timeTbd"))} · ${escapeHtml(CONFIG.timeZoneLabel)}</span></div>
+        <div class="availability-callout"><strong>${escapeHtml(t("drCoachesAction"))}</strong><p>${escapeHtml(t("drTimeOwner"))}</p></div>
         <ol class="agenda">
           <li>${escapeHtml(t("agenda1"))}</li>
           <li>${escapeHtml(t("agenda2"))}</li>
           <li>${escapeHtml(t("agenda3"))}</li>
         </ol>
         <div class="side-actions">
-          ${hasUrl ? `<a class="btn btn-primary btn-block" href="${escapeHtml(state.settings.chatUrl)}" target="_blank" rel="noopener">${escapeHtml(t("joinMeeting"))}</a>` : `<button class="btn btn-primary btn-block" type="button" data-open-settings>${escapeHtml(t("setMeeting"))}</button>`}
+          <button class="btn btn-primary btn-block" type="button" data-copy-availability>${escapeHtml(t("copyAvailability"))}</button>
           <button class="btn btn-block" type="button" data-copy-agenda>${escapeHtml(t("copyAgenda"))}</button>
         </div>`;
-      chatCard.querySelector("[data-open-settings]")?.addEventListener("click", () => showPanel("report"));
+      chatCard.querySelector("[data-copy-availability]").addEventListener("click", copyAvailabilityRequest);
       chatCard.querySelector("[data-copy-agenda]").addEventListener("click", copyAgenda);
     }
 
     function renderCalendar() {
       const locale = state.language === "es" ? "es-DO" : "en-US";
-      const monthDate = new Date(Date.UTC(2026, calendarMonth, 1, 12));
+      const [calendarYear, calendarMonthNumber] = programMonths[calendarMonthIndex].split("-").map(Number);
+      const calendarMonth = calendarMonthNumber - 1;
+      const monthDate = new Date(Date.UTC(calendarYear, calendarMonth, 1, 12));
       document.getElementById("monthTitle").textContent = new Intl.DateTimeFormat(locale, { month: "long", year: "numeric", timeZone: "UTC" }).format(monthDate);
-      document.getElementById("previousMonth").disabled = calendarMonth === 8;
-      document.getElementById("nextMonth").disabled = calendarMonth === 9;
+      document.getElementById("previousMonth").disabled = calendarMonthIndex === 0;
+      document.getElementById("nextMonth").disabled = calendarMonthIndex === programMonths.length - 1;
       const grid = document.getElementById("calendarGrid");
       const headers = weekdayShort[state.language].map((day) => `<div class="weekday">${day}</div>`).join("");
-      const firstWeekday = new Date(Date.UTC(2026, calendarMonth, 1)).getUTCDay();
-      const daysInMonth = new Date(Date.UTC(2026, calendarMonth + 1, 0)).getUTCDate();
+      const firstWeekday = new Date(Date.UTC(calendarYear, calendarMonth, 1)).getUTCDay();
+      const daysInMonth = new Date(Date.UTC(calendarYear, calendarMonth + 1, 0)).getUTCDate();
       const cells = [];
       for (let i = 0; i < firstWeekday; i += 1) cells.push(`<div class="calendar-day outside" aria-hidden="true"></div>`);
       for (let day = 1; day <= daysInMonth; day += 1) {
-        const iso = `2026-${String(calendarMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+        const iso = `${calendarYear}-${String(calendarMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
         const entry = scheduleByDate[iso];
-        const hasChat = weekdayOf(iso) === Number(state.settings.chatDay) && iso >= PROGRAM_START && iso <= PROGRAM_END;
+        const hasChat = weekdayOf(iso) === DEFAULT_CHAT_DAY && iso >= PROGRAM_START && iso <= PROGRAM_END;
         const classes = ["calendar-day"];
         if (!entry) classes.push("outside");
         if (entry?.load) classes.push(entry.load);
         if (iso === realToday) classes.push("today");
-        if (state.records[iso]) classes.push("complete");
+        let status = "";
+        if (entry?.load && state.records[iso]) status = "complete";
+        else if (entry?.load && iso < realToday) status = "missed";
+        else if (entry?.load) status = "scheduled";
+        if (status) classes.push(status);
         const event = entry ? `<span class="day-event">${escapeHtml(eventLabel(entry))}</span>` : "";
         const load = entry?.load ? `<span class="day-load ${entry.load}">${escapeHtml(entry.load === "low" ? t("low") : t("high"))}</span>` : "";
+        const statusKey = status === "complete" ? "calendarCompleted" : status === "missed" ? "calendarMissed" : "calendarScheduled";
+        const statusLabel = status ? `<span class="day-status ${status}">${escapeHtml(t(statusKey))}</span>` : "";
         const chat = hasChat ? `<span class="chat-marker">● ${escapeHtml(t("weeklyChat"))}</span>` : "";
-        cells.push(`<button class="${classes.join(" ")}" type="button" data-calendar-date="${iso}" aria-label="${escapeHtml(fullDate(iso))}${entry ? `, ${escapeHtml(eventLabel(entry))}` : ""}"><span class="day-number">${day}</span>${event}${load}${chat}</button>`);
+        cells.push(`<button class="${classes.join(" ")}" type="button" data-calendar-date="${iso}" aria-label="${escapeHtml(fullDate(iso))}${entry ? `, ${escapeHtml(eventLabel(entry))}` : ""}"><span class="day-number">${day}</span>${event}${load}${statusLabel}${chat}</button>`);
       }
       const usedCells = firstWeekday + daysInMonth;
       for (let i = usedCells; i < Math.ceil(usedCells / 7) * 7; i += 1) cells.push(`<div class="calendar-day outside" aria-hidden="true"></div>`);
@@ -2154,6 +2153,7 @@
         <div class="surface stat"><span>${escapeHtml(t("scheduled"))}</span><strong>${relevantEntries.length}</strong></div>
         <div class="surface stat"><span>${escapeHtml(t("completedStat"))}</span><strong>${completed}</strong></div>
         <div class="surface stat"><span>${escapeHtml(t("completionRate"))}</span><strong>${rate}%</strong></div>`;
+      renderCentralReport();
       const rows = document.getElementById("reportRows");
       if (!records.length) {
         rows.innerHTML = `<tr><td class="empty-row" colspan="6">${escapeHtml(t("noReports"))}</td></tr>`;
@@ -2170,12 +2170,16 @@
         </tr>`).join("");
     }
 
-    function renderSettings() {
-      const daySelect = document.getElementById("chatDay");
-      daySelect.innerHTML = weekdayNames[state.language].map((day, index) => `<option value="${index}">${escapeHtml(day)}</option>`).join("");
-      daySelect.value = String(state.settings.chatDay);
-      document.getElementById("chatTime").value = state.settings.chatTime || "";
-      document.getElementById("chatUrl").value = state.settings.chatUrl || "";
+    function renderCentralReport() {
+      const banner = document.getElementById("centralReportBanner");
+      const ready = isSafeHttpUrl(CONFIG.centralReportUrl);
+      banner.classList.toggle("pending", !ready);
+      banner.innerHTML = ready
+        ? `<strong>${escapeHtml(t("centralReadyTitle"))}</strong><p>${escapeHtml(t("centralReadyBody"))}</p><div class="side-actions top-gap"><a class="btn btn-primary btn-block" href="${escapeHtml(CONFIG.centralReportUrl)}" target="_blank" rel="noopener">${escapeHtml(t("centralReadyAction"))}</a></div>`
+        : `<strong>${escapeHtml(t("centralPendingTitle"))}</strong><p>${escapeHtml(t("centralPendingBody"))}</p>`;
+    }
+
+    function renderExecutionOptions() {
       const executionSelect = document.getElementById("executionSelect");
       const current = executionSelect.value || "onTrack";
       executionSelect.innerHTML = ["sharp", "onTrack", "revisit"].map((value) => `<option value="${value}">${escapeHtml(t(value))}</option>`).join("");
@@ -2194,13 +2198,13 @@
       if (panel === "report") {
         renderReportControls();
         renderReport();
-        renderSettings();
+        renderExecutionOptions();
       }
     }
 
     function selectDate(date) {
       selectedDate = date;
-      calendarMonth = date.startsWith("2026-10") ? 9 : 8;
+      calendarMonthIndex = Math.max(0, programMonths.indexOf(date.slice(0, 7)));
       datePicker.value = date;
       renderSession();
       renderChat();
@@ -2292,9 +2296,23 @@
     }
 
     function copyAgenda() {
-      const chatDate = nextChatDate(selectedDate);
-      const text = `${t("meetingTitle")} · ${fullDate(chatDate)} · ${state.settings.chatTime || t("timeTbd")} AST\n1. ${t("agenda1")}\n2. ${t("agenda2")}\n3. ${t("agenda3")}`;
+      const chatDate = nextChatDate(realToday);
+      const text = `${t("meetingTitle")} · ${fullDate(chatDate)} · ${t("timeTbd")} (${CONFIG.timeZoneLabel})\n${t("drTimeOwner")}\n1. ${t("agenda1")}\n2. ${t("agenda2")}\n3. ${t("agenda3")}`;
       copyText(text).then(() => showToast(t("copied")));
+    }
+
+    function copyAvailabilityRequest() {
+      const chatDate = nextChatDate(realToday);
+      const text = state.language === "es"
+        ? `Coaches en RD: por favor envíen su disponibilidad para la charla del ${fullDate(chatDate)} y propongan la hora en hora de República Dominicana (${CONFIG.timeZoneLabel}). Durante este programa, Chicago está 1 hora detrás y Arizona 3 horas detrás.`
+        : `DR coaches: please send your availability for the ${fullDate(chatDate)} call and propose the time in Dominican Republic time (${CONFIG.timeZoneLabel}). During this program, Chicago is 1 hour behind and Arizona is 3 hours behind.`;
+      copyText(text).then(() => showToast(t("copied")));
+    }
+
+    function copyScheduleLink() {
+      const url = new URL("schedule.html", window.location.href);
+      url.searchParams.set("lang", state.language);
+      copyText(url.href).then(() => showToast(t("copied")));
     }
 
     function csvEscape(value) {
@@ -2315,18 +2333,11 @@
     }
 
     function icsDate(iso) { return iso.replace(/-/g, ""); }
-    function icsUtcDateTime(iso, time) {
-      const [year, month, day] = iso.split("-").map(Number);
-      const [hour, minute] = time.split(":").map(Number);
-      const utc = new Date(Date.UTC(year, month - 1, day, hour + 4, minute));
-      return utc.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
-    }
-
     function chatDates() {
       const dates = [];
       let date = PROGRAM_START;
       while (date <= PROGRAM_END) {
-        if (weekdayOf(date) === Number(state.settings.chatDay)) dates.push(date);
+        if (weekdayOf(date) === DEFAULT_CHAT_DAY) dates.push(date);
         date = addDays(date, 1);
       }
       return dates;
@@ -2349,26 +2360,19 @@
           "END:VEVENT"
         );
       });
-      if (state.settings.chatTime) {
-        chatDates().forEach((date) => {
-          const start = icsUtcDateTime(date, state.settings.chatTime);
-          const [hour, minute] = state.settings.chatTime.split(":").map(Number);
-          const total = hour * 60 + minute + 30;
-          const endTime = `${String(Math.floor(total / 60) % 24).padStart(2, "0")}:${String(total % 60).padStart(2, "0")}`;
-          const endDate = total >= 1440 ? addDays(date, 1) : date;
-          lines.push(
-            "BEGIN:VEVENT",
-            `UID:coach-chat-${date}@dr-instructs`,
-            `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z")}`,
-            `DTSTART:${start}`,
-            `DTEND:${icsUtcDateTime(endDate, endTime)}`,
-            `SUMMARY:${icsEscape(t("chatCalendarName"))}`,
-            `DESCRIPTION:${icsEscape(`${t("agenda1")}\n${t("agenda2")}\n${t("agenda3")}`)}`,
-            ...(isSafeHttpUrl(state.settings.chatUrl) ? [`URL:${state.settings.chatUrl}`] : []),
-            "END:VEVENT"
-          );
-        });
-      }
+      chatDates().forEach((date) => {
+        lines.push(
+          "BEGIN:VEVENT",
+          `UID:coach-chat-${date}@dr-instructs`,
+          `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z")}`,
+          `DTSTART;VALUE=DATE:${icsDate(date)}`,
+          `DTEND;VALUE=DATE:${icsDate(addDays(date, 1))}`,
+          `SUMMARY:${icsEscape(t("chatCalendarName"))}`,
+          `DESCRIPTION:${icsEscape(`${t("drTimeOwner")} ${CONFIG.timeZoneLabel}\n${t("agenda1")}\n${t("agenda2")}\n${t("agenda3")}\n${pageUrl}`)}`,
+          `URL:${pageUrl}`,
+          "END:VEVENT"
+        );
+      });
       lines.push("END:VCALENDAR");
       return lines.join("\r\n");
     }
@@ -2388,17 +2392,6 @@
       link.click();
       link.remove();
       setTimeout(() => URL.revokeObjectURL(url), 500);
-    }
-
-    function staffLink() {
-      const url = new URL(window.location.href);
-      url.search = "";
-      url.hash = "";
-      url.searchParams.set("lang", state.language);
-      url.searchParams.set("chatDay", String(state.settings.chatDay));
-      if (state.settings.chatTime) url.searchParams.set("chatTime", state.settings.chatTime);
-      if (isSafeHttpUrl(state.settings.chatUrl)) url.searchParams.set("chatUrl", state.settings.chatUrl);
-      return url.href;
     }
 
     function openVideo(id, trigger) {
@@ -2515,33 +2508,21 @@
       if (realToday >= PROGRAM_START && realToday <= PROGRAM_END) selectDate(realToday);
       showPanel("today");
     });
+    document.getElementById("refreshSite").addEventListener("click", () => {
+      const url = new URL(window.location.href);
+      url.searchParams.set("refresh", `${SITE_VERSION}-${Date.now()}`);
+      window.location.replace(url.href);
+    });
     datePicker.addEventListener("change", () => selectDate(datePicker.value));
-    document.getElementById("previousMonth").addEventListener("click", () => { if (calendarMonth > 8) { calendarMonth -= 1; renderCalendar(); } });
-    document.getElementById("nextMonth").addEventListener("click", () => { if (calendarMonth < 9) { calendarMonth += 1; renderCalendar(); } });
+    document.getElementById("previousMonth").addEventListener("click", () => { if (calendarMonthIndex > 0) { calendarMonthIndex -= 1; renderCalendar(); } });
+    document.getElementById("nextMonth").addEventListener("click", () => { if (calendarMonthIndex < programMonths.length - 1) { calendarMonthIndex += 1; renderCalendar(); } });
     reportWeek.addEventListener("change", renderReport);
     document.getElementById("copyReport").addEventListener("click", () => copyText(reportText()).then(() => showToast(t("copied"))));
     document.getElementById("downloadCsv").addEventListener("click", downloadCsv);
     document.getElementById("downloadCalendar").addEventListener("click", downloadCalendar);
     document.getElementById("downloadCalendarTop").addEventListener("click", downloadCalendar);
-    document.getElementById("copyStaffLink").addEventListener("click", () => copyText(staffLink()).then(() => showToast(t("copied"))));
-
-    document.getElementById("settingsForm").addEventListener("submit", (event) => {
-      event.preventDefault();
-      const url = document.getElementById("chatUrl").value.trim();
-      if (url && !isSafeHttpUrl(url)) {
-        document.getElementById("chatUrl").setCustomValidity(t("invalidMeetingLink"));
-        document.getElementById("chatUrl").reportValidity();
-        return;
-      }
-      document.getElementById("chatUrl").setCustomValidity("");
-      state.settings.chatDay = Number(document.getElementById("chatDay").value);
-      state.settings.chatTime = document.getElementById("chatTime").value;
-      state.settings.chatUrl = url;
-      saveState();
-      renderEverything();
-      showToast(t("meetingSaved"));
-    });
-    document.getElementById("chatUrl").addEventListener("input", (event) => event.currentTarget.setCustomValidity(""));
+    document.getElementById("copyAvailability").addEventListener("click", copyAvailabilityRequest);
+    document.getElementById("copyScheduleLink").addEventListener("click", copyScheduleLink);
 
     completionForm.addEventListener("submit", (event) => {
       event.preventDefault();
