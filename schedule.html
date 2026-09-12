@@ -1285,13 +1285,13 @@
       </div>
       <div class="greenlight-box" id="greenlightBox" hidden>
         <ol>
-          <li data-i18n="install1">Toca Descargar GreenLight.</li>
+          <li data-i18n="install1">Toca Instalar GreenLight.</li>
           <li data-i18n="install2">Si Edge muestra una advertencia, elige Conservar y luego Conservar de todas formas.</li>
           <li data-i18n="install3">Abre GreenLight_Player_Setup.exe y permite Ejecutar de todas formas si Windows lo solicita.</li>
         </ol>
         <div class="choice-actions">
-          <a class="btn btn-primary" href="greenlight://open" data-i18n="openGreenlight">Abrir GreenLight</a>
-          <a class="btn" href="https://github.com/cdennis10/greenlight-player-pilot/releases/download/v1.0.0/GreenLight_Player_Setup.exe" data-i18n="downloadGreenlight">Descargar</a>
+          <a class="btn btn-primary" href="greenlight://open" data-i18n="openGreenlight">Ejecutar GreenLight</a>
+          <a class="btn" href="https://github.com/cdennis10/greenlight-player-pilot/releases/download/v1.0.0/GreenLight_Player_Setup.exe" data-i18n="downloadGreenlight">Instalar GreenLight</a>
         </div>
       </div>
     </div>
@@ -1315,7 +1315,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="schedule-config.js?v=2026.09.12.2"></script>
+  <script src="schedule-config.js?v=2026.09.12.3"></script>
   <script>
     const CONFIG = window.DR_SCHEDULE_CONFIG;
     const SITE_TIME_ZONE = CONFIG.timeZone;
@@ -1395,11 +1395,11 @@
         notesPlaceholder: "Qué salió bien / qué necesita atención",
         cancel: "Cancelar",
         saveComplete: "Guardar como terminado",
-        install1: "Toca Descargar GreenLight.",
+        install1: "Toca Instalar GreenLight.",
         install2: "Si Edge muestra una advertencia, elige Conservar y luego Conservar de todas formas.",
         install3: "Abre GreenLight_Player_Setup.exe y permite Ejecutar de todas formas si Windows lo solicita.",
-        openGreenlight: "Abrir GreenLight",
-        downloadGreenlight: "Descargar",
+        openGreenlight: "Ejecutar GreenLight",
+        downloadGreenlight: "Instalar GreenLight",
         howItWorks: "Cómo funciona",
         howIntro: "La carga no cambia. La elección sí.",
         how1: "Abre la fecha del bloque.",
@@ -1422,6 +1422,7 @@
         runSelectedTitle: "Mira el video si hace falta y ejecuta el drill",
         runSelectedBody: "Usa la demostración como estándar. Al terminar, registra quién dirigió el bloque, cuántos jugadores participaron y una observación corta.",
         openSelectedVideo: "Abrir video seleccionado",
+        greenlightAction: "Ejecutar/instalar GreenLight",
         shareReminder: "Último paso: comparte este reporte para que el coordinador pueda verlo.",
         centralSubmitReminder: "Último paso: abre y envía el reporte central para que el coordinador lo reciba.",
         todayPrefix: "Hoy en RD",
@@ -1478,7 +1479,7 @@
         weekOf: "Semana del",
         sourceChoice: "Menú completo aprobado",
         videoIntro: "Demostración y explicación del drill.",
-        greenlightIntro: "Abre GreenLight Player o instálalo si es la primera vez.",
+        greenlightIntro: "Ejecuta GreenLight si ya está instalado o instálalo si es la primera vez.",
         programCalendarName: "DR Instructs 2026 · Corrido de Bases",
         chatCalendarName: "Charla semanal · Coaches DR",
         reportGenerated: "Reporte generado desde el plan DR 2026",
@@ -1572,11 +1573,11 @@
         notesPlaceholder: "What went well / what needs attention",
         cancel: "Cancel",
         saveComplete: "Save as complete",
-        install1: "Tap Download GreenLight.",
+        install1: "Select Install GreenLight.",
         install2: "If Edge displays a warning, choose Keep, then Keep anyway.",
         install3: "Open GreenLight_Player_Setup.exe and allow Run anyway if Windows asks.",
-        openGreenlight: "Open GreenLight",
-        downloadGreenlight: "Download",
+        openGreenlight: "Run GreenLight",
+        downloadGreenlight: "Install GreenLight",
         howItWorks: "How it works",
         howIntro: "The workload does not change. The choice does.",
         how1: "Open the block date.",
@@ -1599,6 +1600,7 @@
         runSelectedTitle: "Watch the video if needed, then run the drill",
         runSelectedBody: "Use the demonstration as the standard. When finished, record who led the block, how many players participated, and one short observation.",
         openSelectedVideo: "Open selected video",
+        greenlightAction: "Run/Install GreenLight",
         shareReminder: "Final step: share this report so the coordinator can see it.",
         centralSubmitReminder: "Final step: open and submit the central report so the coordinator receives it.",
         todayPrefix: "Today in the DR",
@@ -1655,7 +1657,7 @@
         weekOf: "Week of",
         sourceChoice: "Full approved menu",
         videoIntro: "Drill demonstration and explanation.",
-        greenlightIntro: "Open GreenLight Player, or install it if this is your first time.",
+        greenlightIntro: "Run GreenLight if it is installed, or install it if this is your first time.",
         programCalendarName: "DR Instructs 2026 · Base Running",
         chatCalendarName: "Weekly chat · DR coaches",
         reportGenerated: "Report generated from the DR 2026 plan",
@@ -1975,7 +1977,7 @@
             <h3>${escapeHtml(drillName(id))}</h3>
             <p>${escapeHtml(drillFocus(id))}</p>
             <div class="choice-actions">
-              <button class="btn" type="button" data-watch="${id}">${escapeHtml(t("watch"))}</button>
+              <button class="btn" type="button" data-watch="${id}">${escapeHtml(drills[id].greenlight ? t("greenlightAction") : t("watch"))}</button>
               <button class="btn${isSelected ? " btn-primary" : ""}" type="button" data-choose="${id}" ${record ? "disabled" : ""}>${escapeHtml(isSelected ? t("chosen") : t("choose"))}</button>
             </div>
           </article>`;
@@ -2005,7 +2007,7 @@
             <div><span>${escapeHtml(t("upNext"))}</span><strong>${escapeHtml(drillName(selected))}</strong><p>${escapeHtml(t("runSelectedBody"))}</p></div>
           </div>
           <div class="run-actions">
-            <button class="btn" type="button" data-run-video="${escapeHtml(selected)}">${escapeHtml(t("openSelectedVideo"))}</button>
+            <button class="btn" type="button" data-run-video="${escapeHtml(selected)}">${escapeHtml(drills[selected].greenlight ? t("greenlightAction") : t("openSelectedVideo"))}</button>
             <button class="btn btn-red" type="button" data-complete>${escapeHtml(t("markComplete"))}</button>
           </div>`;
       }
