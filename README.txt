@@ -14,22 +14,21 @@ as coming soon until its videos are available.
 The shared site opens schedule.html as its landing page. That page adds:
 - The September 6 through October 31 DR instructional calendar
 - A base running block on every Low and High day
-- Two recommended drill options for each block's Low or High workload
-- A skippable four-step first-use walkthrough that can be reopened at any time
+- The full recommended drill menu for each block's Low or High workload
+- A four-step first-use walkthrough that can be reopened at any time
 - A visual Choose > Run > Report progress guide on every session
 - Clear context for the Low or High workload shown by the calendar
-- A brief coach update with planned, adapted, and not-completed outcomes
+- A brief coach completion report
 - A Wednesday availability card, shareable schedule link, and downloadable .ics calendar
 - Weekly report copy and CSV export
 
 COACH REPORTS AND SHARED CONTEXT
 --------------------------------
 The GitHub Pages schedule does not require a login. A local copy of each drill
-choice and update is saved in that device's browser so the calendar can show
-scheduled, logged, and unreported blocks. Older saved records automatically use
-"Completed as planned." Coaches may also open the linked Microsoft Form and add
-their update to the staff's shared record. The form accepts anonymous responses
-without sign-in.
+choice and completion report is saved in that device's browser so the calendar
+can show scheduled, logged, and unreported blocks. Coaches may also open the
+linked Microsoft Form and add their update to the staff's shared record. The
+form accepts anonymous responses without sign-in.
 
 The local Share, Copy, and CSV tools remain available as fallbacks. The
 centralized report URL is configured in schedule-config.js.
