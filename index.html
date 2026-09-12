@@ -1,8 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
   <meta name="theme-color" content="#0e2a52">
   <title>Menú de Drills del Bloque de Corrido de Bases / Rotación de BP</title>
   <style>
@@ -130,6 +131,24 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 22px;
     }
+
+    .schedule-launch {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin: 0 0 22px;
+      padding: 18px 20px;
+      color: #fff;
+      background: linear-gradient(120deg, var(--navy-deep), var(--navy));
+      border-left: 5px solid var(--red);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .schedule-launch strong { display: block; font-size: 1.02rem; }
+    .schedule-launch span { display: block; margin-top: 4px; color: #cfdced; font-size: .84rem; line-height: 1.42; }
+    .schedule-launch .action-link { flex: 0 0 auto; min-width: 170px; color: var(--navy-deep); background: #fff; border-color: #fff; }
 
     .day-card {
       overflow: hidden;
@@ -325,6 +344,8 @@
       .drill-list { padding-inline: 18px; }
       .card-header { padding-inline: 20px; }
       .greenlight-actions { grid-template-columns: 1fr; }
+      .schedule-launch { align-items: stretch; flex-direction: column; }
+      .schedule-launch .action-link { width: 100%; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -347,6 +368,14 @@
       </div>
       <div class="mark" aria-hidden="true">PD</div>
     </header>
+
+    <section class="schedule-launch" aria-labelledby="scheduleLaunchTitle">
+      <div>
+        <strong id="scheduleLaunchTitle" data-i18n="scheduleTitle">Plan diario y calendario 2026</strong>
+        <span data-i18n="scheduleTeaser">Mira la carga del día, elige un drill aprobado y comparte el reporte del bloque.</span>
+      </div>
+      <a class="action-link" id="scheduleLink" href="schedule.html" data-i18n="openSchedule">Abrir calendario</a>
+    </section>
 
     <section class="menu-grid" aria-label="Drill menu">
       <article class="day-card light">
@@ -460,6 +489,9 @@
         eyebrow: "Desarrollo de jugadores · República Dominicana",
         title: "Menú de drills del bloque de corrido de bases / rotación de BP",
         intro: "Selecciona el tipo de día y toca un drill para ver su demostración, explicación y propósito.",
+        scheduleTitle: "Plan diario y calendario 2026",
+        scheduleTeaser: "Mira la carga del día, elige un drill aprobado y comparte el reporte del bloque.",
+        openSchedule: "Abrir calendario",
         lightTitle: "Día liviano",
         lightNote: "Revisión y trabajo de baja carga",
         heavyTitle: "Día medio / pesado",
@@ -491,6 +523,9 @@
         eyebrow: "Player Development · Dominican Republic",
         title: "Base Running Block / BP Rotation Drill Menu",
         intro: "Select the day type and tap a drill to view its demonstration, explanation, and purpose.",
+        scheduleTitle: "Daily plan and 2026 calendar",
+        scheduleTeaser: "See the day’s workload, choose an approved drill, and share the block report.",
+        openSchedule: "Open calendar",
         lightTitle: "Light day",
         lightNote: "Review and low-load work",
         heavyTitle: "Medium / heavy day",
@@ -520,7 +555,7 @@
       }
     };
 
-    let language = "es";
+    let language = new URLSearchParams(window.location.search).get("lang") === "en" ? "en" : "es";
     let lastTrigger = null;
     const modal = document.getElementById("videoModal");
     const modalPanel = document.getElementById("modalPanel");
@@ -546,6 +581,7 @@
         button.setAttribute("aria-selected", String(button.dataset.language === language));
       });
       modalClose.setAttribute("aria-label", copy[language].close);
+      document.getElementById("scheduleLink").href = `schedule.html?lang=${language}`;
       modalTitle.textContent = copy[language].modalTitle;
       modalMessage.textContent = copy[language].modalMessage;
     }
@@ -645,6 +681,7 @@
     modalClose.addEventListener("click", closeModal);
     modal.addEventListener("click", (event) => { if (event.target === modal) closeModal(); });
     document.addEventListener("keydown", (event) => { if (event.key === "Escape" && modal.classList.contains("open")) closeModal(); });
+    setLanguage(language);
   </script>
 </body>
 </html>

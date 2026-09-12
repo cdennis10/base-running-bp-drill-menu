@@ -1,0 +1,2603 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="theme-color" content="#0e2a52">
+  <title>Plan de Corrido de Bases · DR 2026</title>
+  <style>
+    :root {
+      --navy: #0e2a52;
+      --navy-deep: #081a35;
+      --blue: #1659a6;
+      --red: #d9272e;
+      --cream: #f6f3ec;
+      --paper: #ffffff;
+      --ink: #12213a;
+      --muted: #637087;
+      --line: #dce2ea;
+      --soft: #edf2f8;
+      --light: #25745f;
+      --light-soft: #e1f1eb;
+      --heavy: #b95127;
+      --heavy-soft: #fae8df;
+      --complete: #196a53;
+      --warning: #9a6414;
+      --shadow: 0 16px 45px rgba(8, 26, 53, .12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 4%, rgba(22, 89, 166, .12), transparent 27%),
+        radial-gradient(circle at 92% 88%, rgba(217, 39, 46, .08), transparent 31%),
+        var(--cream);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    button, input, select, textarea, a { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+      outline: 3px solid #f2c94c;
+      outline-offset: 3px;
+    }
+    [hidden] { display: none !important; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 64px;
+      padding: 9px max(16px, calc((100vw - 1160px) / 2));
+      color: #fff;
+      background: rgba(8, 26, 53, .97);
+      border-bottom: 3px solid var(--red);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      font-weight: 850;
+      text-decoration: none;
+      letter-spacing: -.01em;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      background: var(--red);
+      border: 2px solid #fff;
+      border-radius: 50%;
+      font-size: .72rem;
+      letter-spacing: -.04em;
+    }
+
+    .topbar-actions { display: flex; align-items: center; gap: 8px; }
+    .menu-link {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 13px;
+      color: #e5edf8;
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 760;
+      font-size: .87rem;
+    }
+
+    .language-toggle { display: flex; gap: 4px; }
+    .language-button {
+      min-height: 42px;
+      padding: 8px 13px;
+      color: #dbe7f7;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: .87rem;
+    }
+    .language-button[aria-selected="true"] { color: var(--navy-deep); background: #fff; }
+
+    main {
+      width: min(1160px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 42px 0 60px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 28px;
+      margin-bottom: 26px;
+    }
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--red);
+      font-size: .78rem;
+      font-weight: 900;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 780px;
+      margin: 0;
+      color: var(--navy-deep);
+      font-size: clamp(2.05rem, 4.2vw, 3.7rem);
+      line-height: 1;
+      letter-spacing: -.045em;
+    }
+    .intro {
+      max-width: 760px;
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.7vw, 1.12rem);
+      line-height: 1.58;
+    }
+    .hero-count {
+      min-width: 146px;
+      padding: 18px;
+      color: #fff;
+      background: var(--navy);
+      border-bottom: 5px solid var(--red);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .hero-count strong { display: block; font-size: 2.25rem; line-height: 1; }
+    .hero-count span { display: block; margin-top: 7px; color: #d8e4f4; font-size: .79rem; font-weight: 700; }
+
+    .today-strip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+      padding: 14px 18px;
+      color: #fff;
+      background: linear-gradient(120deg, var(--navy-deep), var(--navy));
+      border-radius: 16px;
+      box-shadow: 0 9px 28px rgba(8, 26, 53, .14);
+    }
+    .today-strip-copy { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .live-dot { flex: 0 0 auto; width: 10px; height: 10px; background: #52d49c; border-radius: 50%; box-shadow: 0 0 0 5px rgba(82,212,156,.14); }
+    #todayStatus { font-weight: 750; line-height: 1.35; }
+    .today-strip button {
+      flex: 0 0 auto;
+      min-height: 42px;
+      padding: 8px 14px;
+      color: var(--navy-deep);
+      background: #fff;
+      border: 0;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .tabbar {
+      display: flex;
+      gap: 7px;
+      margin-bottom: 20px;
+      padding: 5px;
+      background: rgba(255,255,255,.7);
+      border: 1px solid rgba(14,42,82,.1);
+      border-radius: 14px;
+      width: fit-content;
+    }
+    .tab-button {
+      min-height: 44px;
+      padding: 9px 18px;
+      color: var(--muted);
+      background: transparent;
+      border: 0;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 800;
+    }
+    .tab-button[aria-selected="true"] { color: #fff; background: var(--navy); }
+
+    .panel { animation: panel-in .2s ease-out; }
+    @keyframes panel-in { from { opacity: 0; transform: translateY(4px); } }
+
+    .day-toolbar {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 15px;
+    }
+    .field { display: grid; gap: 7px; }
+    .field label, .field > span { color: var(--navy-deep); font-size: .8rem; font-weight: 820; }
+    input, select, textarea {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 12px;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid #bfc9d7;
+      border-radius: 10px;
+    }
+    textarea { min-height: 92px; resize: vertical; }
+    .date-control { width: min(100%, 230px); }
+
+    .today-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.55fr) minmax(280px, .75fr);
+      gap: 20px;
+      align-items: start;
+    }
+    .surface {
+      background: rgba(255,255,255,.94);
+      border: 1px solid rgba(14,42,82,.11);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+    }
+    .session-card { overflow: hidden; }
+    .session-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 22px 24px;
+      color: #fff;
+      background: var(--navy);
+    }
+    .session-heading.low { background: linear-gradient(130deg, #175f4d, var(--light)); }
+    .session-heading.high { background: linear-gradient(130deg, #993e1e, var(--heavy)); }
+    .session-date { margin: 0 0 5px; color: rgba(255,255,255,.75); font-size: .82rem; font-weight: 760; text-transform: uppercase; letter-spacing: .06em; }
+    .session-heading h2 { margin: 0; font-size: clamp(1.35rem, 3vw, 1.85rem); line-height: 1.15; }
+    .load-badge {
+      flex: 0 0 auto;
+      padding: 7px 11px;
+      color: var(--navy-deep);
+      background: #fff;
+      border-radius: 999px;
+      font-size: .74rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .session-body { padding: 23px 24px 25px; }
+    .choice-kicker { margin: 0; color: var(--red); font-size: .78rem; font-weight: 900; letter-spacing: .11em; text-transform: uppercase; }
+    .choice-instruction { margin: 7px 0 17px; color: var(--muted); line-height: 1.5; }
+    .choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+    .choice-card {
+      display: flex;
+      min-height: 190px;
+      flex-direction: column;
+      padding: 17px;
+      background: var(--soft);
+      border: 2px solid transparent;
+      border-radius: 15px;
+    }
+    .choice-card.selected { background: #fff; border-color: var(--blue); box-shadow: 0 8px 22px rgba(22,89,166,.12); }
+    .choice-number {
+      display: inline-grid;
+      place-items: center;
+      width: 29px;
+      height: 29px;
+      color: #fff;
+      background: var(--navy);
+      border-radius: 50%;
+      font-size: .79rem;
+      font-weight: 900;
+    }
+    .choice-card h3 { margin: 12px 0 6px; color: var(--navy-deep); font-size: 1.05rem; line-height: 1.28; }
+    .choice-card p { margin: 0 0 16px; color: var(--muted); font-size: .86rem; line-height: 1.42; }
+    .choice-actions { display: flex; gap: 8px; margin-top: auto; }
+    .btn {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 9px 14px;
+      color: var(--navy);
+      background: #fff;
+      border: 1px solid #bfc9d7;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 820;
+      text-decoration: none;
+      line-height: 1.2;
+    }
+    .btn:hover { border-color: var(--blue); }
+    .btn-primary { color: #fff; background: var(--navy); border-color: var(--navy); }
+    .btn-red { color: #fff; background: var(--red); border-color: var(--red); }
+    .btn-block { width: 100%; }
+    .btn:disabled { cursor: not-allowed; opacity: .56; }
+    .choice-actions .btn { flex: 1; padding-inline: 9px; font-size: .84rem; }
+
+    .session-action {
+      margin-top: 17px;
+      padding-top: 17px;
+      border-top: 1px solid var(--line);
+    }
+    .selected-line { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+    .selected-line strong { color: var(--navy-deep); }
+    .selected-line span { color: var(--muted); font-size: .84rem; }
+    .complete-card {
+      padding: 15px;
+      color: #124f40;
+      background: var(--light-soft);
+      border-radius: 13px;
+    }
+    .complete-card strong { display: block; margin-bottom: 5px; }
+    .complete-card p { margin: 0; line-height: 1.45; font-size: .88rem; }
+    .complete-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+
+    .empty-session { padding: 28px 24px 30px; text-align: center; }
+    .empty-symbol { display: grid; place-items: center; width: 58px; height: 58px; margin: 0 auto 14px; color: var(--navy); background: var(--soft); border-radius: 17px; font-size: 1.5rem; }
+    .empty-session h2 { margin: 0 0 8px; color: var(--navy-deep); }
+    .empty-session p { max-width: 520px; margin: 0 auto 18px; color: var(--muted); line-height: 1.52; }
+
+    .sidebar { display: grid; gap: 16px; }
+    .side-card { padding: 20px; }
+    .side-card h2 { margin: 0; color: var(--navy-deep); font-size: 1.12rem; }
+    .side-card > p { margin: 8px 0 0; color: var(--muted); font-size: .89rem; line-height: 1.5; }
+    .chat-date { margin-top: 16px; padding: 14px; background: var(--soft); border-radius: 12px; }
+    .chat-date strong { display: block; color: var(--navy-deep); }
+    .chat-date span { display: block; margin-top: 4px; color: var(--muted); font-size: .84rem; }
+    .agenda { margin: 14px 0 17px; padding-left: 21px; color: var(--ink); font-size: .87rem; line-height: 1.55; }
+    .agenda li + li { margin-top: 4px; }
+    .side-actions { display: grid; gap: 8px; }
+    .side-actions.top-gap { margin-top: 9px; }
+    .privacy-note { display: flex; gap: 10px; padding: 14px; color: #6b4a13; background: #fff2d8; border-radius: 12px; font-size: .82rem; line-height: 1.42; }
+    .privacy-note strong { display: block; color: #65420b; }
+
+    .calendar-shell { padding: 20px; }
+    .calendar-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 16px; }
+    .calendar-toolbar h2 { margin: 0; color: var(--navy-deep); font-size: 1.35rem; }
+    .month-controls { display: flex; gap: 7px; }
+    .month-button { min-width: 44px; min-height: 42px; padding: 8px 12px; color: var(--navy); background: #fff; border: 1px solid #bfc9d7; border-radius: 10px; cursor: pointer; font-weight: 850; }
+    .month-button:disabled { opacity: .38; cursor: not-allowed; }
+    .calendar-legend { display: flex; flex-wrap: wrap; gap: 8px 14px; margin: 0 0 13px; padding: 0; color: var(--muted); font-size: .78rem; font-weight: 720; list-style: none; }
+    .legend-item { display: inline-flex; align-items: center; gap: 6px; }
+    .legend-dot { width: 9px; height: 9px; border-radius: 3px; }
+    .legend-dot.low { background: var(--light); }
+    .legend-dot.high { background: var(--heavy); }
+    .legend-dot.chat { background: var(--blue); border-radius: 50%; }
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+    .weekday { padding: 9px 4px; color: var(--muted); background: var(--soft); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: center; font-size: .72rem; font-weight: 880; text-transform: uppercase; }
+    .calendar-day {
+      position: relative;
+      min-height: 122px;
+      padding: 10px;
+      color: var(--ink);
+      background: rgba(255,255,255,.72);
+      border: 0;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+    }
+    button.calendar-day { cursor: pointer; }
+    button.calendar-day:hover { background: #fff; box-shadow: inset 0 0 0 2px var(--blue); }
+    .calendar-day.outside { background: rgba(237,242,248,.42); }
+    .calendar-day.today { box-shadow: inset 0 0 0 3px var(--navy); }
+    .calendar-day.complete::after { content: "✓"; position: absolute; top: 8px; right: 8px; display: grid; place-items: center; width: 22px; height: 22px; color: #fff; background: var(--complete); border-radius: 50%; font-size: .72rem; font-weight: 900; }
+    .day-number { display: block; color: var(--navy-deep); font-weight: 900; }
+    .day-event { display: block; margin-top: 9px; color: var(--ink); font-size: .79rem; font-weight: 780; line-height: 1.3; }
+    .day-load { display: inline-block; margin-top: 7px; padding: 3px 7px; border-radius: 999px; font-size: .66rem; font-weight: 900; text-transform: uppercase; }
+    .day-load.low { color: #15533f; background: var(--light-soft); }
+    .day-load.high { color: #853517; background: var(--heavy-soft); }
+    .chat-marker { display: block; margin-top: 7px; color: var(--blue); font-size: .68rem; font-weight: 820; line-height: 1.2; }
+    .calendar-caption { margin: 14px 0 0; color: var(--muted); font-size: .8rem; line-height: 1.45; }
+
+    .report-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; margin-bottom: 18px; }
+    .stat { padding: 18px; }
+    .stat span { display: block; color: var(--muted); font-size: .79rem; font-weight: 760; }
+    .stat strong { display: block; margin-top: 5px; color: var(--navy-deep); font-size: 1.9rem; line-height: 1; }
+    .report-layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(290px, .75fr); gap: 18px; align-items: start; }
+    .report-card { padding: 20px; }
+    .report-card h2 { margin: 0; color: var(--navy-deep); font-size: 1.2rem; }
+    .report-card .section-copy { margin: 7px 0 16px; color: var(--muted); font-size: .87rem; line-height: 1.48; }
+    .report-tools { display: flex; flex-wrap: wrap; align-items: end; gap: 9px; margin-bottom: 15px; }
+    .report-tools .field { min-width: 210px; flex: 1; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+    th, td { padding: 11px 9px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-size: .71rem; letter-spacing: .04em; text-transform: uppercase; }
+    .empty-row { padding: 26px 8px; color: var(--muted); text-align: center; }
+    .setup-form { display: grid; gap: 13px; }
+    .two-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .setup-note { margin: 13px 0 0; color: var(--muted); font-size: .78rem; line-height: 1.42; }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: rgba(4,14,30,.76);
+      backdrop-filter: blur(7px);
+    }
+    .modal {
+      position: relative;
+      width: min(560px, 100%);
+      max-height: calc(100vh - 36px);
+      overflow-y: auto;
+      padding: 27px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.32);
+    }
+    .modal.video-modal { width: min(900px, 100%); }
+    .modal-close { position: absolute; top: 12px; right: 12px; display: grid; place-items: center; width: 38px; height: 38px; color: var(--navy); background: var(--soft); border: 0; border-radius: 50%; cursor: pointer; font-size: 1.35rem; }
+    .modal h2 { margin: 0 42px 7px 0; color: var(--navy-deep); font-size: 1.4rem; }
+    .modal-intro { margin: 0 0 19px; color: var(--muted); line-height: 1.48; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .field.full { grid-column: 1 / -1; }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 9px; margin-top: 19px; }
+    .video-stage { overflow: hidden; margin-top: 18px; aspect-ratio: 16 / 9; background: #050b14; border-radius: 13px; }
+    .video-stage iframe, .video-stage video { width: 100%; height: 100%; border: 0; }
+    .greenlight-box { margin-top: 17px; padding: 17px; background: var(--soft); border-radius: 13px; }
+    .greenlight-box ol { margin: 0 0 15px; padding-left: 22px; color: var(--ink); font-size: .88rem; line-height: 1.48; }
+    .greenlight-box li + li { margin-top: 5px; }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 80;
+      max-width: min(390px, calc(100% - 36px));
+      padding: 13px 16px;
+      color: #fff;
+      background: var(--navy-deep);
+      border-left: 4px solid #52d49c;
+      border-radius: 11px;
+      box-shadow: 0 15px 45px rgba(0,0,0,.24);
+      font-weight: 730;
+      line-height: 1.35;
+    }
+
+    footer { margin-top: 24px; color: var(--muted); font-size: .78rem; text-align: center; line-height: 1.5; }
+
+    @media (max-width: 860px) {
+      .today-layout, .report-layout { grid-template-columns: 1fr; }
+      .sidebar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero-count { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .calendar-day { min-height: 110px; padding: 8px; }
+    }
+
+    @media (max-width: 660px) {
+      .topbar { align-items: flex-start; padding-inline: 12px; }
+      .brand-link { padding-top: 4px; }
+      .brand-text { display: none; }
+      .topbar-actions { gap: 5px; }
+      .menu-link, .language-button { min-height: 40px; padding-inline: 10px; font-size: .79rem; }
+      main { width: min(100% - 22px, 600px); padding-top: 30px; }
+      h1 { font-size: clamp(2rem, 10vw, 3rem); }
+      .today-strip { align-items: flex-start; }
+      .today-strip button { min-height: 38px; padding: 7px 10px; font-size: .78rem; }
+      .tabbar { width: 100%; }
+      .tab-button { flex: 1; padding-inline: 8px; font-size: .82rem; }
+      .day-toolbar { align-items: stretch; flex-direction: column; }
+      .date-control { width: 100%; }
+      .session-heading { padding: 19px; }
+      .session-body { padding: 20px 18px 22px; }
+      .choice-grid, .sidebar, .report-grid, .two-fields, .form-grid { grid-template-columns: 1fr; }
+      .choice-card { min-height: 0; }
+      .field.full { grid-column: auto; }
+      .calendar-shell { padding: 12px; }
+      .calendar-day { min-height: 94px; padding: 6px; }
+      .weekday { font-size: .62rem; }
+      .day-event { font-size: .69rem; }
+      .day-load { padding: 2px 5px; font-size: .58rem; }
+      .chat-marker { font-size: 0; }
+      .chat-marker::before { content: "●"; color: var(--blue); font-size: .72rem; }
+      .calendar-toolbar h2 { font-size: 1.12rem; }
+      .report-grid { gap: 9px; }
+      .stat { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; }
+      .stat strong { margin: 0; font-size: 1.45rem; }
+      .modal { padding: 23px 18px; }
+      .modal-actions { flex-direction: column-reverse; }
+      .modal-actions .btn { width: 100%; }
+    }
+
+    @media (max-width: 410px) {
+      .menu-link { max-width: 94px; text-align: center; }
+      .calendar-day { min-height: 84px; }
+      .day-event { display: -webkit-box; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+      .month-button { min-width: 40px; padding-inline: 9px; }
+      .selected-line { align-items: flex-start; flex-direction: column; }
+    }
+
+    /* 2026 coach experience */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      z-index: -1;
+      pointer-events: none;
+      border-radius: 50%;
+    }
+    body::before {
+      width: 420px;
+      height: 420px;
+      top: 90px;
+      right: -255px;
+      border: 2px dashed rgba(217,39,46,.15);
+      box-shadow: 0 0 0 30px rgba(255,255,255,.22), 0 0 0 32px rgba(217,39,46,.08);
+    }
+    body::after {
+      width: 330px;
+      height: 330px;
+      bottom: 60px;
+      left: -220px;
+      border: 2px dashed rgba(22,89,166,.13);
+      box-shadow: 0 0 0 24px rgba(255,255,255,.2), 0 0 0 26px rgba(22,89,166,.07);
+    }
+
+    .topbar {
+      min-height: 70px;
+      background: linear-gradient(105deg, rgba(5,18,39,.98), rgba(14,42,82,.98));
+      box-shadow: 0 10px 30px rgba(8,26,53,.16);
+    }
+    .brand-link { line-height: 1; }
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(145deg, #f23b42, #b90f18);
+      border-width: 3px;
+      box-shadow: 0 5px 15px rgba(217,39,46,.3);
+      font-size: .76rem;
+    }
+    .brand-copy { display: grid; gap: 5px; }
+    .season-label { color: #9fb7d6; font-size: .59rem; font-weight: 850; letter-spacing: .14em; }
+    .help-button {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 13px;
+      color: #e5edf8;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: .84rem;
+      font-weight: 800;
+    }
+    .help-button > span:first-child {
+      display: grid;
+      place-items: center;
+      width: 20px;
+      height: 20px;
+      color: var(--navy-deep);
+      background: #f2c94c;
+      border-radius: 50%;
+      font-size: .72rem;
+      font-weight: 950;
+    }
+
+    .hero {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      min-height: 270px;
+      align-items: center;
+      padding: clamp(28px, 5vw, 48px);
+      color: #fff;
+      background:
+        linear-gradient(120deg, rgba(5,18,39,.99) 12%, rgba(14,42,82,.96) 70%, rgba(18,65,118,.95)),
+        var(--navy-deep);
+      border-radius: 30px;
+      box-shadow: 0 24px 70px rgba(8,26,53,.22);
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      width: 530px;
+      height: 530px;
+      top: -345px;
+      right: 95px;
+      border: 2px dashed rgba(255,255,255,.16);
+      border-radius: 50%;
+      box-shadow: 0 0 0 28px rgba(255,255,255,.025), 0 0 0 30px rgba(255,255,255,.08);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      width: 280px;
+      height: 280px;
+      right: -115px;
+      bottom: -175px;
+      background: rgba(217,39,46,.2);
+      border-radius: 50%;
+      filter: blur(1px);
+    }
+    .hero .eyebrow { color: #f6d36b; }
+    .hero h1 { max-width: 720px; color: #fff; text-wrap: balance; }
+    .hero .intro { max-width: 720px; color: #c9d8ea; }
+    .hero-count {
+      position: relative;
+      display: grid;
+      place-items: center;
+      align-content: center;
+      width: 176px;
+      height: 176px;
+      min-width: 176px;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+    }
+    .hero-count::before {
+      content: "";
+      position: absolute;
+      inset: 24px;
+      background: linear-gradient(145deg, rgba(255,255,255,.18), rgba(255,255,255,.06));
+      border: 3px solid rgba(255,255,255,.86);
+      border-radius: 17px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.23), inset 0 0 0 8px rgba(255,255,255,.04);
+      transform: rotate(45deg);
+    }
+    .hero-count strong,
+    .hero-count span { position: relative; z-index: 1; }
+    .hero-count strong { color: #fff; font-size: 3.15rem; text-shadow: 0 4px 18px rgba(0,0,0,.28); }
+    .hero-count span { max-width: 94px; margin-top: 2px; color: #f6d36b; font-size: .67rem; letter-spacing: .07em; text-transform: uppercase; }
+
+    .today-strip {
+      position: relative;
+      overflow: hidden;
+      margin-top: -8px;
+      border: 1px solid rgba(255,255,255,.09);
+      box-shadow: 0 14px 34px rgba(8,26,53,.18);
+    }
+    .today-strip::after {
+      content: "";
+      position: absolute;
+      right: 116px;
+      width: 82px;
+      height: 82px;
+      border: 1px dashed rgba(255,255,255,.13);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .live-dot { animation: live-pulse 2.2s ease-out infinite; }
+    @keyframes live-pulse {
+      0%, 55%, 100% { box-shadow: 0 0 0 5px rgba(82,212,156,.14); }
+      25% { box-shadow: 0 0 0 9px rgba(82,212,156,.04); }
+    }
+
+    .tabbar {
+      width: 100%;
+      gap: 9px;
+      padding: 7px;
+      background: rgba(255,255,255,.82);
+      border-radius: 17px;
+      box-shadow: 0 9px 28px rgba(8,26,53,.07);
+    }
+    .tab-button {
+      display: inline-flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 50px;
+      border-radius: 12px;
+    }
+    .tab-number { color: #94a2b5; font-size: .68rem; font-weight: 900; letter-spacing: .05em; }
+    .tab-button[aria-selected="true"] {
+      background: linear-gradient(120deg, var(--navy-deep), var(--navy));
+      box-shadow: 0 8px 18px rgba(8,26,53,.18);
+    }
+    .tab-button[aria-selected="true"] .tab-number { color: #f6d36b; }
+
+    .surface { box-shadow: 0 18px 50px rgba(8,26,53,.1); }
+    .session-card { border-radius: 24px; }
+    .session-heading {
+      position: relative;
+      isolation: isolate;
+      min-height: 124px;
+      align-items: center;
+      overflow: hidden;
+      padding: 25px 27px;
+    }
+    .session-heading::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      width: 160px;
+      height: 160px;
+      right: -62px;
+      top: -89px;
+      border: 2px dashed rgba(255,255,255,.22);
+      border-radius: 50%;
+      box-shadow: 0 0 0 14px rgba(255,255,255,.035);
+    }
+    .session-heading.low { background: linear-gradient(125deg, #0f493c, #25745f 72%, #3b9178); }
+    .session-heading.high { background: linear-gradient(125deg, #742912, #b95127 72%, #d36b3b); }
+    .load-badge { padding: 9px 13px; box-shadow: 0 7px 18px rgba(0,0,0,.13); }
+    .session-body { padding: 25px 27px 28px; }
+
+    .load-explanation {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 14px;
+      padding: 12px 14px;
+      color: var(--navy-deep);
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+    }
+    .load-explanation > span { padding: 5px 8px; color: #fff; background: var(--navy); border-radius: 7px; font-size: .62rem; font-weight: 900; letter-spacing: .07em; }
+    .load-explanation p { margin: 0; color: var(--muted); font-size: .79rem; line-height: 1.42; }
+    .load-explanation strong { color: var(--navy-deep); }
+
+    .workflow {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 24px;
+      padding: 8px;
+      background: var(--soft);
+      border-radius: 15px;
+      list-style: none;
+    }
+    .workflow-step {
+      display: grid;
+      grid-template-columns: 35px 1fr;
+      align-items: center;
+      gap: 9px;
+      min-width: 0;
+      padding: 9px 10px;
+      color: var(--muted);
+      border-radius: 11px;
+    }
+    .workflow-step > span {
+      display: grid;
+      place-items: center;
+      width: 35px;
+      height: 35px;
+      color: #6d7c90;
+      background: #fff;
+      border: 1px solid #cbd4df;
+      border-radius: 50%;
+      font-size: .75rem;
+      font-weight: 900;
+    }
+    .workflow-step b { display: block; color: inherit; font-size: .82rem; }
+    .workflow-step small { display: block; overflow: hidden; margin-top: 2px; font-size: .67rem; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+    .workflow-step.active { color: var(--navy-deep); background: #fff; box-shadow: 0 6px 18px rgba(8,26,53,.09); }
+    .workflow-step.active > span { color: #fff; background: var(--blue); border-color: var(--blue); }
+    .workflow-step.done { color: #24624f; }
+    .workflow-step.done > span { color: #fff; background: var(--complete); border-color: var(--complete); }
+
+    .choice-kicker { color: var(--red); }
+    .choice-grid { gap: 15px; }
+    .choice-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 228px;
+      padding: 19px;
+      background: #fff;
+      border: 1px solid #d7dee8;
+      border-radius: 18px;
+      box-shadow: 0 8px 22px rgba(8,26,53,.055);
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    .choice-card::before {
+      content: "";
+      position: absolute;
+      width: 115px;
+      height: 115px;
+      right: -72px;
+      top: -70px;
+      border: 1px dashed rgba(14,42,82,.16);
+      border-radius: 50%;
+    }
+    .choice-card:hover { transform: translateY(-3px); box-shadow: 0 15px 32px rgba(8,26,53,.11); }
+    .choice-card.selected {
+      background: linear-gradient(155deg, #fff, #f1f7ff);
+      border-color: var(--blue);
+      box-shadow: 0 13px 32px rgba(22,89,166,.16), inset 0 4px 0 var(--blue);
+    }
+    .choice-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .choice-number {
+      width: auto;
+      height: auto;
+      padding: 5px 9px;
+      color: var(--navy);
+      background: var(--soft);
+      border-radius: 999px;
+      font-size: .67rem;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .drill-symbol {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      color: #fff;
+      background: linear-gradient(145deg, var(--navy), var(--blue));
+      border: 3px solid #fff;
+      border-radius: 13px;
+      box-shadow: 0 7px 16px rgba(22,89,166,.2);
+      font-size: .73rem;
+      font-weight: 950;
+      letter-spacing: -.02em;
+      transform: rotate(3deg);
+    }
+    .choice-card h3 { margin-top: 15px; font-size: 1.12rem; }
+    .choice-card p { font-size: .88rem; }
+
+    .run-brief {
+      display: grid;
+      grid-template-columns: 46px minmax(0, 1fr);
+      gap: 13px;
+      margin-bottom: 15px;
+      padding: 15px;
+      color: var(--navy-deep);
+      background: linear-gradient(120deg, #eef5ff, #f7faff);
+      border: 1px solid #d6e3f3;
+      border-radius: 14px;
+    }
+    .run-number { display: grid; place-items: center; width: 46px; height: 46px; color: #fff; background: var(--blue); border-radius: 14px; font-size: .76rem; font-weight: 950; }
+    .run-brief span { display: block; color: var(--red); font-size: .68rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+    .run-brief strong { display: block; margin-top: 3px; }
+    .run-brief p { margin: 4px 0 0; color: var(--muted); font-size: .81rem; line-height: 1.42; }
+    .run-actions { display: grid; grid-template-columns: .85fr 1.15fr; gap: 9px; }
+    .complete-card { position: relative; overflow: hidden; padding: 18px; border: 1px solid #b9ddcf; }
+    .complete-card::after { content: "✓"; position: absolute; right: -10px; bottom: -42px; color: rgba(25,106,83,.09); font-size: 8rem; font-weight: 950; transform: rotate(-8deg); }
+    .complete-card > * { position: relative; z-index: 1; }
+    .complete-prompt { margin-top: 10px !important; color: #174f40; font-weight: 780; }
+    .guide-replay { margin-top: 12px; }
+
+    .calendar-shell { border-radius: 24px; }
+    .calendar-grid { gap: 8px; border: 0; }
+    .weekday { color: #7a879a; background: transparent; border: 0; }
+    .calendar-day {
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid #d9e0e9;
+      border-radius: 12px;
+      box-shadow: 0 5px 14px rgba(8,26,53,.035);
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .calendar-day.low { border-top: 4px solid var(--light); }
+    .calendar-day.high { border-top: 4px solid var(--heavy); }
+    button.calendar-day:hover { transform: translateY(-2px); background: #fff; box-shadow: 0 11px 22px rgba(8,26,53,.1); }
+    .calendar-day.today { box-shadow: 0 0 0 3px rgba(14,42,82,.9), 0 11px 24px rgba(8,26,53,.13); }
+    .calendar-day.outside { background: rgba(237,242,248,.35); box-shadow: none; }
+
+    .calendar-rule {
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr);
+      gap: 11px;
+      align-items: center;
+      margin: 0 0 17px;
+      padding: 13px 15px;
+      color: #5f4311;
+      background: #fff3d9;
+      border: 1px solid #efd79e;
+      border-radius: 13px;
+    }
+    .calendar-rule > span { display: grid; place-items: center; width: 32px; height: 32px; color: #fff; background: var(--warning); border-radius: 50%; font-weight: 950; }
+    .calendar-rule strong { display: block; font-size: .86rem; }
+    .calendar-rule p { margin: 2px 0 0; font-size: .78rem; line-height: 1.4; }
+
+    .report-grid .stat { overflow: hidden; position: relative; }
+    .report-grid .stat::after { content: ""; position: absolute; width: 70px; height: 70px; right: -37px; bottom: -38px; background: rgba(22,89,166,.08); border-radius: 50%; }
+    .report-card { border-radius: 22px; }
+    .monitor-path {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 18px;
+      padding: 10px;
+      background: rgba(255,255,255,.74);
+      border: 1px solid rgba(14,42,82,.1);
+      border-radius: 17px;
+      box-shadow: 0 9px 28px rgba(8,26,53,.055);
+    }
+    .monitor-path > div { display: grid; grid-template-columns: 38px 1fr; gap: 10px; align-items: center; padding: 10px; }
+    .monitor-path > div + div { border-left: 1px solid var(--line); }
+    .monitor-path span { display: grid; place-items: center; width: 38px; height: 38px; color: #fff; background: var(--navy); border-radius: 12px; font-size: .7rem; font-weight: 900; }
+    .monitor-path p { margin: 0; }
+    .monitor-path strong { display: block; color: var(--navy-deep); font-size: .82rem; }
+    .monitor-path small { display: block; margin-top: 3px; color: var(--muted); font-size: .72rem; line-height: 1.35; }
+
+    .tour-backdrop { background: rgba(3,12,27,.84); }
+    .tour-modal {
+      overflow: hidden;
+      width: min(760px, 100%);
+      padding: 0;
+      color: #fff;
+      background:
+        radial-gradient(circle at 88% 10%, rgba(52,132,212,.28), transparent 28%),
+        linear-gradient(135deg, #071a35, #0e2a52);
+      border: 1px solid rgba(255,255,255,.13);
+      box-shadow: 0 32px 100px rgba(0,0,0,.45);
+    }
+    .tour-modal .tour-close { color: #fff; background: rgba(255,255,255,.1); }
+    .tour-topline { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 27px 29px 13px; }
+    .tour-eyebrow { margin: 0; color: #f6d36b; font-size: .7rem; font-weight: 900; letter-spacing: .13em; }
+    #tourCounter { padding-right: 38px; color: #9eb5d2; font-size: .78rem; font-weight: 800; }
+    .tour-progress { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; padding: 0 29px; }
+    .tour-progress span { height: 4px; background: rgba(255,255,255,.15); border-radius: 999px; }
+    .tour-progress span.done { background: #f6d36b; }
+    .tour-content { min-height: 330px; display: grid; grid-template-columns: 170px minmax(0, 1fr); align-items: center; gap: 32px; padding: 32px 48px 35px; }
+    .tour-visual {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 150px;
+      height: 150px;
+      color: #fff;
+      background: rgba(255,255,255,.07);
+      border: 2px solid rgba(255,255,255,.42);
+      border-radius: 30px;
+      box-shadow: inset 0 0 0 10px rgba(255,255,255,.025), 0 20px 45px rgba(0,0,0,.18);
+      transform: rotate(45deg);
+    }
+    .tour-visual span { max-width: 112px; font-size: 1.7rem; font-weight: 950; line-height: 1.05; text-align: center; transform: rotate(-45deg); }
+    .tour-copy h2 { margin: 0 0 12px; color: #fff; font-size: clamp(1.55rem, 4vw, 2.25rem); line-height: 1.06; letter-spacing: -.035em; text-wrap: balance; }
+    .tour-copy p { margin: 0; color: #cbd9e9; font-size: 1rem; line-height: 1.62; }
+    .tour-callout { display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; padding: 8px 11px; color: #ffe797; background: rgba(246,211,107,.1); border: 1px solid rgba(246,211,107,.3); border-radius: 999px; font-size: .75rem; font-weight: 850; }
+    .tour-callout::before { content: "✓"; display: grid; place-items: center; width: 20px; height: 20px; color: var(--navy-deep); background: #f6d36b; border-radius: 50%; font-size: .68rem; }
+    .tour-actions { display: flex; justify-content: space-between; gap: 10px; padding: 19px 29px 25px; background: rgba(0,0,0,.12); border-top: 1px solid rgba(255,255,255,.09); }
+    .tour-actions .btn { min-width: 120px; color: #fff; background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.2); }
+    .tour-actions .btn-primary { background: #fff; border-color: #fff; color: var(--navy-deep); }
+
+    @media (max-width: 860px) {
+      .hero { min-height: 240px; grid-template-columns: minmax(0, 1fr) 150px; }
+      .hero-count { display: grid; width: 146px; height: 146px; min-width: 146px; }
+    }
+
+    @media (max-width: 700px) {
+      .hero { min-height: 0; grid-template-columns: 1fr; padding: 30px 24px; border-radius: 24px; }
+      .hero-count, .hero > .sr-only { display: none; }
+      .workflow-step { grid-template-columns: 30px 1fr; padding-inline: 7px; }
+      .workflow-step > span { width: 30px; height: 30px; }
+      .workflow-step small { display: none; }
+      .tour-content { min-height: 410px; grid-template-columns: 1fr; justify-items: center; gap: 27px; padding: 30px 28px; text-align: center; }
+      .tour-visual { width: 116px; height: 116px; border-radius: 24px; }
+      .tour-visual span { font-size: 1.25rem; }
+      .tour-callout { justify-content: center; }
+      .monitor-path { grid-template-columns: 1fr; }
+      .monitor-path > div + div { border-top: 1px solid var(--line); border-left: 0; }
+    }
+
+    @media (max-width: 660px) {
+      .brand-copy { display: none; }
+      .help-button { padding-inline: 10px; }
+      .help-button > span:last-child { display: none; }
+      .tab-button { flex-direction: column; gap: 3px; min-height: 54px; }
+      .workflow { gap: 4px; padding: 5px; }
+      .workflow-step { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 5px; padding: 7px 4px; }
+      .workflow-step b { font-size: .68rem; }
+      .choice-card:hover { transform: none; }
+      .run-actions { grid-template-columns: 1fr; }
+      .calendar-grid { display: grid; grid-template-columns: 1fr; gap: 9px; }
+      .calendar-grid .weekday,
+      .calendar-grid .calendar-day.outside { display: none; }
+      .calendar-day {
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 9px;
+        min-height: 68px;
+        padding: 10px 12px;
+        border-top-width: 1px;
+      }
+      .calendar-day.low { border-left: 5px solid var(--light); }
+      .calendar-day.high { border-left: 5px solid var(--heavy); }
+      .day-number { grid-row: 1 / span 2; font-size: 1.08rem; text-align: center; }
+      .day-event { grid-column: 2; margin: 0; font-size: .83rem; }
+      .day-load { grid-column: 3; grid-row: 1; margin: 0; font-size: .64rem; }
+      .chat-marker { grid-column: 2 / 4; margin: -2px 0 0; font-size: .68rem; }
+      .chat-marker::before { content: none; }
+      .calendar-day.complete::after { top: auto; right: 10px; bottom: 8px; }
+      .tour-topline { padding-inline: 20px; }
+      .tour-progress { padding-inline: 20px; }
+      .tour-actions { padding: 16px 20px 20px; }
+    }
+
+    @media (max-width: 410px) {
+      .topbar-actions { gap: 4px; }
+      .menu-link { max-width: 84px; }
+      .language-button { padding-inline: 9px; }
+      .session-heading { align-items: flex-start; flex-direction: column; }
+      .load-badge { align-self: flex-start; }
+      .tour-copy p { font-size: .92rem; }
+      .tour-actions .btn { min-width: 0; flex: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="topbar" aria-label="Principal">
+    <a class="brand-link" href="schedule.html" aria-label="DR Base Running">
+      <span class="brand-mark" aria-hidden="true">BR</span>
+      <span class="brand-copy">
+        <span class="brand-text">DR Base Running</span>
+        <span class="season-label" data-i18n="seasonLabel">INSTRUCTIVA · 2026</span>
+      </span>
+    </a>
+    <div class="topbar-actions">
+      <button class="help-button" id="openTour" type="button"><span aria-hidden="true">?</span><span data-i18n="guide">Guía</span></button>
+      <a class="menu-link" id="menuLink" href="index.html" data-i18n="drillLibrary">Menú de drills</a>
+      <div class="language-toggle" role="group" aria-label="Language / Idioma">
+        <button class="language-button" type="button" data-language="es" aria-selected="true">ES</button>
+        <button class="language-button" type="button" data-language="en" aria-selected="false">EN</button>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <div>
+        <p class="eyebrow" data-i18n="eyebrow">Calendario de instructiva · República Dominicana</p>
+        <h1 data-i18n="title">Plan semanal de corrido de bases</h1>
+        <p class="intro" data-i18n="intro">El calendario fija la carga. El coach elige del menú completo aprobado para ese día, completa el bloque y comparte un reporte de 30 segundos.</p>
+      </div>
+      <div class="hero-count" aria-hidden="true">
+        <strong>16</strong>
+        <span data-i18n="plannedBlocks">bloques programados</span>
+      </div>
+      <span class="sr-only">16 <span data-i18n="plannedBlocks">bloques programados</span></span>
+    </header>
+
+    <section class="today-strip" aria-live="polite">
+      <div class="today-strip-copy"><span class="live-dot" aria-hidden="true"></span><span id="todayStatus"></span></div>
+      <button id="jumpToday" type="button" data-i18n="openToday">Abrir hoy</button>
+    </section>
+
+    <div class="tabbar" role="tablist" aria-label="Views / Vistas">
+      <button class="tab-button" id="todayTab" type="button" role="tab" aria-selected="true" aria-controls="todayPanel" data-panel="today"><span class="tab-number">01</span><span data-i18n="todayTab">Hoy</span></button>
+      <button class="tab-button" id="calendarTab" type="button" role="tab" aria-selected="false" aria-controls="calendarPanel" data-panel="calendar"><span class="tab-number">02</span><span data-i18n="calendarTab">Calendario</span></button>
+      <button class="tab-button" id="reportTab" type="button" role="tab" aria-selected="false" aria-controls="reportPanel" data-panel="report"><span class="tab-number">03</span><span data-i18n="reportTab">Reporte</span></button>
+    </div>
+
+    <section class="panel" id="todayPanel" role="tabpanel" aria-labelledby="todayTab">
+      <div class="day-toolbar">
+        <div class="field date-control">
+          <label for="datePicker" data-i18n="viewDate">Ver fecha</label>
+          <input id="datePicker" type="date" min="2026-09-06" max="2026-10-31">
+        </div>
+        <button class="btn" id="downloadCalendarTop" type="button" data-i18n="addProgramCalendar">Añadir programa al calendario</button>
+      </div>
+      <div class="today-layout">
+        <article class="surface session-card" id="sessionCard"></article>
+        <aside class="sidebar">
+          <section class="surface side-card" id="chatCard"></section>
+          <section class="surface side-card">
+            <h2 data-i18n="howItWorks">Cómo funciona</h2>
+            <p data-i18n="howIntro">La carga no cambia. La elección sí.</p>
+            <ol class="agenda">
+              <li data-i18n="how1">Abre la fecha del bloque.</li>
+              <li data-i18n="how2">Elige del menú completo aprobado para la carga del día.</li>
+              <li data-i18n="how3">Marca terminado y comparte el reporte.</li>
+            </ol>
+            <div class="privacy-note">
+              <span aria-hidden="true">ⓘ</span>
+              <span><strong data-i18n="deviceOnlyTitle">Guardado en este dispositivo</strong><span data-i18n="deviceOnlyBody">Usa “Compartir reporte” para enviarlo al coordinador.</span></span>
+            </div>
+            <button class="btn btn-block guide-replay" type="button" data-open-tour data-i18n="reopenGuide">Ver la guía otra vez</button>
+          </section>
+        </aside>
+      </div>
+    </section>
+
+    <section class="panel" id="calendarPanel" role="tabpanel" aria-labelledby="calendarTab" hidden>
+      <div class="surface calendar-shell">
+        <div class="calendar-toolbar">
+          <h2 id="monthTitle">Septiembre 2026</h2>
+          <div class="month-controls">
+            <button class="month-button" id="previousMonth" type="button" aria-label="Previous month">←</button>
+            <button class="month-button" id="nextMonth" type="button" aria-label="Next month">→</button>
+          </div>
+        </div>
+        <ul class="calendar-legend">
+          <li class="legend-item"><span class="legend-dot low"></span><span data-i18n="lightDay">Día liviano</span></li>
+          <li class="legend-item"><span class="legend-dot high"></span><span data-i18n="heavyDay">Día medio / fuerte</span></li>
+          <li class="legend-item"><span class="legend-dot chat"></span><span data-i18n="weeklyChat">Charla semanal</span></li>
+        </ul>
+        <div class="calendar-rule">
+          <span aria-hidden="true">!</span>
+          <div><strong data-i18n="calendarRuleTitle">¿Cuándo hacemos corrido de bases?</strong><p data-i18n="calendarRuleBody">Solamente en las fechas con etiqueta Low o High. Juegos, Camp Days y días libres no generan un bloque.</p></div>
+        </div>
+        <div class="calendar-grid" id="calendarGrid"></div>
+        <p class="calendar-caption" data-i18n="calendarCaption">Toca cualquier fecha para ver sus detalles. Los bloques de corrido aparecen solamente en los días marcados Low o High en el calendario original.</p>
+      </div>
+    </section>
+
+    <section class="panel" id="reportPanel" role="tabpanel" aria-labelledby="reportTab" hidden>
+      <div class="report-grid" id="reportStats"></div>
+      <div class="monitor-path">
+        <div><span>01</span><p><strong data-i18n="monitor1Title">El coach guarda</strong><small data-i18n="monitor1Body">Completa el reporte de 30 segundos.</small></p></div>
+        <div><span>02</span><p><strong data-i18n="monitor2Title">El coach comparte</strong><small data-i18n="monitor2Body">Lo envía por WhatsApp, Teams o email.</small></p></div>
+        <div><span>03</span><p><strong data-i18n="monitor3Title">El coordinador revisa</strong><small data-i18n="monitor3Body">Usa los reportes en la charla semanal.</small></p></div>
+      </div>
+      <div class="report-layout">
+        <section class="surface report-card">
+          <h2 data-i18n="completionReport">Reporte de cumplimiento</h2>
+          <p class="section-copy" data-i18n="reportIntro">Filtra una semana, copia el resumen o descarga el CSV para monitoreo.</p>
+          <div class="report-tools">
+            <div class="field">
+              <label for="reportWeek" data-i18n="week">Semana</label>
+              <select id="reportWeek"></select>
+            </div>
+            <button class="btn" id="copyReport" type="button" data-i18n="copyReport">Copiar reporte</button>
+            <button class="btn btn-primary" id="downloadCsv" type="button" data-i18n="downloadCsv">Descargar CSV</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th data-i18n="date">Fecha</th>
+                  <th data-i18n="coach">Coach</th>
+                  <th data-i18n="drill">Drill</th>
+                  <th data-i18n="playersShort">Jug.</th>
+                  <th data-i18n="minutesShort">Min.</th>
+                  <th data-i18n="execution">Ejecución</th>
+                </tr>
+              </thead>
+              <tbody id="reportRows"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="surface report-card">
+          <h2 data-i18n="weeklySetup">Configurar charla semanal</h2>
+          <p class="section-copy" data-i18n="setupIntro">Guarda el día, hora y enlace. Luego comparte el enlace del calendario con los coaches.</p>
+          <form class="setup-form" id="settingsForm">
+            <div class="two-fields">
+              <div class="field">
+                <label for="chatDay" data-i18n="day">Día</label>
+                <select id="chatDay"></select>
+              </div>
+              <div class="field">
+                <label for="chatTime" data-i18n="timeDr">Hora DR</label>
+                <input id="chatTime" type="time">
+              </div>
+            </div>
+            <div class="field">
+              <label for="chatUrl" data-i18n="meetingLink">Enlace de Teams / Zoom / Meet</label>
+              <input id="chatUrl" type="url" inputmode="url" placeholder="https://...">
+            </div>
+            <button class="btn btn-primary btn-block" type="submit" data-i18n="saveMeeting">Guardar charla</button>
+          </form>
+          <div class="side-actions top-gap">
+            <button class="btn btn-block" id="copyStaffLink" type="button" data-i18n="copyStaffLink">Copiar enlace para el staff</button>
+            <button class="btn btn-block" id="downloadCalendar" type="button" data-i18n="downloadCalendar">Descargar calendario (.ics)</button>
+          </div>
+          <p class="setup-note" data-i18n="staffLinkNote">El enlace compartido incluye la configuración de la charla, no los reportes privados guardados en el teléfono.</p>
+        </section>
+      </div>
+    </section>
+
+    <footer data-i18n="footer">Calendario transcrito de “DR Instructs 2026 Calendar”. Zona horaria de las charlas: República Dominicana (AST / UTC-4).</footer>
+  </main>
+
+  <div class="modal-backdrop" id="completionBackdrop" role="dialog" aria-modal="true" aria-labelledby="completionTitle" hidden>
+    <div class="modal">
+      <button class="modal-close" id="completionClose" type="button" aria-label="Cerrar">×</button>
+      <h2 id="completionTitle" data-i18n="completeBlock">Completar bloque</h2>
+      <p class="modal-intro" id="completionIntro"></p>
+      <form id="completionForm">
+        <div class="form-grid">
+          <div class="field">
+            <label for="coachName" data-i18n="coachName">Nombre del coach</label>
+            <input id="coachName" name="coach" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="groupName" data-i18n="groupName">Grupo / equipo</label>
+            <input id="groupName" name="group" type="text" placeholder="DSL / grupo">
+          </div>
+          <div class="field">
+            <label for="playerCount" data-i18n="playerCount">Jugadores</label>
+            <input id="playerCount" name="players" type="number" min="1" max="100" inputmode="numeric" required>
+          </div>
+          <div class="field">
+            <label for="minutes" data-i18n="minutes">Minutos</label>
+            <input id="minutes" name="minutes" type="number" min="1" max="90" inputmode="numeric" value="10" required>
+          </div>
+          <div class="field full">
+            <label for="executionSelect" data-i18n="execution">Ejecución</label>
+            <select id="executionSelect" name="execution" required></select>
+          </div>
+          <div class="field full">
+            <label for="notes" data-i18n="notes">Nota rápida</label>
+            <textarea id="notes" name="notes" data-i18n-placeholder="notesPlaceholder" placeholder="Qué salió bien / qué necesita atención"></textarea>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button class="btn" id="cancelCompletion" type="button" data-i18n="cancel">Cancelar</button>
+          <button class="btn btn-primary" type="submit" data-i18n="saveComplete">Guardar como terminado</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="videoBackdrop" role="dialog" aria-modal="true" aria-labelledby="videoTitle" hidden>
+    <div class="modal video-modal">
+      <button class="modal-close" id="videoClose" type="button" aria-label="Cerrar">×</button>
+      <h2 id="videoTitle">Video</h2>
+      <p class="modal-intro" id="videoIntro"></p>
+      <div class="video-stage" id="videoStage" hidden>
+        <iframe id="videoFrame" title="Drill video" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        <video id="videoPlayer" controls playsinline hidden></video>
+      </div>
+      <div class="greenlight-box" id="greenlightBox" hidden>
+        <ol>
+          <li data-i18n="install1">Toca Descargar GreenLight.</li>
+          <li data-i18n="install2">Si Edge muestra una advertencia, elige Conservar y luego Conservar de todas formas.</li>
+          <li data-i18n="install3">Abre GreenLight_Player_Setup.exe y permite Ejecutar de todas formas si Windows lo solicita.</li>
+        </ol>
+        <div class="choice-actions">
+          <a class="btn btn-primary" href="greenlight://open" data-i18n="openGreenlight">Abrir GreenLight</a>
+          <a class="btn" href="https://github.com/cdennis10/greenlight-player-pilot/releases/download/v1.0.0/GreenLight_Player_Setup.exe" data-i18n="downloadGreenlight">Descargar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop tour-backdrop" id="tourBackdrop" role="dialog" aria-modal="true" aria-labelledby="tourTitle" hidden>
+    <div class="modal tour-modal">
+      <button class="modal-close tour-close" id="tourClose" type="button" aria-label="Cerrar">×</button>
+      <div class="tour-topline">
+        <p class="tour-eyebrow" data-i18n="tourEyebrow">GUÍA RÁPIDA PARA COACHES</p>
+        <span id="tourCounter">1 / 4</span>
+      </div>
+      <div class="tour-progress" id="tourProgress" aria-hidden="true"></div>
+      <div class="tour-content" id="tourContent"></div>
+      <div class="tour-actions">
+        <button class="btn" id="tourBack" type="button" data-i18n="back">Atrás</button>
+        <button class="btn btn-primary" id="tourNext" type="button">Siguiente</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script>
+    const SITE_TIME_ZONE = "America/Santo_Domingo";
+    const STORAGE_KEY = "dr-base-running-schedule-v1";
+    const PROGRAM_START = "2026-09-06";
+    const PROGRAM_END = "2026-10-31";
+
+    const copy = {
+      es: {
+        seasonLabel: "INSTRUCTIVA · 2026",
+        guide: "Guía",
+        drillLibrary: "Menú de drills",
+        eyebrow: "Calendario de instructiva · República Dominicana",
+        title: "Plan semanal de corrido de bases",
+        intro: "El calendario fija la carga. El coach elige del menú completo aprobado para ese día, completa el bloque y comparte un reporte de 30 segundos.",
+        plannedBlocks: "bloques programados",
+        openToday: "Abrir hoy",
+        todayTab: "Hoy",
+        calendarTab: "Calendario",
+        reportTab: "Reporte",
+        viewDate: "Ver fecha",
+        addProgramCalendar: "Añadir programa al calendario",
+        lightDay: "Día liviano",
+        heavyDay: "Día medio / fuerte",
+        weeklyChat: "Charla semanal",
+        calendarRuleTitle: "¿Cuándo hacemos corrido de bases?",
+        calendarRuleBody: "Solamente en las fechas con etiqueta Low o High. Juegos, Camp Days y días libres no generan un bloque.",
+        calendarCaption: "Toca cualquier fecha para ver sus detalles. Los bloques de corrido aparecen solamente en los días marcados Low o High en el calendario original.",
+        completionReport: "Reporte de cumplimiento",
+        reportIntro: "Filtra una semana, copia el resumen o descarga el CSV para monitoreo.",
+        monitor1Title: "El coach guarda",
+        monitor1Body: "Completa el reporte de 30 segundos.",
+        monitor2Title: "El coach comparte",
+        monitor2Body: "Lo envía por WhatsApp, Teams o email.",
+        monitor3Title: "El coordinador revisa",
+        monitor3Body: "Usa los reportes en la charla semanal.",
+        week: "Semana",
+        copyReport: "Copiar reporte",
+        downloadCsv: "Descargar CSV",
+        date: "Fecha",
+        coach: "Coach",
+        drill: "Drill",
+        playersShort: "Jug.",
+        minutesShort: "Min.",
+        execution: "Ejecución",
+        weeklySetup: "Configurar charla semanal",
+        setupIntro: "Guarda el día, hora y enlace. Luego comparte el enlace del calendario con los coaches.",
+        day: "Día",
+        timeDr: "Hora DR",
+        meetingLink: "Enlace de Teams / Zoom / Meet",
+        saveMeeting: "Guardar charla",
+        copyStaffLink: "Copiar enlace para el staff",
+        downloadCalendar: "Descargar calendario (.ics)",
+        staffLinkNote: "El enlace compartido incluye la configuración de la charla, no los reportes privados guardados en el teléfono.",
+        footer: "Calendario transcrito de “DR Instructs 2026 Calendar”. Zona horaria de las charlas: República Dominicana (AST / UTC-4).",
+        completeBlock: "Completar bloque",
+        coachName: "Nombre del coach",
+        groupName: "Grupo / equipo",
+        playerCount: "Jugadores",
+        minutes: "Minutos",
+        notes: "Nota rápida",
+        notesPlaceholder: "Qué salió bien / qué necesita atención",
+        cancel: "Cancelar",
+        saveComplete: "Guardar como terminado",
+        install1: "Toca Descargar GreenLight.",
+        install2: "Si Edge muestra una advertencia, elige Conservar y luego Conservar de todas formas.",
+        install3: "Abre GreenLight_Player_Setup.exe y permite Ejecutar de todas formas si Windows lo solicita.",
+        openGreenlight: "Abrir GreenLight",
+        downloadGreenlight: "Descargar",
+        howItWorks: "Cómo funciona",
+        howIntro: "La carga no cambia. La elección sí.",
+        how1: "Abre la fecha del bloque.",
+        how2: "Elige del menú completo aprobado para la carga del día.",
+        how3: "Marca terminado y comparte el reporte.",
+        deviceOnlyTitle: "Guardado en este dispositivo",
+        deviceOnlyBody: "Usa “Compartir reporte” para enviarlo al coordinador.",
+        reopenGuide: "Ver la guía otra vez",
+        workflowChoose: "Elegir",
+        workflowChooseHint: "del menú",
+        workflowRun: "Ejecutar",
+        workflowRunHint: "con el grupo",
+        workflowReport: "Reportar",
+        workflowReportHint: "30 segundos",
+        loadLocked: "FIJO",
+        calendarDecision: "Decisión del calendario:",
+        lightDefinition: "día de revisión y trabajo de baja carga. Por eso solamente aparecen drills livianos.",
+        heavyDefinition: "día competitivo y de mayor carga. Por eso solamente aparecen drills medio/fuertes.",
+        upNext: "Siguiente paso",
+        runSelectedTitle: "Mira el video si hace falta y ejecuta el drill",
+        runSelectedBody: "Usa la demostración como estándar. Al terminar, registra quién dirigió el bloque, cuántos jugadores participaron y una observación corta.",
+        openSelectedVideo: "Abrir video seleccionado",
+        shareReminder: "Último paso: comparte este reporte para que el coordinador pueda verlo.",
+        todayPrefix: "Hoy en RD",
+        noCalendarToday: "no hay actividad en el calendario",
+        outsideProgram: "fuera del período de instructiva",
+        chooseOne: "Elección del coach",
+        chooseInstruction: "Elige el drill que mejor responda a lo que necesita el grupo. Todo el menú respeta la carga asignada para hoy.",
+        option: "Opción",
+        watch: "Ver video",
+        choose: "Elegir",
+        chosen: "Elegido",
+        selectedDrill: "Drill seleccionado",
+        markComplete: "Marcar bloque terminado",
+        completed: "Bloque terminado",
+        shareUpdate: "Compartir reporte",
+        editReport: "Editar reporte",
+        nextBlock: "Ver próximo bloque",
+        noBlock: "No hay bloque de corrido de bases",
+        noBlockBody: "Los bloques se programan únicamente en días Low y High. Usa el calendario para ver la próxima sesión.",
+        meetingTitle: "Charla semanal con coaches",
+        nextMeeting: "Próxima charla",
+        timeTbd: "Hora por definir",
+        setMeeting: "Configurar en Reporte",
+        joinMeeting: "Entrar a la charla",
+        addMeeting: "Añadir charla al calendario",
+        copyAgenda: "Copiar agenda",
+        agenda1: "Bloques completados y omitidos",
+        agenda2: "Una tendencia positiva de los jugadores",
+        agenda3: "Un punto que necesita video o seguimiento",
+        off: "Día libre del equipo",
+        practice: "Práctica",
+        camp: "Día de campamento",
+        game: "Juego",
+        conditionalGame: "Juego si es necesario",
+        baseBlock: "Bloque de corrido de bases",
+        allWeeks: "Todas las semanas",
+        scheduled: "Programados",
+        completedStat: "Terminados",
+        completionRate: "Cumplimiento",
+        noReports: "Todavía no hay reportes guardados para este período.",
+        saved: "Reporte guardado.",
+        meetingSaved: "Charla semanal guardada.",
+        copied: "Copiado.",
+        downloadReady: "Descarga preparada.",
+        shareTitle: "Reporte de corrido de bases",
+        sharp: "Nítido / listo",
+        onTrack: "En progreso",
+        revisit: "Repetir / dar seguimiento",
+        low: "Low",
+        high: "High",
+        minutesWord: "minutos",
+        playersWord: "jugadores",
+        notesWord: "Nota",
+        weekOf: "Semana del",
+        sourceChoice: "Menú completo aprobado",
+        videoIntro: "Demostración y explicación del drill.",
+        greenlightIntro: "Abre GreenLight Player o instálalo si es la primera vez.",
+        invalidMeetingLink: "Agrega un enlace válido que comience con http:// o https://.",
+        meetingNeedsTime: "Configura la hora de la charla antes de añadirla al calendario.",
+        programCalendarName: "DR Instructs 2026 · Corrido de Bases",
+        chatCalendarName: "Charla semanal · Coaches DR",
+        reportGenerated: "Reporte generado desde el plan DR 2026",
+        tourEyebrow: "GUÍA RÁPIDA PARA COACHES",
+        back: "Atrás",
+        next: "Siguiente",
+        start: "Ver el plan de hoy",
+        tour1Title: "El calendario toma la primera decisión",
+        tour1Body: "Abre esta página cualquier día. Si el calendario marca Low o High, la carga correcta aparecerá automáticamente. No tienes que recordar qué menú corresponde.",
+        tour1Callout: "La carga del día está bloqueada",
+        tour1Visual: "LOW / HIGH",
+        tour2Title: "Tú eliges el mejor drill para el grupo",
+        tour2Body: "Verás el menú completo aprobado para la carga del día. Elige el drill que mejor responda a lo que necesita el grupo; todas las opciones respetan la carga asignada.",
+        tour2Callout: "Todo el menú correcto para el día",
+        tour2Visual: "MENÚ",
+        tour3Title: "Ejecuta el bloque con un estándar claro",
+        tour3Body: "Abre el video para ver la demostración y escuchar el propósito. Luego corre el drill con el grupo. La pantalla te mantiene en el paso correcto.",
+        tour3Callout: "Elegir → Ejecutar → Reportar",
+        tour3Visual: "PLAY",
+        tour4Title: "Cierra el ciclo en 30 segundos",
+        tour4Body: "Marca el bloque terminado, agrega jugadores, minutos y una nota. El reporte queda en este teléfono hasta que pulses Compartir para enviarlo por WhatsApp, Teams o email.",
+        tour4Callout: "La charla semanal también vive aquí",
+        tour4Visual: "✓"
+      },
+      en: {
+        seasonLabel: "INSTRUCTS · 2026",
+        guide: "Guide",
+        drillLibrary: "Drill menu",
+        eyebrow: "Instructional calendar · Dominican Republic",
+        title: "Weekly base running plan",
+        intro: "The calendar fixes the workload. The coach chooses from the full approved menu for that day, completes the block, and shares a 30-second report.",
+        plannedBlocks: "scheduled blocks",
+        openToday: "Open today",
+        todayTab: "Today",
+        calendarTab: "Calendar",
+        reportTab: "Report",
+        viewDate: "View date",
+        addProgramCalendar: "Add program to calendar",
+        lightDay: "Light day",
+        heavyDay: "Medium / heavy day",
+        weeklyChat: "Weekly chat",
+        calendarRuleTitle: "When do we run a base running block?",
+        calendarRuleBody: "Only on dates labeled Low or High. Games, Camp Days, and team off-days do not generate a block.",
+        calendarCaption: "Tap any date to see its details. Base running blocks appear only on days marked Low or High in the original calendar.",
+        completionReport: "Completion report",
+        reportIntro: "Filter a week, copy the summary, or download the CSV for monitoring.",
+        monitor1Title: "Coach saves",
+        monitor1Body: "Completes the 30-second report.",
+        monitor2Title: "Coach shares",
+        monitor2Body: "Sends it through WhatsApp, Teams, or email.",
+        monitor3Title: "Coordinator reviews",
+        monitor3Body: "Uses the reports in the weekly chat.",
+        week: "Week",
+        copyReport: "Copy report",
+        downloadCsv: "Download CSV",
+        date: "Date",
+        coach: "Coach",
+        drill: "Drill",
+        playersShort: "Players",
+        minutesShort: "Min.",
+        execution: "Execution",
+        weeklySetup: "Set up weekly chat",
+        setupIntro: "Save the day, time, and link. Then share the calendar link with the coaches.",
+        day: "Day",
+        timeDr: "DR time",
+        meetingLink: "Teams / Zoom / Meet link",
+        saveMeeting: "Save chat",
+        copyStaffLink: "Copy staff link",
+        downloadCalendar: "Download calendar (.ics)",
+        staffLinkNote: "The shared link includes the chat setup, not the private reports saved on the phone.",
+        footer: "Calendar transcribed from “DR Instructs 2026 Calendar.” Weekly chat time zone: Dominican Republic (AST / UTC-4).",
+        completeBlock: "Complete block",
+        coachName: "Coach name",
+        groupName: "Group / team",
+        playerCount: "Players",
+        minutes: "Minutes",
+        notes: "Quick note",
+        notesPlaceholder: "What went well / what needs attention",
+        cancel: "Cancel",
+        saveComplete: "Save as complete",
+        install1: "Tap Download GreenLight.",
+        install2: "If Edge displays a warning, choose Keep, then Keep anyway.",
+        install3: "Open GreenLight_Player_Setup.exe and allow Run anyway if Windows asks.",
+        openGreenlight: "Open GreenLight",
+        downloadGreenlight: "Download",
+        howItWorks: "How it works",
+        howIntro: "The workload does not change. The choice does.",
+        how1: "Open the block date.",
+        how2: "Choose from the full menu approved for the day's workload.",
+        how3: "Mark it complete and share the report.",
+        deviceOnlyTitle: "Saved on this device",
+        deviceOnlyBody: "Use “Share report” to send it to the coordinator.",
+        reopenGuide: "View the guide again",
+        workflowChoose: "Choose",
+        workflowChooseHint: "from menu",
+        workflowRun: "Run",
+        workflowRunHint: "with the group",
+        workflowReport: "Report",
+        workflowReportHint: "30 seconds",
+        loadLocked: "LOCKED",
+        calendarDecision: "Calendar decision:",
+        lightDefinition: "review and low-load work. That is why only light drills appear.",
+        heavyDefinition: "competitive, higher-load work. That is why only medium/heavy drills appear.",
+        upNext: "Next step",
+        runSelectedTitle: "Watch the video if needed, then run the drill",
+        runSelectedBody: "Use the demonstration as the standard. When finished, record who led the block, how many players participated, and one short observation.",
+        openSelectedVideo: "Open selected video",
+        shareReminder: "Final step: share this report so the coordinator can see it.",
+        todayPrefix: "Today in the DR",
+        noCalendarToday: "no calendar activity",
+        outsideProgram: "outside the instructional period",
+        chooseOne: "Coach choice",
+        chooseInstruction: "Choose the drill that best matches what the group needs. Every option shown fits today's assigned workload.",
+        option: "Option",
+        watch: "Watch video",
+        choose: "Choose",
+        chosen: "Chosen",
+        selectedDrill: "Selected drill",
+        markComplete: "Mark block complete",
+        completed: "Block complete",
+        shareUpdate: "Share report",
+        editReport: "Edit report",
+        nextBlock: "View next block",
+        noBlock: "No base running block",
+        noBlockBody: "Blocks are scheduled only on Low and High days. Use the calendar to see the next session.",
+        meetingTitle: "Weekly coach chat",
+        nextMeeting: "Next chat",
+        timeTbd: "Time to be set",
+        setMeeting: "Set up in Report",
+        joinMeeting: "Join chat",
+        addMeeting: "Add chat to calendar",
+        copyAgenda: "Copy agenda",
+        agenda1: "Completed and missed blocks",
+        agenda2: "One positive player trend",
+        agenda3: "One item needing video or follow-up",
+        off: "Team off-day",
+        practice: "Practice",
+        camp: "Camp day",
+        game: "Game",
+        conditionalGame: "Game if necessary",
+        baseBlock: "Base running block",
+        allWeeks: "All weeks",
+        scheduled: "Scheduled",
+        completedStat: "Completed",
+        completionRate: "Completion",
+        noReports: "No reports have been saved for this period yet.",
+        saved: "Report saved.",
+        meetingSaved: "Weekly chat saved.",
+        copied: "Copied.",
+        downloadReady: "Download ready.",
+        shareTitle: "Base running report",
+        sharp: "Sharp / ready",
+        onTrack: "On track",
+        revisit: "Revisit / follow up",
+        low: "Low",
+        high: "High",
+        minutesWord: "minutes",
+        playersWord: "players",
+        notesWord: "Note",
+        weekOf: "Week of",
+        sourceChoice: "Full approved menu",
+        videoIntro: "Drill demonstration and explanation.",
+        greenlightIntro: "Open GreenLight Player, or install it if this is your first time.",
+        invalidMeetingLink: "Add a valid link beginning with http:// or https://.",
+        meetingNeedsTime: "Set the weekly chat time before adding it to the calendar.",
+        programCalendarName: "DR Instructs 2026 · Base Running",
+        chatCalendarName: "Weekly chat · DR coaches",
+        reportGenerated: "Report generated from the DR 2026 plan",
+        tourEyebrow: "QUICK COACH GUIDE",
+        back: "Back",
+        next: "Next",
+        start: "View today’s plan",
+        tour1Title: "The calendar makes the first decision",
+        tour1Body: "Open this page on any day. If the calendar says Low or High, the correct workload appears automatically. You never have to remember which menu to use.",
+        tour1Callout: "The day’s workload is locked",
+        tour1Visual: "LOW / HIGH",
+        tour2Title: "You choose the best drill for the group",
+        tour2Body: "You will see the full menu approved for the day's workload. Choose the drill that best matches what the group needs; every option fits the assigned workload.",
+        tour2Callout: "The full correct menu for the day",
+        tour2Visual: "MENU",
+        tour3Title: "Run the block with one clear standard",
+        tour3Body: "Open the video to see the demonstration and hear the purpose. Then run the drill with the group. The screen keeps you on the correct step.",
+        tour3Callout: "Choose → Run → Report",
+        tour3Visual: "PLAY",
+        tour4Title: "Close the loop in 30 seconds",
+        tour4Body: "Mark the block complete, add players, minutes, and one note. The report stays on this phone until you tap Share to send it through WhatsApp, Teams, or email.",
+        tour4Callout: "The weekly coach chat lives here too",
+        tour4Visual: "✓"
+      }
+    };
+
+    const weekdayNames = {
+      es: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+      en: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    };
+    const weekdayShort = {
+      es: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
+      en: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    };
+
+    const drills = {
+      videoReview: {
+        load: "low",
+        es: "Revisión de video / GreenLight",
+        en: "Video review / GreenLight",
+        focusEs: "Reconocimiento, decisiones y aprendizaje por video",
+        focusEn: "Recognition, decisions, and video learning",
+        greenlight: true
+      },
+      standingReturns: {
+        load: "low",
+        es: "Regresos de pie en 1B",
+        en: "Standing returns at 1B",
+        focusEs: "Pies, control corporal y regreso eficiente",
+        focusEn: "Footwork, body control, and an efficient return",
+        videoEs: "https://youtu.be/KQ2pEsqU-mo",
+        videoEn: "https://youtu.be/Si9ZMB6Qupg"
+      },
+      oddEven: {
+        load: "low",
+        es: "Momentum impar + par",
+        en: "Odd + even momentum",
+        focusEs: "Ritmo, sincronización y lectura del movimiento",
+        focusEn: "Rhythm, timing, and movement reads",
+        videoEs: "https://youtu.be/CJMairjYBQc",
+        videoEn: "https://youtu.be/szvbfky62cU"
+      },
+      oneMomentum: {
+        load: "high",
+        es: "Momentum 1 contra 1",
+        en: "1v1 momentum",
+        focusEs: "Competencia, salida y compromiso con la decisión",
+        focusEn: "Competition, break, and commitment to the decision",
+        videoEs: "https://youtu.be/3HS_t-pMccY",
+        videoEn: "https://youtu.be/5zvo9eW_Ll8"
+      },
+      tennisBall: {
+        load: "high",
+        es: "Atrapa la pelota de tenis",
+        en: "Catch the tennis ball",
+        focusEs: "Reacción y respuesta a una señal visual",
+        focusEn: "Reaction and response to a visual cue",
+        videoEs: "https://youtu.be/dZeEr30j8As",
+        videoEn: "https://youtu.be/STrBfIRw6bw"
+      },
+      twoBase: {
+        load: "high",
+        es: "1 contra 1 en 2B con miradas",
+        en: "1v1 at 2B with looks",
+        focusEs: "Miradas, paso cruzado y ángulo de salida",
+        focusEn: "Looks, crossover step, and break angle",
+        videoEs: "https://youtu.be/M6MZqeIMsSg",
+        videoEn: "https://youtu.be/ofbNCOcSWfc"
+      },
+      liveReturns: {
+        load: "high",
+        es: "Regresos en vivo con lanzador",
+        en: "Live returns with pitcher",
+        focusEs: "Decisión en vivo contra el movimiento del lanzador",
+        focusEn: "Live decision against the pitcher's move",
+        videoEs: "https://youtu.be/OqeEnS2jLuY",
+        videoEn: "https://youtu.be/_Ve_ZuajkRk"
+      }
+    };
+
+    const schedule = [
+      { date: "2026-09-06", type: "off" },
+      { date: "2026-09-07", type: "practice", load: "low" },
+      { date: "2026-09-08", type: "practice", load: "low" },
+      { date: "2026-09-09", type: "practice", load: "high" },
+      { date: "2026-09-10", type: "practice", load: "low" },
+      { date: "2026-09-11", type: "practice", load: "high" },
+      { date: "2026-09-12", type: "practice", load: "low" },
+      { date: "2026-09-13", type: "off" },
+      { date: "2026-09-14", type: "practice", load: "high" },
+      { date: "2026-09-15", type: "practice", load: "high" },
+      { date: "2026-09-16", type: "practice", load: "low" },
+      { date: "2026-09-17", type: "practice", load: "high" },
+      { date: "2026-09-18", type: "practice", load: "high" },
+      { date: "2026-09-19", type: "practice", load: "low" },
+      { date: "2026-09-20", type: "off" },
+      { date: "2026-09-21", type: "practice", load: "high" },
+      { date: "2026-09-22", type: "game", detail: "Game 1 · Blue vs Gray" },
+      { date: "2026-09-23", type: "camp" },
+      { date: "2026-09-24", type: "game", detail: "Game 2 · Blue vs Gray" },
+      { date: "2026-09-25", type: "game", detail: "Game 3 · Blue vs Gray" },
+      { date: "2026-09-26", type: "off" },
+      { date: "2026-09-27", type: "off" },
+      { date: "2026-09-28", type: "practice", load: "high" },
+      { date: "2026-09-29", type: "conditionalGame", detail: "Game 4 · Blue vs Gray" },
+      { date: "2026-09-30", type: "camp" },
+      { date: "2026-10-01", type: "conditionalGame", detail: "Game 5 · Blue vs Gray" },
+      { date: "2026-10-02", type: "practice", load: "high" },
+      { date: "2026-10-03", type: "practice", load: "low" },
+      { date: "2026-10-04", type: "off" },
+      { date: "2026-10-05", type: "camp" },
+      { date: "2026-10-06", type: "game", detail: "11:00 AM · @ Pirates" },
+      { date: "2026-10-07", type: "camp" },
+      { date: "2026-10-08", type: "game", detail: "11:00 AM · @ Kansas City" },
+      { date: "2026-10-09", type: "game", detail: "11:00 AM · Pirates" },
+      { date: "2026-10-10", type: "camp" },
+      { date: "2026-10-11", type: "off" },
+      { date: "2026-10-12", type: "camp" },
+      { date: "2026-10-13", type: "game", detail: "11:00 AM · @ Dodgers" },
+      { date: "2026-10-14", type: "camp" },
+      { date: "2026-10-15", type: "game", detail: "11:00 AM · Pirates" },
+      { date: "2026-10-16", type: "game", detail: "10:30 AM · @ D-Backs" },
+      { date: "2026-10-17", type: "camp" },
+      { date: "2026-10-18", type: "off" },
+      { date: "2026-10-19", type: "camp" },
+      { date: "2026-10-20", type: "game", detail: "11:00 AM · @ Texas" },
+      { date: "2026-10-21", type: "camp" },
+      { date: "2026-10-22", type: "game", detail: "11:00 AM · @ Pirates" },
+      { date: "2026-10-23", type: "game", detail: "11:00 AM · Texas" },
+      { date: "2026-10-24", type: "camp" },
+      { date: "2026-10-25", type: "off" },
+      { date: "2026-10-26", type: "camp" },
+      { date: "2026-10-27", type: "game", detail: "11:00 AM · @ Texas" },
+      { date: "2026-10-28", type: "camp" },
+      { date: "2026-10-29", type: "game", detail: "11:00 AM · Texas" },
+      { date: "2026-10-30", type: "game", detail: "10:30 AM · @ D-Backs" },
+      { date: "2026-10-31", type: "camp" }
+    ];
+
+    const scheduleByDate = Object.fromEntries(schedule.map((entry) => [entry.date, entry]));
+    const eligibleEntries = schedule.filter((entry) => entry.load);
+    function initialState() {
+      return {
+        language: "es",
+        onboardingSeen: false,
+        plans: {},
+        records: {},
+        settings: { coach: "", group: "", chatDay: 1, chatTime: "", chatUrl: "" }
+      };
+    }
+
+    function loadState() {
+      const fallback = initialState();
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (!saved || typeof saved !== "object") return fallback;
+        return {
+          ...fallback,
+          ...saved,
+          plans: saved.plans || {},
+          records: saved.records || {},
+          settings: { ...fallback.settings, ...(saved.settings || {}) }
+        };
+      } catch (error) {
+        return fallback;
+      }
+    }
+
+    let state = loadState();
+    const query = new URLSearchParams(window.location.search);
+    if (query.get("lang") === "en" || query.get("lang") === "es") state.language = query.get("lang");
+    if (/^[0-6]$/.test(query.get("chatDay") || "")) state.settings.chatDay = Number(query.get("chatDay"));
+    if (/^\d{2}:\d{2}$/.test(query.get("chatTime") || "")) state.settings.chatTime = query.get("chatTime");
+    if (isSafeHttpUrl(query.get("chatUrl") || "")) state.settings.chatUrl = query.get("chatUrl");
+
+    const realToday = todayInDr();
+    let selectedDate = realToday >= PROGRAM_START && realToday <= PROGRAM_END ? realToday : eligibleEntries[0].date;
+    let calendarMonth = selectedDate.startsWith("2026-10") ? 9 : 8;
+    let activePanel = "today";
+    let completionDate = null;
+    let lastModalTrigger = null;
+    let tourTrigger = null;
+    let toastTimer = null;
+    let tourIndex = 0;
+
+    const datePicker = document.getElementById("datePicker");
+    const sessionCard = document.getElementById("sessionCard");
+    const chatCard = document.getElementById("chatCard");
+    const completionBackdrop = document.getElementById("completionBackdrop");
+    const videoBackdrop = document.getElementById("videoBackdrop");
+    const completionForm = document.getElementById("completionForm");
+    const reportWeek = document.getElementById("reportWeek");
+    const toast = document.getElementById("toast");
+    const tourBackdrop = document.getElementById("tourBackdrop");
+
+    function saveState() {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (error) {}
+    }
+
+    function t(key) { return copy[state.language][key] || key; }
+
+    function todayInDr() {
+      const parts = new Intl.DateTimeFormat("en", {
+        timeZone: SITE_TIME_ZONE,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      }).formatToParts(new Date());
+      const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+      return `${values.year}-${values.month}-${values.day}`;
+    }
+
+    function dateObject(iso) { return new Date(`${iso}T12:00:00Z`); }
+    function dateLabel(iso, options = {}) {
+      const locale = state.language === "es" ? "es-DO" : "en-US";
+      return new Intl.DateTimeFormat(locale, { timeZone: "UTC", ...options }).format(dateObject(iso));
+    }
+    function fullDate(iso) { return dateLabel(iso, { weekday: "long", month: "long", day: "numeric", year: "numeric" }); }
+    function shortDate(iso) { return dateLabel(iso, { month: "short", day: "numeric" }); }
+    function weekdayOf(iso) { return dateObject(iso).getUTCDay(); }
+
+    function eventLabel(entry) {
+      if (!entry) return "";
+      if (entry.detail) return entry.detail;
+      return t(entry.type);
+    }
+
+    function choicesFor(entry) {
+      if (!entry || !entry.load) return [];
+      return Object.entries(drills)
+        .filter(([, drill]) => drill.load === entry.load)
+        .map(([id]) => id);
+    }
+
+    function drillName(id) { return drills[id] ? drills[id][state.language] : id; }
+    function drillFocus(id) { return drills[id] ? drills[id][state.language === "es" ? "focusEs" : "focusEn"] : ""; }
+
+    function drillSymbol(id) {
+      return ({
+        videoReview: "VIDEO",
+        standingReturns: "1B",
+        oddEven: "O/E",
+        oneMomentum: "1v1",
+        tennisBall: "REACT",
+        twoBase: "2B",
+        liveReturns: "LIVE"
+      })[id] || "BR";
+    }
+
+    function workflowMarkup(selected, record) {
+      const steps = [
+        { number: "01", title: t("workflowChoose"), hint: t("workflowChooseHint") },
+        { number: "02", title: t("workflowRun"), hint: t("workflowRunHint") },
+        { number: "03", title: t("workflowReport"), hint: t("workflowReportHint") }
+      ];
+      return `<ol class="workflow">${steps.map((step, index) => {
+        let status = "";
+        if (record || (selected && index === 0)) status = " done";
+        else if ((!selected && index === 0) || (selected && !record && index === 1)) status = " active";
+        const number = status.includes("done") ? "✓" : step.number;
+        return `<li class="workflow-step${status}"><span>${number}</span><div><b>${escapeHtml(step.title)}</b><small>${escapeHtml(step.hint)}</small></div></li>`;
+      }).join("")}</ol>`;
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"]/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[character]));
+    }
+
+    function isSafeHttpUrl(value) {
+      try {
+        const url = new URL(value);
+        return url.protocol === "https:" || url.protocol === "http:";
+      } catch (error) { return false; }
+    }
+
+    function setLanguage(language) {
+      state.language = language;
+      saveState();
+      document.documentElement.lang = language;
+      document.title = language === "es" ? "Plan de Corrido de Bases · DR 2026" : "DR Base Running Plan · 2026";
+      document.querySelectorAll("[data-i18n]").forEach((element) => {
+        element.textContent = t(element.dataset.i18n);
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+        element.placeholder = t(element.dataset.i18nPlaceholder);
+      });
+      document.querySelectorAll(".language-button").forEach((button) => {
+        button.setAttribute("aria-selected", String(button.dataset.language === language));
+      });
+      document.getElementById("menuLink").href = `index.html?lang=${language}`;
+      document.getElementById("completionClose").setAttribute("aria-label", t("cancel"));
+      document.getElementById("videoClose").setAttribute("aria-label", t("cancel"));
+      document.getElementById("tourClose").setAttribute("aria-label", t("cancel"));
+      renderEverything();
+      if (!tourBackdrop.hidden) renderTour();
+    }
+
+    function renderEverything() {
+      datePicker.value = selectedDate;
+      renderTodayStatus();
+      renderSession();
+      renderChat();
+      renderCalendar();
+      renderReportControls();
+      renderReport();
+      renderSettings();
+    }
+
+    function renderTodayStatus() {
+      const entry = scheduleByDate[realToday];
+      let status;
+      if (entry) {
+        status = eventLabel(entry);
+        if (entry.load) status += ` · ${entry.load === "low" ? t("lightDay") : t("heavyDay")}`;
+      } else {
+        status = realToday < PROGRAM_START || realToday > PROGRAM_END ? t("outsideProgram") : t("noCalendarToday");
+      }
+      document.getElementById("todayStatus").textContent = `${t("todayPrefix")}: ${fullDate(realToday)} · ${status}`;
+    }
+
+    function renderSession() {
+      const entry = scheduleByDate[selectedDate];
+      if (!entry || !entry.load) {
+        const event = entry ? eventLabel(entry) : t("noCalendarToday");
+        sessionCard.innerHTML = `
+          <header class="session-heading">
+            <div><p class="session-date">${escapeHtml(fullDate(selectedDate))}</p><h2>${escapeHtml(event)}</h2></div>
+          </header>
+          <div class="empty-session">
+            <div class="empty-symbol" aria-hidden="true">◇</div>
+            <h2>${escapeHtml(t("noBlock"))}</h2>
+            <p>${escapeHtml(t("noBlockBody"))}</p>
+            <button class="btn btn-primary" type="button" data-next-block>${escapeHtml(t("nextBlock"))}</button>
+          </div>`;
+        const nextButton = sessionCard.querySelector("[data-next-block]");
+        nextButton.addEventListener("click", () => {
+          const next = eligibleEntries.find((item) => item.date > selectedDate) || eligibleEntries[0];
+          selectDate(next.date);
+        });
+        return;
+      }
+
+      const selected = state.plans[selectedDate] || "";
+      const record = state.records[selectedDate];
+      const choiceIds = choicesFor(entry);
+      const choiceMarkup = choiceIds.map((id, index) => {
+        const isSelected = selected === id;
+        return `
+          <article class="choice-card${isSelected ? " selected" : ""}">
+            <div class="choice-top">
+              <span class="choice-number">${escapeHtml(t("option"))} ${String.fromCharCode(65 + index)}</span>
+              <span class="drill-symbol" aria-hidden="true">${escapeHtml(drillSymbol(id))}</span>
+            </div>
+            <h3>${escapeHtml(drillName(id))}</h3>
+            <p>${escapeHtml(drillFocus(id))}</p>
+            <div class="choice-actions">
+              <button class="btn" type="button" data-watch="${id}">${escapeHtml(t("watch"))}</button>
+              <button class="btn${isSelected ? " btn-primary" : ""}" type="button" data-choose="${id}" ${record ? "disabled" : ""}>${escapeHtml(isSelected ? t("chosen") : t("choose"))}</button>
+            </div>
+          </article>`;
+      }).join("");
+
+      let actionMarkup = "";
+      if (record) {
+        const note = record.notes ? `<br>${escapeHtml(t("notesWord"))}: ${escapeHtml(record.notes)}` : "";
+        actionMarkup = `
+          <div class="complete-card">
+            <strong>✓ ${escapeHtml(t("completed"))}</strong>
+            <p>${escapeHtml(record.coach)} · ${escapeHtml(record.players)} ${escapeHtml(t("playersWord"))} · ${escapeHtml(record.minutes)} ${escapeHtml(t("minutesWord"))} · ${escapeHtml(executionLabel(record.execution))}${note}</p>
+            <p class="complete-prompt">${escapeHtml(t("shareReminder"))}</p>
+            <div class="complete-actions">
+              <button class="btn btn-primary" type="button" data-share-record>${escapeHtml(t("shareUpdate"))}</button>
+              <button class="btn" type="button" data-edit-record>${escapeHtml(t("editReport"))}</button>
+            </div>
+          </div>`;
+      } else if (selected) {
+        actionMarkup = `
+          <div class="run-brief">
+            <span class="run-number" aria-hidden="true">02</span>
+            <div><span>${escapeHtml(t("upNext"))}</span><strong>${escapeHtml(drillName(selected))}</strong><p>${escapeHtml(t("runSelectedBody"))}</p></div>
+          </div>
+          <div class="run-actions">
+            <button class="btn" type="button" data-run-video="${escapeHtml(selected)}">${escapeHtml(t("openSelectedVideo"))}</button>
+            <button class="btn btn-red" type="button" data-complete>${escapeHtml(t("markComplete"))}</button>
+          </div>`;
+      }
+
+      sessionCard.innerHTML = `
+        <header class="session-heading ${entry.load}">
+          <div><p class="session-date">${escapeHtml(fullDate(selectedDate))}</p><h2>${escapeHtml(t("baseBlock"))} · ${escapeHtml(eventLabel(entry))}</h2></div>
+          <span class="load-badge">${escapeHtml(entry.load === "low" ? t("lightDay") : t("heavyDay"))}</span>
+        </header>
+        <div class="session-body">
+          <div class="load-explanation"><span>${escapeHtml(t("loadLocked"))}</span><p><strong>${escapeHtml(t("calendarDecision"))}</strong> ${escapeHtml(entry.load === "low" ? t("lightDefinition") : t("heavyDefinition"))}</p></div>
+          ${workflowMarkup(selected, record)}
+          <p class="choice-kicker">${escapeHtml(t("chooseOne"))}</p>
+          <p class="choice-instruction">${escapeHtml(t("chooseInstruction"))}</p>
+          <div class="choice-grid">${choiceMarkup}</div>
+          <div class="session-action"${actionMarkup ? "" : " hidden"}>${actionMarkup}</div>
+        </div>`;
+
+      sessionCard.querySelectorAll("[data-choose]").forEach((button) => {
+        button.addEventListener("click", () => {
+          state.plans[selectedDate] = button.dataset.choose;
+          saveState();
+          renderSession();
+          renderCalendar();
+        });
+      });
+      sessionCard.querySelectorAll("[data-watch]").forEach((button) => {
+        button.addEventListener("click", () => openVideo(button.dataset.watch, button));
+      });
+      sessionCard.querySelector("[data-run-video]")?.addEventListener("click", (event) => openVideo(event.currentTarget.dataset.runVideo, event.currentTarget));
+      sessionCard.querySelector("[data-complete]")?.addEventListener("click", (event) => openCompletion(selectedDate, event.currentTarget));
+      sessionCard.querySelector("[data-edit-record]")?.addEventListener("click", (event) => openCompletion(selectedDate, event.currentTarget));
+      sessionCard.querySelector("[data-share-record]")?.addEventListener("click", () => shareRecord(selectedDate));
+    }
+
+    function nextChatDate(fromDate) {
+      const candidates = schedule.map((entry) => entry.date).filter((date) => weekdayOf(date) === Number(state.settings.chatDay));
+      return candidates.find((date) => date >= fromDate) || candidates[0] || PROGRAM_START;
+    }
+
+    function renderChat() {
+      const chatDate = nextChatDate(selectedDate);
+      const hasUrl = isSafeHttpUrl(state.settings.chatUrl);
+      const time = state.settings.chatTime || t("timeTbd");
+      chatCard.innerHTML = `
+        <h2>${escapeHtml(t("meetingTitle"))}</h2>
+        <p>${escapeHtml(t("nextMeeting"))}</p>
+        <div class="chat-date"><strong>${escapeHtml(fullDate(chatDate))}</strong><span>${escapeHtml(time)} · AST / UTC-4</span></div>
+        <ol class="agenda">
+          <li>${escapeHtml(t("agenda1"))}</li>
+          <li>${escapeHtml(t("agenda2"))}</li>
+          <li>${escapeHtml(t("agenda3"))}</li>
+        </ol>
+        <div class="side-actions">
+          ${hasUrl ? `<a class="btn btn-primary btn-block" href="${escapeHtml(state.settings.chatUrl)}" target="_blank" rel="noopener">${escapeHtml(t("joinMeeting"))}</a>` : `<button class="btn btn-primary btn-block" type="button" data-open-settings>${escapeHtml(t("setMeeting"))}</button>`}
+          <button class="btn btn-block" type="button" data-copy-agenda>${escapeHtml(t("copyAgenda"))}</button>
+        </div>`;
+      chatCard.querySelector("[data-open-settings]")?.addEventListener("click", () => showPanel("report"));
+      chatCard.querySelector("[data-copy-agenda]").addEventListener("click", copyAgenda);
+    }
+
+    function renderCalendar() {
+      const locale = state.language === "es" ? "es-DO" : "en-US";
+      const monthDate = new Date(Date.UTC(2026, calendarMonth, 1, 12));
+      document.getElementById("monthTitle").textContent = new Intl.DateTimeFormat(locale, { month: "long", year: "numeric", timeZone: "UTC" }).format(monthDate);
+      document.getElementById("previousMonth").disabled = calendarMonth === 8;
+      document.getElementById("nextMonth").disabled = calendarMonth === 9;
+      const grid = document.getElementById("calendarGrid");
+      const headers = weekdayShort[state.language].map((day) => `<div class="weekday">${day}</div>`).join("");
+      const firstWeekday = new Date(Date.UTC(2026, calendarMonth, 1)).getUTCDay();
+      const daysInMonth = new Date(Date.UTC(2026, calendarMonth + 1, 0)).getUTCDate();
+      const cells = [];
+      for (let i = 0; i < firstWeekday; i += 1) cells.push(`<div class="calendar-day outside" aria-hidden="true"></div>`);
+      for (let day = 1; day <= daysInMonth; day += 1) {
+        const iso = `2026-${String(calendarMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+        const entry = scheduleByDate[iso];
+        const hasChat = weekdayOf(iso) === Number(state.settings.chatDay) && iso >= PROGRAM_START && iso <= PROGRAM_END;
+        const classes = ["calendar-day"];
+        if (!entry) classes.push("outside");
+        if (entry?.load) classes.push(entry.load);
+        if (iso === realToday) classes.push("today");
+        if (state.records[iso]) classes.push("complete");
+        const event = entry ? `<span class="day-event">${escapeHtml(eventLabel(entry))}</span>` : "";
+        const load = entry?.load ? `<span class="day-load ${entry.load}">${escapeHtml(entry.load === "low" ? t("low") : t("high"))}</span>` : "";
+        const chat = hasChat ? `<span class="chat-marker">● ${escapeHtml(t("weeklyChat"))}</span>` : "";
+        cells.push(`<button class="${classes.join(" ")}" type="button" data-calendar-date="${iso}" aria-label="${escapeHtml(fullDate(iso))}${entry ? `, ${escapeHtml(eventLabel(entry))}` : ""}"><span class="day-number">${day}</span>${event}${load}${chat}</button>`);
+      }
+      const usedCells = firstWeekday + daysInMonth;
+      for (let i = usedCells; i < Math.ceil(usedCells / 7) * 7; i += 1) cells.push(`<div class="calendar-day outside" aria-hidden="true"></div>`);
+      grid.innerHTML = headers + cells.join("");
+      grid.querySelectorAll("[data-calendar-date]").forEach((button) => {
+        button.addEventListener("click", () => {
+          selectDate(button.dataset.calendarDate);
+          showPanel("today");
+        });
+      });
+    }
+
+    function weekStart(iso) {
+      const date = dateObject(iso);
+      const day = date.getUTCDay();
+      const offset = day === 0 ? -6 : 1 - day;
+      date.setUTCDate(date.getUTCDate() + offset);
+      return date.toISOString().slice(0, 10);
+    }
+
+    function addDays(iso, count) {
+      const date = dateObject(iso);
+      date.setUTCDate(date.getUTCDate() + count);
+      return date.toISOString().slice(0, 10);
+    }
+
+    function renderReportControls() {
+      const previousValue = reportWeek.value || "all";
+      const weeks = [...new Set(eligibleEntries.map((entry) => weekStart(entry.date)))];
+      reportWeek.innerHTML = `<option value="all">${escapeHtml(t("allWeeks"))}</option>` + weeks.map((start) => `<option value="${start}">${escapeHtml(t("weekOf"))} ${escapeHtml(shortDate(start))}</option>`).join("");
+      reportWeek.value = weeks.includes(previousValue) || previousValue === "all" ? previousValue : "all";
+    }
+
+    function recordsForFilter() {
+      const filter = reportWeek.value || "all";
+      return Object.entries(state.records)
+        .filter(([date]) => filter === "all" || weekStart(date) === filter)
+        .sort(([a], [b]) => a.localeCompare(b));
+    }
+
+    function entriesForFilter() {
+      const filter = reportWeek.value || "all";
+      return eligibleEntries.filter((entry) => filter === "all" || weekStart(entry.date) === filter);
+    }
+
+    function renderReport() {
+      const relevantEntries = entriesForFilter();
+      const records = recordsForFilter();
+      const completed = records.length;
+      const rate = relevantEntries.length ? Math.round((completed / relevantEntries.length) * 100) : 0;
+      document.getElementById("reportStats").innerHTML = `
+        <div class="surface stat"><span>${escapeHtml(t("scheduled"))}</span><strong>${relevantEntries.length}</strong></div>
+        <div class="surface stat"><span>${escapeHtml(t("completedStat"))}</span><strong>${completed}</strong></div>
+        <div class="surface stat"><span>${escapeHtml(t("completionRate"))}</span><strong>${rate}%</strong></div>`;
+      const rows = document.getElementById("reportRows");
+      if (!records.length) {
+        rows.innerHTML = `<tr><td class="empty-row" colspan="6">${escapeHtml(t("noReports"))}</td></tr>`;
+        return;
+      }
+      rows.innerHTML = records.map(([date, record]) => `
+        <tr>
+          <td>${escapeHtml(shortDate(date))}</td>
+          <td>${escapeHtml(record.coach)}</td>
+          <td>${escapeHtml(drillName(record.drillId))}</td>
+          <td>${escapeHtml(record.players)}</td>
+          <td>${escapeHtml(record.minutes)}</td>
+          <td>${escapeHtml(executionLabel(record.execution))}</td>
+        </tr>`).join("");
+    }
+
+    function renderSettings() {
+      const daySelect = document.getElementById("chatDay");
+      daySelect.innerHTML = weekdayNames[state.language].map((day, index) => `<option value="${index}">${escapeHtml(day)}</option>`).join("");
+      daySelect.value = String(state.settings.chatDay);
+      document.getElementById("chatTime").value = state.settings.chatTime || "";
+      document.getElementById("chatUrl").value = state.settings.chatUrl || "";
+      const executionSelect = document.getElementById("executionSelect");
+      const current = executionSelect.value || "onTrack";
+      executionSelect.innerHTML = ["sharp", "onTrack", "revisit"].map((value) => `<option value="${value}">${escapeHtml(t(value))}</option>`).join("");
+      executionSelect.value = current;
+    }
+
+    function showPanel(panel) {
+      activePanel = panel;
+      document.querySelectorAll(".tab-button").forEach((button) => {
+        const active = button.dataset.panel === panel;
+        button.setAttribute("aria-selected", String(active));
+      });
+      ["today", "calendar", "report"].forEach((name) => {
+        document.getElementById(`${name}Panel`).hidden = name !== panel;
+      });
+      if (panel === "report") {
+        renderReportControls();
+        renderReport();
+        renderSettings();
+      }
+    }
+
+    function selectDate(date) {
+      selectedDate = date;
+      calendarMonth = date.startsWith("2026-10") ? 9 : 8;
+      datePicker.value = date;
+      renderSession();
+      renderChat();
+      renderCalendar();
+    }
+
+    function openCompletion(date, trigger) {
+      completionDate = date;
+      lastModalTrigger = trigger;
+      const record = state.records[date];
+      const drillId = state.plans[date];
+      document.getElementById("completionIntro").textContent = `${fullDate(date)} · ${drillName(drillId)}`;
+      document.getElementById("coachName").value = record?.coach || state.settings.coach || "";
+      document.getElementById("groupName").value = record?.group || state.settings.group || "";
+      document.getElementById("playerCount").value = record?.players || "";
+      document.getElementById("minutes").value = record?.minutes || 10;
+      document.getElementById("executionSelect").value = record?.execution || "onTrack";
+      document.getElementById("notes").value = record?.notes || "";
+      completionBackdrop.hidden = false;
+      document.body.style.overflow = "hidden";
+      setTimeout(() => document.getElementById("coachName").focus(), 0);
+    }
+
+    function closeCompletion() {
+      completionBackdrop.hidden = true;
+      document.body.style.overflow = "";
+      lastModalTrigger?.focus();
+    }
+
+    function executionLabel(value) { return t(value || "onTrack"); }
+
+    function recordText(date) {
+      const record = state.records[date];
+      if (!record) return "";
+      const entry = scheduleByDate[date];
+      const lines = [
+        `⚾ ${t("shareTitle")}`,
+        `${fullDate(date)} · ${entry.load === "low" ? t("lightDay") : t("heavyDay")}`,
+        `${t("coach")}: ${record.coach}${record.group ? ` · ${record.group}` : ""}`,
+        `${t("drill")}: ${drillName(record.drillId)}`,
+        `${record.players} ${t("playersWord")} · ${record.minutes} ${t("minutesWord")}`,
+        `${t("execution")}: ${executionLabel(record.execution)}`
+      ];
+      if (record.notes) lines.push(`${t("notesWord")}: ${record.notes}`);
+      return lines.join("\n");
+    }
+
+    async function shareRecord(date) {
+      const text = recordText(date);
+      if (navigator.share) {
+        try {
+          await navigator.share({ title: t("shareTitle"), text });
+          return;
+        } catch (error) {
+          if (error.name === "AbortError") return;
+        }
+      }
+      await copyText(text);
+      showToast(t("copied"));
+    }
+
+    function reportText() {
+      const filter = reportWeek.value || "all";
+      const entries = entriesForFilter();
+      const records = recordsForFilter();
+      const title = filter === "all" ? t("shareTitle") : `${t("shareTitle")} · ${t("weekOf")} ${shortDate(filter)}`;
+      const lines = [title, `${t("completedStat")}: ${records.length}/${entries.length}`];
+      records.forEach(([date, record]) => {
+        lines.push(`• ${shortDate(date)} · ${record.coach} · ${drillName(record.drillId)} · ${record.players} ${t("playersWord")} · ${executionLabel(record.execution)}`);
+      });
+      if (!records.length) lines.push(t("noReports"));
+      lines.push(t("reportGenerated"));
+      return lines.join("\n");
+    }
+
+    async function copyText(text) {
+      if (navigator.clipboard?.writeText) {
+        try { await navigator.clipboard.writeText(text); return; } catch (error) {}
+      }
+      const area = document.createElement("textarea");
+      area.value = text;
+      area.setAttribute("readonly", "");
+      area.style.position = "fixed";
+      area.style.opacity = "0";
+      document.body.appendChild(area);
+      area.select();
+      document.execCommand("copy");
+      area.remove();
+    }
+
+    function copyAgenda() {
+      const chatDate = nextChatDate(selectedDate);
+      const text = `${t("meetingTitle")} · ${fullDate(chatDate)} · ${state.settings.chatTime || t("timeTbd")} AST\n1. ${t("agenda1")}\n2. ${t("agenda2")}\n3. ${t("agenda3")}`;
+      copyText(text).then(() => showToast(t("copied")));
+    }
+
+    function csvEscape(value) {
+      const text = String(value ?? "");
+      return /[",\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+    }
+
+    function downloadCsv() {
+      const headers = [t("date"), t("coach"), t("groupName"), t("drill"), t("playersShort"), t("minutesShort"), t("execution"), t("notes")];
+      const rows = recordsForFilter().map(([date, record]) => [date, record.coach, record.group, drillName(record.drillId), record.players, record.minutes, executionLabel(record.execution), record.notes]);
+      const csv = "\uFEFF" + [headers, ...rows].map((row) => row.map(csvEscape).join(",")).join("\r\n");
+      downloadBlob(csv, `dr-base-running-report-${reportWeek.value || "all"}.csv`, "text/csv;charset=utf-8");
+      showToast(t("downloadReady"));
+    }
+
+    function icsEscape(value) {
+      return String(value ?? "").replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
+    }
+
+    function icsDate(iso) { return iso.replace(/-/g, ""); }
+    function icsUtcDateTime(iso, time) {
+      const [year, month, day] = iso.split("-").map(Number);
+      const [hour, minute] = time.split(":").map(Number);
+      const utc = new Date(Date.UTC(year, month - 1, day, hour + 4, minute));
+      return utc.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
+    }
+
+    function chatDates() {
+      const dates = [];
+      let date = PROGRAM_START;
+      while (date <= PROGRAM_END) {
+        if (weekdayOf(date) === Number(state.settings.chatDay)) dates.push(date);
+        date = addDays(date, 1);
+      }
+      return dates;
+    }
+
+    function buildIcs() {
+      const pageUrl = window.location.href.split(/[?#]/)[0];
+      const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//DR Base Running//Instructional 2026//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH", `X-WR-CALNAME:${icsEscape(t("programCalendarName"))}`];
+      eligibleEntries.forEach((entry) => {
+        const choices = choicesFor(entry).map(drillName).join(" / ");
+        lines.push(
+          "BEGIN:VEVENT",
+          `UID:base-running-${entry.date}@dr-instructs`,
+          `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z")}`,
+          `DTSTART;VALUE=DATE:${icsDate(entry.date)}`,
+          `DTEND;VALUE=DATE:${icsDate(addDays(entry.date, 1))}`,
+          `SUMMARY:${icsEscape(`${t("baseBlock")} · ${entry.load === "low" ? t("lightDay") : t("heavyDay")}`)}`,
+          `DESCRIPTION:${icsEscape(`${t("sourceChoice")}: ${choices}\n${pageUrl}`)}`,
+          `URL:${pageUrl}`,
+          "END:VEVENT"
+        );
+      });
+      if (state.settings.chatTime) {
+        chatDates().forEach((date) => {
+          const start = icsUtcDateTime(date, state.settings.chatTime);
+          const [hour, minute] = state.settings.chatTime.split(":").map(Number);
+          const total = hour * 60 + minute + 30;
+          const endTime = `${String(Math.floor(total / 60) % 24).padStart(2, "0")}:${String(total % 60).padStart(2, "0")}`;
+          const endDate = total >= 1440 ? addDays(date, 1) : date;
+          lines.push(
+            "BEGIN:VEVENT",
+            `UID:coach-chat-${date}@dr-instructs`,
+            `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z")}`,
+            `DTSTART:${start}`,
+            `DTEND:${icsUtcDateTime(endDate, endTime)}`,
+            `SUMMARY:${icsEscape(t("chatCalendarName"))}`,
+            `DESCRIPTION:${icsEscape(`${t("agenda1")}\n${t("agenda2")}\n${t("agenda3")}`)}`,
+            ...(isSafeHttpUrl(state.settings.chatUrl) ? [`URL:${state.settings.chatUrl}`] : []),
+            "END:VEVENT"
+          );
+        });
+      }
+      lines.push("END:VCALENDAR");
+      return lines.join("\r\n");
+    }
+
+    function downloadCalendar() {
+      downloadBlob(buildIcs(), "dr-instructs-2026-base-running.ics", "text/calendar;charset=utf-8");
+      showToast(t("downloadReady"));
+    }
+
+    function downloadBlob(content, filename, type) {
+      const blob = new Blob([content], { type });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 500);
+    }
+
+    function staffLink() {
+      const url = new URL(window.location.href);
+      url.search = "";
+      url.hash = "";
+      url.searchParams.set("lang", state.language);
+      url.searchParams.set("chatDay", String(state.settings.chatDay));
+      if (state.settings.chatTime) url.searchParams.set("chatTime", state.settings.chatTime);
+      if (isSafeHttpUrl(state.settings.chatUrl)) url.searchParams.set("chatUrl", state.settings.chatUrl);
+      return url.href;
+    }
+
+    function openVideo(id, trigger) {
+      const drill = drills[id];
+      lastModalTrigger = trigger;
+      document.getElementById("videoTitle").textContent = drillName(id);
+      const videoStage = document.getElementById("videoStage");
+      const greenlightBox = document.getElementById("greenlightBox");
+      const videoFrame = document.getElementById("videoFrame");
+      const videoPlayer = document.getElementById("videoPlayer");
+      videoFrame.src = "about:blank";
+      videoPlayer.pause();
+      videoPlayer.removeAttribute("src");
+      videoPlayer.load();
+      if (drill.greenlight) {
+        document.getElementById("videoIntro").textContent = t("greenlightIntro");
+        greenlightBox.hidden = false;
+        videoStage.hidden = true;
+      } else {
+        document.getElementById("videoIntro").textContent = t("videoIntro");
+        greenlightBox.hidden = true;
+        videoStage.hidden = false;
+        const rawUrl = state.language === "es" ? drill.videoEs : drill.videoEn;
+        videoFrame.hidden = false;
+        videoPlayer.hidden = true;
+        videoFrame.src = resolveVideoUrl(rawUrl);
+      }
+      videoBackdrop.hidden = false;
+      document.body.style.overflow = "hidden";
+      setTimeout(() => document.getElementById("videoClose").focus(), 0);
+    }
+
+    function resolveVideoUrl(rawUrl) {
+      try {
+        const url = new URL(rawUrl, window.location.href);
+        const host = url.hostname.replace(/^www\./, "");
+        if (host === "youtu.be") return `https://www.youtube.com/embed/${url.pathname.slice(1)}?autoplay=1`;
+        if (host.endsWith("youtube.com")) {
+          const id = url.searchParams.get("v") || url.pathname.split("/").filter(Boolean).pop();
+          return `https://www.youtube.com/embed/${id}?autoplay=1`;
+        }
+        if (host.endsWith("vimeo.com")) {
+          const id = url.pathname.split("/").filter(Boolean).pop();
+          return `https://player.vimeo.com/video/${id}?autoplay=1`;
+        }
+        return url.href;
+      } catch (error) { return rawUrl; }
+    }
+
+    function closeVideo() {
+      videoBackdrop.hidden = true;
+      document.getElementById("videoFrame").src = "about:blank";
+      const player = document.getElementById("videoPlayer");
+      player.pause();
+      player.removeAttribute("src");
+      player.load();
+      document.body.style.overflow = "";
+      lastModalTrigger?.focus();
+    }
+
+    function showToast(message) {
+      clearTimeout(toastTimer);
+      toast.textContent = message;
+      toast.hidden = false;
+      toastTimer = setTimeout(() => { toast.hidden = true; }, 2600);
+    }
+
+    function renderTour() {
+      const slide = tourIndex + 1;
+      document.getElementById("tourCounter").textContent = `${slide} / 4`;
+      document.getElementById("tourProgress").innerHTML = [0, 1, 2, 3]
+        .map((index) => `<span class="${index <= tourIndex ? "done" : ""}"></span>`)
+        .join("");
+      document.getElementById("tourContent").innerHTML = `
+        <div class="tour-visual" aria-hidden="true"><span>${escapeHtml(t(`tour${slide}Visual`))}</span></div>
+        <div class="tour-copy">
+          <h2 id="tourTitle">${escapeHtml(t(`tour${slide}Title`))}</h2>
+          <p>${escapeHtml(t(`tour${slide}Body`))}</p>
+          <span class="tour-callout">${escapeHtml(t(`tour${slide}Callout`))}</span>
+        </div>`;
+      const backButton = document.getElementById("tourBack");
+      const nextButton = document.getElementById("tourNext");
+      backButton.hidden = tourIndex === 0;
+      backButton.textContent = t("back");
+      nextButton.textContent = tourIndex === 3 ? t("start") : t("next");
+    }
+
+    function openTour(trigger) {
+      tourTrigger = trigger || null;
+      tourIndex = 0;
+      renderTour();
+      tourBackdrop.hidden = false;
+      document.body.style.overflow = "hidden";
+      setTimeout(() => document.getElementById("tourNext").focus(), 0);
+    }
+
+    function closeTour(markSeen = true) {
+      tourBackdrop.hidden = true;
+      document.body.style.overflow = "";
+      if (markSeen) {
+        state.onboardingSeen = true;
+        saveState();
+      }
+      tourTrigger?.focus();
+    }
+
+    document.querySelectorAll(".language-button").forEach((button) => {
+      button.addEventListener("click", () => setLanguage(button.dataset.language));
+    });
+    document.querySelectorAll(".tab-button").forEach((button) => {
+      button.addEventListener("click", () => showPanel(button.dataset.panel));
+    });
+    document.getElementById("jumpToday").addEventListener("click", () => {
+      if (realToday >= PROGRAM_START && realToday <= PROGRAM_END) selectDate(realToday);
+      showPanel("today");
+    });
+    datePicker.addEventListener("change", () => selectDate(datePicker.value));
+    document.getElementById("previousMonth").addEventListener("click", () => { if (calendarMonth > 8) { calendarMonth -= 1; renderCalendar(); } });
+    document.getElementById("nextMonth").addEventListener("click", () => { if (calendarMonth < 9) { calendarMonth += 1; renderCalendar(); } });
+    reportWeek.addEventListener("change", renderReport);
+    document.getElementById("copyReport").addEventListener("click", () => copyText(reportText()).then(() => showToast(t("copied"))));
+    document.getElementById("downloadCsv").addEventListener("click", downloadCsv);
+    document.getElementById("downloadCalendar").addEventListener("click", downloadCalendar);
+    document.getElementById("downloadCalendarTop").addEventListener("click", downloadCalendar);
+    document.getElementById("copyStaffLink").addEventListener("click", () => copyText(staffLink()).then(() => showToast(t("copied"))));
+
+    document.getElementById("settingsForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const url = document.getElementById("chatUrl").value.trim();
+      if (url && !isSafeHttpUrl(url)) {
+        document.getElementById("chatUrl").setCustomValidity(t("invalidMeetingLink"));
+        document.getElementById("chatUrl").reportValidity();
+        return;
+      }
+      document.getElementById("chatUrl").setCustomValidity("");
+      state.settings.chatDay = Number(document.getElementById("chatDay").value);
+      state.settings.chatTime = document.getElementById("chatTime").value;
+      state.settings.chatUrl = url;
+      saveState();
+      renderEverything();
+      showToast(t("meetingSaved"));
+    });
+    document.getElementById("chatUrl").addEventListener("input", (event) => event.currentTarget.setCustomValidity(""));
+
+    completionForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const form = new FormData(completionForm);
+      const drillId = state.plans[completionDate];
+      state.records[completionDate] = {
+        drillId,
+        coach: String(form.get("coach") || "").trim(),
+        group: String(form.get("group") || "").trim(),
+        players: Number(form.get("players")),
+        minutes: Number(form.get("minutes")),
+        execution: String(form.get("execution")),
+        notes: String(form.get("notes") || "").trim(),
+        savedAt: new Date().toISOString()
+      };
+      state.settings.coach = state.records[completionDate].coach;
+      state.settings.group = state.records[completionDate].group;
+      saveState();
+      closeCompletion();
+      renderEverything();
+      showToast(t("saved"));
+    });
+
+    document.getElementById("completionClose").addEventListener("click", closeCompletion);
+    document.getElementById("cancelCompletion").addEventListener("click", closeCompletion);
+    completionBackdrop.addEventListener("click", (event) => { if (event.target === completionBackdrop) closeCompletion(); });
+    document.getElementById("videoClose").addEventListener("click", closeVideo);
+    videoBackdrop.addEventListener("click", (event) => { if (event.target === videoBackdrop) closeVideo(); });
+    document.getElementById("openTour").addEventListener("click", (event) => openTour(event.currentTarget));
+    document.querySelectorAll("[data-open-tour]").forEach((button) => {
+      button.addEventListener("click", (event) => openTour(event.currentTarget));
+    });
+    document.getElementById("tourClose").addEventListener("click", () => closeTour(true));
+    tourBackdrop.addEventListener("click", (event) => { if (event.target === tourBackdrop) closeTour(true); });
+    document.getElementById("tourBack").addEventListener("click", () => {
+      if (tourIndex > 0) {
+        tourIndex -= 1;
+        renderTour();
+      }
+    });
+    document.getElementById("tourNext").addEventListener("click", () => {
+      if (tourIndex < 3) {
+        tourIndex += 1;
+        renderTour();
+        return;
+      }
+      closeTour(true);
+      if (realToday >= PROGRAM_START && realToday <= PROGRAM_END) selectDate(realToday);
+      showPanel("today");
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      if (!completionBackdrop.hidden) closeCompletion();
+      if (!videoBackdrop.hidden) closeVideo();
+      if (!tourBackdrop.hidden) closeTour(true);
+    });
+
+    setLanguage(state.language);
+    if (!state.onboardingSeen) {
+      setTimeout(() => {
+        if (!state.onboardingSeen && tourBackdrop.hidden) openTour(null);
+      }, 240);
+    }
+  </script>
+</body>
+</html>
