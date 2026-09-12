@@ -1294,7 +1294,7 @@
   <script>
     const SITE_TIME_ZONE = "America/Santo_Domingo";
     const STORAGE_KEY = "dr-base-running-schedule-v1";
-    const CHAT_DAY_DEFAULT_VERSION = 2;
+    const CHAT_DAY_DEFAULT_VERSION = 3;
     const DEFAULT_CHAT_DAY = 3;
     const PROGRAM_START = "2026-09-06";
     const PROGRAM_END = "2026-10-31";
@@ -1783,7 +1783,7 @@
         const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
         if (!saved || typeof saved !== "object") return fallback;
         const settings = { ...fallback.settings, ...(saved.settings || {}) };
-        if (settings.chatDayDefaultVersion !== CHAT_DAY_DEFAULT_VERSION) {
+        if (saved.settings?.chatDayDefaultVersion !== CHAT_DAY_DEFAULT_VERSION) {
           settings.chatDay = DEFAULT_CHAT_DAY;
           settings.chatDayDefaultVersion = CHAT_DAY_DEFAULT_VERSION;
         }
