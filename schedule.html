@@ -1294,6 +1294,8 @@
   <script>
     const SITE_TIME_ZONE = "America/Santo_Domingo";
     const STORAGE_KEY = "dr-base-running-schedule-v1";
+    const CHAT_DAY_DEFAULT_VERSION = 2;
+    const DEFAULT_CHAT_DAY = 3;
     const PROGRAM_START = "2026-09-06";
     const PROGRAM_END = "2026-10-31";
 
@@ -1771,7 +1773,7 @@
         onboardingSeen: false,
         plans: {},
         records: {},
-        settings: { coach: "", group: "", chatDay: 1, chatTime: "", chatUrl: "" }
+        settings: { coach: "", group: "", chatDay: DEFAULT_CHAT_DAY, chatDayDefaultVersion: CHAT_DAY_DEFAULT_VERSION, chatTime: "", chatUrl: "" }
       };
     }
 
@@ -1780,12 +1782,17 @@
       try {
         const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
         if (!saved || typeof saved !== "object") return fallback;
+        const settings = { ...fallback.settings, ...(saved.settings || {}) };
+        if (settings.chatDayDefaultVersion !== CHAT_DAY_DEFAULT_VERSION) {
+          settings.chatDay = DEFAULT_CHAT_DAY;
+          settings.chatDayDefaultVersion = CHAT_DAY_DEFAULT_VERSION;
+        }
         return {
           ...fallback,
           ...saved,
           plans: saved.plans || {},
           records: saved.records || {},
-          settings: { ...fallback.settings, ...(saved.settings || {}) }
+          settings
         };
       } catch (error) {
         return fallback;
