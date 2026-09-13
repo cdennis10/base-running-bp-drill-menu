@@ -20,7 +20,7 @@ The shared site opens schedule.html as its landing page. That page adds:
 - A visual Choose > Run > Report progress guide on every session
 - Clear context for the Low or High workload shown by the calendar
 - A brief coach completion report
-- A Wednesday availability card, shareable schedule link, and downloadable .ics calendar
+- A weekly-call scheduler, shareable schedule link, and downloadable .ics calendar
 - Weekly report copy and CSV export
 
 COACH REPORTS AND SHARED CONTEXT
@@ -36,12 +36,12 @@ centralized report URL is configured in schedule-config.js.
 
 WEEKLY STAFF CONVERSATION
 -------------------------
-The conversation recurs every Wednesday. The website intentionally does not set a call
-time or meeting URL. Coaches in the Dominican Republic supply the proposed time
-based on their availability and communicate it in Dominican Republic time
-(AST / UTC-4). During this program Chicago is one hour behind the DR, and
-Arizona is three hours behind. The .ics download includes Wednesday all-day
-conversation reminders with this instruction.
+The conversation recurs every Wednesday. A coach can choose the date, Dominican
+Republic time (AST / UTC-4), and duration in the Report view. The site opens a
+prefilled Outlook invitation addressed to cdennis@cubs.com; Outlook sends the
+invitation when the coach reviews it and selects Send. No mail credentials are
+stored in this public site. The .ics download also includes Wednesday all-day
+conversation reminders.
 
 UPDATING THE PROGRAM
 --------------------

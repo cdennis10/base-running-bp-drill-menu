@@ -6,13 +6,16 @@
   Weekdays use JavaScript numbering: 0=Sunday, 1=Monday, 3=Wednesday.
 */
 window.DR_SCHEDULE_CONFIG = {
-  version: "2026.09.13.1",
+  version: "2026.09.13.2",
   updatedDate: "2026-09-13",
   timeZone: "America/Santo_Domingo",
   timeZoneLabel: "AST / UTC−4",
   programStart: "2026-09-06",
   programEnd: "2026-10-31",
   defaultChatDay: 3,
+
+  // Public recipient for weekly Outlook meeting invitations; this is not a secret.
+  weeklyCallRecipient: "cdennis@cubs.com",
 
   // Public Microsoft Form used as the staff's shared record; no sign-in required.
   centralReportUrl: "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=RuumN88yyUG9MLIz_mc-rDw-v2Vf9XBGmurfIGVhBEhUOE5NNUozUTZNUTZBSFRJT0tZVVBXRFhFNS4u",

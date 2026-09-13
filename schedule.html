@@ -459,6 +459,8 @@
     .modal-intro { margin: 0 0 19px; color: var(--muted); line-height: 1.48; }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .field.full { grid-column: 1 / -1; }
+    .weekly-call-form { margin-top: 16px; padding: 16px; background: var(--soft); border: 1px solid var(--line); border-radius: 14px; }
+    .weekly-call-form > .full { grid-column: 1 / -1; }
     .modal-actions { display: flex; justify-content: flex-end; gap: 9px; margin-top: 19px; }
     .video-stage { overflow: hidden; margin-top: 18px; aspect-ratio: 16 / 9; background: #050b14; border-radius: 13px; }
     .video-stage iframe, .video-stage video { width: 100%; height: 100%; border: 0; }
@@ -1214,23 +1216,32 @@
         </section>
 
         <section class="surface report-card">
-          <h2 data-i18n="availabilityTitle">Disponibilidad para la conversación del miércoles</h2>
-          <p class="section-copy" data-i18n="availabilityIntro">Los coaches en RD deben proponer la hora de la llamada según su disponibilidad.</p>
-          <div class="availability-callout">
-            <strong data-i18n="drCoachesAction">Acción para los coaches en RD</strong>
-            <p data-i18n="availabilityBody">Envíen su disponibilidad y expresen la hora propuesta en hora de República Dominicana (AST / UTC−4). El staff fuera de RD debe convertir desde esa zona horaria.</p>
-            <div class="timezone-row" aria-label="Time zone reference">
-              <span>RD · AST · UTC−4</span>
-              <span data-i18n="chicagoTime">Chicago · CDT · UTC−5</span>
-              <span data-i18n="arizonaTime">Arizona · MST · UTC−7</span>
+          <h2 data-i18n="availabilityTitle">Programar llamada semanal</h2>
+          <p class="section-copy" data-i18n="availabilityIntro">Elige la fecha y la hora en República Dominicana. Outlook abrirá una invitación lista para revisar y enviar.</p>
+          <form class="form-grid weekly-call-form" id="weeklyCallForm">
+            <div class="field">
+              <label for="weeklyCallDate" data-i18n="callDate">Fecha</label>
+              <input id="weeklyCallDate" name="callDate" type="date" required>
             </div>
-          </div>
+            <div class="field">
+              <label for="weeklyCallTime" data-i18n="callTime">Hora en RD (AST)</label>
+              <input id="weeklyCallTime" name="callTime" type="time" required>
+            </div>
+            <div class="field full">
+              <label for="weeklyCallDuration" data-i18n="callDuration">Duración</label>
+              <select id="weeklyCallDuration" name="callDuration">
+                <option value="30">30 min</option>
+                <option value="45">45 min</option>
+                <option value="60">60 min</option>
+              </select>
+            </div>
+            <button class="btn btn-primary full" type="submit" data-i18n="scheduleWeeklyCall">Programar llamada semanal</button>
+          </form>
           <div class="side-actions top-gap">
-            <button class="btn btn-primary btn-block" id="copyAvailability" type="button" data-i18n="copyAvailability">Copiar solicitud de disponibilidad</button>
             <button class="btn btn-block" id="copyScheduleLink" type="button" data-i18n="copyScheduleLink">Copiar enlace del calendario</button>
             <button class="btn btn-block" id="downloadCalendar" type="button" data-i18n="downloadCalendar">Descargar calendario (.ics)</button>
           </div>
-          <p class="setup-note" data-i18n="availabilityNote">La fecha es cada miércoles. La página no fija la hora: los coaches en RD la suministran según su disponibilidad.</p>
+          <p class="setup-note" data-i18n="availabilityNote">La invitación incluirá a cdennis@cubs.com. Al seleccionar Enviar en Outlook, el correo se enviará automáticamente.</p>
         </section>
       </div>
     </section>
@@ -1319,7 +1330,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="schedule-config.js?v=2026.09.13.1"></script>
+  <script src="schedule-config.js?v=2026.09.13.2"></script>
   <script>
     const CONFIG = window.DR_SCHEDULE_CONFIG;
     const SITE_TIME_ZONE = CONFIG.timeZone;
@@ -1328,6 +1339,7 @@
     const PROGRAM_START = CONFIG.programStart;
     const PROGRAM_END = CONFIG.programEnd;
     const SITE_VERSION = CONFIG.version;
+    const WEEKLY_CALL_RECIPIENT = CONFIG.weeklyCallRecipient || "cdennis@cubs.com";
 
     const copy = {
       es: {
@@ -1377,15 +1389,20 @@
         playersShort: "Jug.",
         minutesShort: "Min.",
         execution: "Ejecución",
-        availabilityTitle: "Disponibilidad para la conversación del miércoles",
-        availabilityIntro: "Los coaches en RD deben proponer la hora de la llamada según su disponibilidad.",
+        availabilityTitle: "Programar llamada semanal",
+        availabilityIntro: "Elige la fecha y la hora en República Dominicana. Outlook abrirá una invitación lista para revisar y enviar.",
         drCoachesAction: "Acción para los coaches en RD",
         availabilityBody: "Envíen su disponibilidad y expresen la hora propuesta en hora de República Dominicana (AST / UTC−4). El staff fuera de RD debe convertir desde esa zona horaria.",
         chicagoTime: "Chicago · CDT · UTC−5",
         arizonaTime: "Arizona · MST · UTC−7",
-        copyAvailability: "Copiar solicitud de disponibilidad",
+        copyAvailability: "Programar llamada semanal",
+        scheduleWeeklyCall: "Programar llamada semanal",
+        callDate: "Fecha",
+        callTime: "Hora en RD (AST)",
+        callDuration: "Duración",
+        outlookOpening: "Abriendo la invitación en Outlook…",
         copyScheduleLink: "Copiar enlace del calendario",
-        availabilityNote: "La fecha es cada miércoles. La página no fija la hora: los coaches en RD la suministran según su disponibilidad.",
+        availabilityNote: "La invitación incluirá a cdennis@cubs.com. Al seleccionar Enviar en Outlook, el correo se enviará automáticamente.",
         day: "Día",
         downloadCalendar: "Descargar calendario (.ics)",
         staffLinkNote: "El enlace compartido incluye la configuración de la conversación, no los reportes privados guardados en el teléfono.",
@@ -1558,15 +1575,20 @@
         playersShort: "Players",
         minutesShort: "Min.",
         execution: "Execution",
-        availabilityTitle: "Wednesday conversation availability",
-        availabilityIntro: "The DR coaches should propose the call time based on their availability.",
+        availabilityTitle: "Schedule weekly call",
+        availabilityIntro: "Choose the date and time in the Dominican Republic. Outlook will open a meeting invitation ready to review and send.",
         drCoachesAction: "Action for DR coaches",
         availabilityBody: "Send your availability and state the proposed time in Dominican Republic time (AST / UTC−4). Staff outside the DR should convert from that time zone.",
         chicagoTime: "Chicago · CDT · UTC−5",
         arizonaTime: "Arizona · MST · UTC−7",
-        copyAvailability: "Copy availability request",
+        copyAvailability: "Schedule weekly call",
+        scheduleWeeklyCall: "Schedule weekly call",
+        callDate: "Date",
+        callTime: "Time in the DR (AST)",
+        callDuration: "Duration",
+        outlookOpening: "Opening the invitation in Outlook…",
         copyScheduleLink: "Copy schedule link",
-        availabilityNote: "The date is every Wednesday. The page does not set the time; DR coaches supply it based on their availability.",
+        availabilityNote: "The invitation will include cdennis@cubs.com. When you select Send in Outlook, the email invitation is sent automatically.",
         day: "Day",
         downloadCalendar: "Download calendar (.ics)",
         staffLinkNote: "The shared link includes the conversation setup, not the private reports saved on the phone.",
@@ -1819,6 +1841,9 @@
     const completionBackdrop = document.getElementById("completionBackdrop");
     const videoBackdrop = document.getElementById("videoBackdrop");
     const completionForm = document.getElementById("completionForm");
+    const weeklyCallForm = document.getElementById("weeklyCallForm");
+    const weeklyCallDate = document.getElementById("weeklyCallDate");
+    const weeklyCallTime = document.getElementById("weeklyCallTime");
     const reportWeek = document.getElementById("reportWeek");
     const toast = document.getElementById("toast");
     const tourBackdrop = document.getElementById("tourBackdrop");
@@ -1945,6 +1970,7 @@
       renderReportControls();
       renderReport();
       renderExecutionOptions();
+      renderWeeklyCallDefaults();
     }
 
     function renderTodayStatus() {
@@ -2080,10 +2106,10 @@
           <li>${escapeHtml(t("agenda3"))}</li>
         </ol>
         <div class="side-actions">
-          <button class="btn btn-primary btn-block" type="button" data-copy-availability>${escapeHtml(t("copyAvailability"))}</button>
+          <button class="btn btn-primary btn-block" type="button" data-schedule-call>${escapeHtml(t("scheduleWeeklyCall"))}</button>
           <button class="btn btn-block" type="button" data-copy-agenda>${escapeHtml(t("copyAgenda"))}</button>
         </div>`;
-      chatCard.querySelector("[data-copy-availability]").addEventListener("click", copyAvailabilityRequest);
+      chatCard.querySelector("[data-schedule-call]").addEventListener("click", openCallScheduler);
       chatCard.querySelector("[data-copy-agenda]").addEventListener("click", copyAgenda);
     }
 
@@ -2327,12 +2353,46 @@
       copyText(text).then(() => showToast(t("copied")));
     }
 
-    function copyAvailabilityRequest() {
-      const chatDate = nextChatDate(realToday);
-      const text = state.language === "es"
-        ? `Coaches en RD: por favor envíen su disponibilidad para la conversación del ${fullDate(chatDate)} y propongan la hora en hora de República Dominicana (${CONFIG.timeZoneLabel}). Durante este programa, Chicago está 1 hora detrás y Arizona 3 horas detrás.`
-        : `DR coaches: please send your availability for the ${fullDate(chatDate)} call and propose the time in Dominican Republic time (${CONFIG.timeZoneLabel}). During this program, Chicago is 1 hour behind and Arizona is 3 hours behind.`;
-      copyText(text).then(() => showToast(t("copied")));
+    function renderWeeklyCallDefaults() {
+      weeklyCallDate.min = PROGRAM_START;
+      weeklyCallDate.max = PROGRAM_END;
+      if (!weeklyCallDate.value) weeklyCallDate.value = nextChatDate(realToday);
+    }
+
+    function openCallScheduler() {
+      showPanel("report");
+      renderWeeklyCallDefaults();
+      weeklyCallForm.scrollIntoView({ behavior: "smooth", block: "center" });
+      setTimeout(() => weeklyCallTime.focus(), 300);
+    }
+
+    function scheduleWeeklyCall(event) {
+      event.preventDefault();
+      const form = new FormData(weeklyCallForm);
+      const date = String(form.get("callDate") || "");
+      const time = String(form.get("callTime") || "");
+      const duration = Number(form.get("callDuration") || 30);
+      const [year, month, day] = date.split("-").map(Number);
+      const [hour, minute] = time.split(":").map(Number);
+      const start = new Date(Date.UTC(year, month - 1, day, hour + 4, minute));
+      const end = new Date(start.getTime() + duration * 60 * 1000);
+      const agenda = `1. ${t("agenda1")}\n2. ${t("agenda2")}\n3. ${t("agenda3")}\n\n${CONFIG.timeZoneLabel}`;
+      const outlookUrl = new URL("https://outlook.office.com/calendar/0/deeplink/compose");
+      outlookUrl.searchParams.set("path", "/calendar/action/compose");
+      outlookUrl.searchParams.set("rru", "addevent");
+      outlookUrl.searchParams.set("subject", t("meetingTitle"));
+      outlookUrl.searchParams.set("startdt", start.toISOString());
+      outlookUrl.searchParams.set("enddt", end.toISOString());
+      outlookUrl.searchParams.set("body", agenda);
+      outlookUrl.searchParams.set("to", WEEKLY_CALL_RECIPIENT);
+      const link = document.createElement("a");
+      link.href = outlookUrl.href;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      showToast(t("outlookOpening"));
     }
 
     function copyScheduleLink() {
@@ -2547,8 +2607,8 @@
     document.getElementById("downloadCsv").addEventListener("click", downloadCsv);
     document.getElementById("downloadCalendar").addEventListener("click", downloadCalendar);
     document.getElementById("downloadCalendarTop").addEventListener("click", downloadCalendar);
-    document.getElementById("copyAvailability").addEventListener("click", copyAvailabilityRequest);
     document.getElementById("copyScheduleLink").addEventListener("click", copyScheduleLink);
+    weeklyCallForm.addEventListener("submit", scheduleWeeklyCall);
 
     completionForm.addEventListener("submit", (event) => {
       event.preventDefault();
