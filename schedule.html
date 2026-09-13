@@ -1206,7 +1206,6 @@
                   <th data-i18n="drill">Drill</th>
                   <th data-i18n="playersShort">Jug.</th>
                   <th data-i18n="minutesShort">Min.</th>
-                  <th data-i18n="execution">Ejecución</th>
                 </tr>
               </thead>
               <tbody id="reportRows"></tbody>
@@ -1273,10 +1272,6 @@
             <input id="minutes" name="minutes" type="number" min="1" max="90" inputmode="numeric" value="10" required>
           </div>
           <div class="field full">
-            <label for="executionSelect" data-i18n="execution">Ejecución</label>
-            <select id="executionSelect" name="execution" required></select>
-          </div>
-          <div class="field full">
             <label for="notes" data-i18n="notes">Observación, ajuste o apoyo necesario</label>
             <textarea id="notes" name="notes" data-i18n-placeholder="notesPlaceholder" placeholder="¿Qué viste? ¿Qué ajustaste? ¿Qué apoyo sería útil?"></textarea>
           </div>
@@ -1330,7 +1325,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="schedule-config.js?v=2026.09.13.3"></script>
+  <script src="schedule-config.js?v=2026.09.13.4"></script>
   <script>
     const CONFIG = window.DR_SCHEDULE_CONFIG;
     const SITE_TIME_ZONE = CONFIG.timeZone;
@@ -1388,7 +1383,6 @@
         drill: "Drill",
         playersShort: "Jug.",
         minutesShort: "Min.",
-        execution: "Ejecución",
         availabilityTitle: "Programar llamada semanal",
         availabilityIntro: "Elige la fecha y la hora en República Dominicana. Outlook abrirá una invitación lista para revisar y enviar.",
         drCoachesAction: "Acción para los coaches en RD",
@@ -1497,9 +1491,6 @@
         copied: "Copiado.",
         downloadReady: "Descarga preparada.",
         shareTitle: "Reporte de corrido de bases",
-        sharp: "Nítido / listo",
-        onTrack: "En progreso",
-        revisit: "Repetir / dar seguimiento",
         low: "Low",
         high: "High",
         minutesWord: "minutos",
@@ -1579,7 +1570,6 @@
         drill: "Drill",
         playersShort: "Players",
         minutesShort: "Min.",
-        execution: "Execution",
         availabilityTitle: "Schedule weekly call",
         availabilityIntro: "Choose the date and time in the Dominican Republic. Outlook will open a meeting invitation ready to review and send.",
         drCoachesAction: "Action for DR coaches",
@@ -1688,9 +1678,6 @@
         copied: "Copied.",
         downloadReady: "Download ready.",
         shareTitle: "Base running report",
-        sharp: "Sharp / ready",
-        onTrack: "On track",
-        revisit: "Revisit / follow up",
         low: "Low",
         high: "High",
         minutesWord: "minutes",
@@ -1979,7 +1966,6 @@
       renderCalendar();
       renderReportControls();
       renderReport();
-      renderExecutionOptions();
       renderWeeklyCallDefaults();
     }
 
@@ -2047,7 +2033,7 @@
         actionMarkup = `
           <div class="complete-card">
             <strong>✓ ${escapeHtml(t("completed"))}</strong>
-            <p>${escapeHtml(record.coach)} · ${escapeHtml(record.players)} ${escapeHtml(t("playersWord"))} · ${escapeHtml(record.minutes)} ${escapeHtml(t("minutesWord"))} · ${escapeHtml(executionLabel(record.execution))}${note}</p>
+            <p>${escapeHtml(record.coach)} · ${escapeHtml(record.players)} ${escapeHtml(t("playersWord"))} · ${escapeHtml(record.minutes)} ${escapeHtml(t("minutesWord"))}${note}</p>
             <p class="complete-prompt">${escapeHtml(t("emailReportReminder"))}</p>
             <div class="complete-actions">
               <button class="btn btn-primary" type="button" data-email-record>${escapeHtml(t("emailReport"))}</button>
@@ -2220,7 +2206,7 @@
       renderCentralReport();
       const rows = document.getElementById("reportRows");
       if (!records.length) {
-        rows.innerHTML = `<tr><td class="empty-row" colspan="6">${escapeHtml(t("noReports"))}</td></tr>`;
+        rows.innerHTML = `<tr><td class="empty-row" colspan="5">${escapeHtml(t("noReports"))}</td></tr>`;
         return;
       }
       rows.innerHTML = records.map(([date, record]) => `
@@ -2230,7 +2216,6 @@
           <td>${escapeHtml(drillName(record.drillId))}</td>
           <td>${escapeHtml(record.players)}</td>
           <td>${escapeHtml(record.minutes)}</td>
-          <td>${escapeHtml(executionLabel(record.execution))}</td>
         </tr>`).join("");
     }
 
@@ -2241,13 +2226,6 @@
       banner.innerHTML = ready
         ? `<strong>${escapeHtml(t("centralReadyTitle"))}</strong><p>${escapeHtml(t("centralReadyBody"))}</p><div class="side-actions top-gap"><a class="btn btn-primary btn-block" href="${escapeHtml(CONFIG.centralReportUrl)}" target="_blank" rel="noopener">${escapeHtml(t("centralReadyAction"))}</a></div>`
         : `<strong>${escapeHtml(t("centralPendingTitle"))}</strong><p>${escapeHtml(t("centralPendingBody"))}</p>`;
-    }
-
-    function renderExecutionOptions() {
-      const executionSelect = document.getElementById("executionSelect");
-      const current = executionSelect.value || "onTrack";
-      executionSelect.innerHTML = ["sharp", "onTrack", "revisit"].map((value) => `<option value="${value}">${escapeHtml(t(value))}</option>`).join("");
-      executionSelect.value = current;
     }
 
     function showPanel(panel) {
@@ -2262,7 +2240,6 @@
       if (panel === "report") {
         renderReportControls();
         renderReport();
-        renderExecutionOptions();
       }
     }
 
@@ -2285,7 +2262,6 @@
       document.getElementById("groupName").value = record?.group || state.settings.group || "";
       document.getElementById("playerCount").value = record?.players || "";
       document.getElementById("minutes").value = record?.minutes || 10;
-      document.getElementById("executionSelect").value = record?.execution || "onTrack";
       document.getElementById("notes").value = record?.notes || "";
       completionBackdrop.hidden = false;
       document.body.style.overflow = "hidden";
@@ -2298,8 +2274,6 @@
       lastModalTrigger?.focus();
     }
 
-    function executionLabel(value) { return t(value || "onTrack"); }
-
     function recordText(date) {
       const record = state.records[date];
       if (!record) return "";
@@ -2309,8 +2283,7 @@
         `${fullDate(date)} · ${blockMenuLabel(entry)}`,
         `${t("coach")}: ${record.coach}${record.group ? ` · ${record.group}` : ""}`,
         `${t("drill")}: ${drillName(record.drillId)}`,
-        `${record.players} ${t("playersWord")} · ${record.minutes} ${t("minutesWord")}`,
-        `${t("execution")}: ${executionLabel(record.execution)}`
+        `${record.players} ${t("playersWord")} · ${record.minutes} ${t("minutesWord")}`
       ];
       if (record.notes) lines.push(`${t("notesWord")}: ${record.notes}`);
       return lines.join("\n");
@@ -2358,7 +2331,7 @@
       const title = filter === "all" ? t("shareTitle") : `${t("shareTitle")} · ${t("weekOf")} ${shortDate(filter)}`;
       const lines = [title, `${t("completedStat")}: ${records.length}/${entries.length}`];
       records.forEach(([date, record]) => {
-        lines.push(`• ${shortDate(date)} · ${record.coach} · ${drillName(record.drillId)} · ${record.players} ${t("playersWord")} · ${executionLabel(record.execution)}`);
+        lines.push(`• ${shortDate(date)} · ${record.coach} · ${drillName(record.drillId)} · ${record.players} ${t("playersWord")}`);
       });
       if (!records.length) lines.push(t("noReports"));
       lines.push(t("reportGenerated"));
@@ -2434,8 +2407,8 @@
     }
 
     function downloadCsv() {
-      const headers = [t("date"), t("coach"), t("groupName"), t("drill"), t("playersShort"), t("minutesShort"), t("execution"), t("notes")];
-      const rows = recordsForFilter().map(([date, record]) => [date, record.coach, record.group, drillName(record.drillId), record.players, record.minutes, executionLabel(record.execution), record.notes]);
+      const headers = [t("date"), t("coach"), t("groupName"), t("drill"), t("playersShort"), t("minutesShort"), t("notes")];
+      const rows = recordsForFilter().map(([date, record]) => [date, record.coach, record.group, drillName(record.drillId), record.players, record.minutes, record.notes]);
       const csv = "\uFEFF" + [headers, ...rows].map((row) => row.map(csvEscape).join(",")).join("\r\n");
       downloadBlob(csv, `dr-base-running-report-${reportWeek.value || "all"}.csv`, "text/csv;charset=utf-8");
       showToast(t("downloadReady"));
@@ -2647,7 +2620,6 @@
         group: String(form.get("group") || "").trim(),
         players: Number(form.get("players")),
         minutes: Number(form.get("minutes")),
-        execution: String(form.get("execution")),
         notes: String(form.get("notes") || "").trim(),
         savedAt: new Date().toISOString()
       };
