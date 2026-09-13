@@ -1275,7 +1275,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="schedule-config.js?v=2026.09.13.5"></script>
+  <script src="schedule-config.js?v=2026.09.13.6"></script>
   <script>
     const CONFIG = window.DR_SCHEDULE_CONFIG;
     const SITE_TIME_ZONE = CONFIG.timeZone;
@@ -1421,7 +1421,6 @@
         setMeeting: "Configurar en Reporte",
         joinMeeting: "Entrar a la conversación",
         addMeeting: "Añadir conversación al calendario",
-        copyAgenda: "Copiar agenda",
         agenda1: "Qué se trabajó esta semana",
         agenda2: "Una tendencia positiva de los jugadores",
         agenda3: "Un ajuste, pregunta o apoyo necesario",
@@ -1607,7 +1606,6 @@
         setMeeting: "Set up in Report",
         joinMeeting: "Join conversation",
         addMeeting: "Add conversation to calendar",
-        copyAgenda: "Copy agenda",
         agenda1: "What the staff worked on this week",
         agenda2: "One positive player trend",
         agenda3: "One adjustment, question, or support need",
@@ -2051,10 +2049,8 @@
         </ol>
         <div class="side-actions">
           <button class="btn btn-primary btn-block" type="button" data-schedule-call>${escapeHtml(t("scheduleWeeklyCall"))}</button>
-          <button class="btn btn-block" type="button" data-copy-agenda>${escapeHtml(t("copyAgenda"))}</button>
         </div>`;
       chatCard.querySelector("[data-schedule-call]").addEventListener("click", openCallScheduler);
-      chatCard.querySelector("[data-copy-agenda]").addEventListener("click", copyAgenda);
     }
 
     function renderCalendar() {
@@ -2297,12 +2293,6 @@
       area.select();
       document.execCommand("copy");
       area.remove();
-    }
-
-    function copyAgenda() {
-      const chatDate = nextChatDate(realToday);
-      const text = `${t("meetingTitle")} · ${fullDate(chatDate)} · ${t("timeTbd")} (${CONFIG.timeZoneLabel})\n${t("drTimeOwner")}\n1. ${t("agenda1")}\n2. ${t("agenda2")}\n3. ${t("agenda3")}`;
-      copyText(text).then(() => showToast(t("copied")));
     }
 
     function renderWeeklyCallDefaults() {
