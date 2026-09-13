@@ -264,6 +264,7 @@
     }
     .session-heading.low { background: linear-gradient(130deg, #175f4d, var(--light)); }
     .session-heading.high { background: linear-gradient(130deg, #993e1e, var(--heavy)); }
+    .session-heading.game-block { background: linear-gradient(130deg, var(--navy-deep), var(--blue)); }
     .session-date { margin: 0 0 5px; color: rgba(255,255,255,.75); font-size: .82rem; font-weight: 760; text-transform: uppercase; letter-spacing: .06em; }
     .session-heading h2 { margin: 0; font-size: clamp(1.35rem, 3vw, 1.85rem); line-height: 1.15; }
     .load-badge {
@@ -405,6 +406,7 @@
     .day-load { display: inline-block; margin-top: 7px; padding: 3px 7px; border-radius: 999px; font-size: .66rem; font-weight: 900; text-transform: uppercase; }
     .day-load.low { color: #15533f; background: var(--light-soft); }
     .day-load.high { color: #853517; background: var(--heavy-soft); }
+    .day-load.game { color: #fff; background: var(--blue); }
     .chat-marker { display: block; margin-top: 7px; color: var(--blue); font-size: .68rem; font-weight: 820; line-height: 1.2; }
     .day-status { display: inline-flex; margin-top: 6px; padding: 3px 7px; color: #fff; border-radius: 999px; font-size: .58rem; font-weight: 900; letter-spacing: .02em; text-transform: uppercase; }
     .day-status.scheduled { background: var(--scheduled); }
@@ -915,6 +917,7 @@
     }
     .calendar-day.low { border-top: 4px solid var(--light); }
     .calendar-day.high { border-top: 4px solid var(--heavy); }
+    .calendar-day.game-block { border-top: 4px solid var(--blue); }
     button.calendar-day:hover { transform: translateY(-2px); background: #fff; box-shadow: 0 11px 22px rgba(8,26,53,.1); }
     .calendar-day.today { box-shadow: 0 0 0 3px rgba(14,42,82,.9), 0 11px 24px rgba(8,26,53,.13); }
     .calendar-day.outside { background: rgba(237,242,248,.35); box-shadow: none; }
@@ -1041,6 +1044,7 @@
       }
       .calendar-day.low { border-left: 5px solid var(--light); }
       .calendar-day.high { border-left: 5px solid var(--heavy); }
+      .calendar-day.game-block { border-left: 5px solid var(--blue); }
       .day-number { grid-row: 1 / span 2; font-size: 1.08rem; text-align: center; }
       .day-event { grid-column: 2; margin: 0; font-size: .83rem; }
       .day-load { grid-column: 3; grid-row: 1; margin: 0; font-size: .64rem; }
@@ -1095,10 +1099,10 @@
         <p class="intro" data-i18n="intro">El calendario organiza la carga del día. Tú conoces al grupo: elige el drill que mejor responda a lo que ves, ejecuta el bloque y comparte una observación breve.</p>
       </div>
       <div class="hero-count" aria-hidden="true">
-        <strong id="plannedBlockCount">16</strong>
+        <strong id="plannedBlockCount">33</strong>
         <span data-i18n="plannedBlocks">bloques programados</span>
       </div>
-      <span class="sr-only"><span id="plannedBlockCountA11y">16</span> <span data-i18n="plannedBlocks">bloques programados</span></span>
+      <span class="sr-only"><span id="plannedBlockCountA11y">33</span> <span data-i18n="plannedBlocks">bloques programados</span></span>
     </header>
 
     <section class="today-strip" aria-live="polite">
@@ -1165,10 +1169,10 @@
         </ul>
         <div class="calendar-rule">
           <span aria-hidden="true">!</span>
-          <div><strong data-i18n="calendarRuleTitle">¿Cuándo hacemos corrido de bases?</strong><p data-i18n="calendarRuleBody">Solamente en las fechas con etiqueta Low o High. Juegos, Camp Days y días libres no generan un bloque.</p></div>
+          <div><strong data-i18n="calendarRuleTitle">¿Cuándo hacemos corrido de bases?</strong><p data-i18n="calendarRuleBody">En las fechas con etiqueta Low o High y en los días de juego. Los Camp Days y días libres no generan un bloque.</p></div>
         </div>
         <div class="calendar-grid" id="calendarGrid"></div>
-        <p class="calendar-caption" data-i18n="calendarCaption">Toca cualquier fecha para ver sus detalles. Los bloques de corrido aparecen solamente en los días marcados Low o High en el calendario original.</p>
+        <p class="calendar-caption" data-i18n="calendarCaption">Toca cualquier fecha para ver sus detalles. Los días Low y High usan su menú correspondiente; los días de juego muestran el menú completo.</p>
       </div>
     </section>
 
@@ -1315,7 +1319,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="schedule-config.js?v=2026.09.12.5"></script>
+  <script src="schedule-config.js?v=2026.09.13.1"></script>
   <script>
     const CONFIG = window.DR_SCHEDULE_CONFIG;
     const SITE_TIME_ZONE = CONFIG.timeZone;
@@ -1346,8 +1350,8 @@
         heavyDay: "Día medio / fuerte",
         weeklyChat: "Conversación semanal del staff",
         calendarRuleTitle: "¿Cuándo hacemos corrido de bases?",
-        calendarRuleBody: "Solamente en las fechas con etiqueta Low o High. Juegos, Camp Days y días libres no generan un bloque.",
-        calendarCaption: "Toca cualquier fecha para ver sus detalles. Los bloques de corrido aparecen solamente en los días marcados Low o High en el calendario original.",
+        calendarRuleBody: "En las fechas con etiqueta Low o High y en los días de juego. Los Camp Days y días libres no generan un bloque.",
+        calendarCaption: "Toca cualquier fecha para ver sus detalles. Los días Low y High usan su menú correspondiente; los días de juego muestran el menú completo.",
         calendarScheduled: "Programado",
         calendarCompleted: "Registrado",
         calendarMissed: "No reportado",
@@ -1418,6 +1422,9 @@
         calendarDecision: "Definida por el calendario:",
         lightDefinition: "Día de revisión y trabajo de baja carga. Estas opciones mantienen el objetivo del día.",
         heavyDefinition: "Día competitivo y de mayor carga. Estas opciones mantienen el objetivo del día.",
+        fullMenu: "Menú completo",
+        gameDayHeading: "Día de juego:",
+        gameDayDefinition: "El bloque de corrido de bases sigue programado. Elige cualquier drill según lo que necesite el grupo.",
         upNext: "Siguiente paso",
         runSelectedTitle: "Mira el video si hace falta y ejecuta el drill",
         runSelectedBody: "Usa el video como referencia común cuando sea útil. Aplica tu criterio para organizar el drill según el grupo.",
@@ -1441,7 +1448,7 @@
         editReport: "Editar reporte",
         nextBlock: "Ver próximo bloque",
         noBlock: "No hay bloque de corrido de bases",
-        noBlockBody: "Los bloques se programan únicamente en días Low y High. Usa el calendario para ver la próxima sesión.",
+        noBlockBody: "Los bloques se programan en días Low, High y de juego. Usa el calendario para ver la próxima sesión.",
         meetingTitle: "Conversación semanal del staff",
         nextMeeting: "Próxima conversación",
         timeTbd: "Hora por confirmar por coaches RD",
@@ -1488,7 +1495,7 @@
         next: "Siguiente",
         start: "Ver el plan de hoy",
         tour1Title: "La carga del día ya está organizada",
-        tour1Body: "El calendario muestra automáticamente si corresponde un día Low o High para agilizar la preparación del staff.",
+        tour1Body: "El calendario muestra automáticamente si corresponde un día Low, High o de juego para agilizar la preparación del staff.",
         tour1Callout: "Menos preparación, más tiempo con los jugadores",
         tour1Visual: "LOW / HIGH",
         tour2Title: "Tu criterio guía la elección",
@@ -1524,8 +1531,8 @@
         heavyDay: "Medium / heavy day",
         weeklyChat: "Weekly staff conversation",
         calendarRuleTitle: "When do we run a base running block?",
-        calendarRuleBody: "Only on dates labeled Low or High. Games, Camp Days, and team off-days do not generate a block.",
-        calendarCaption: "Tap any date to see its details. Base running blocks appear only on days marked Low or High in the original calendar.",
+        calendarRuleBody: "On dates labeled Low or High and on game days. Camp Days and team off-days do not generate a block.",
+        calendarCaption: "Tap any date to see its details. Low and High days use their matching menu; game days show the full menu.",
         calendarScheduled: "Scheduled",
         calendarCompleted: "Logged",
         calendarMissed: "Not reported",
@@ -1596,6 +1603,9 @@
         calendarDecision: "Defined by the calendar:",
         lightDefinition: "Review and low-load work day. These options maintain the day’s objective.",
         heavyDefinition: "Competitive, higher-load day. These options maintain the day’s objective.",
+        fullMenu: "Full menu",
+        gameDayHeading: "Game day:",
+        gameDayDefinition: "The base-running block remains scheduled. Choose any drill based on what the group needs.",
         upNext: "Next step",
         runSelectedTitle: "Watch the video if needed, then run the drill",
         runSelectedBody: "Use the video as a shared reference when helpful. Apply your judgment to organize the drill for the group.",
@@ -1619,7 +1629,7 @@
         editReport: "Edit report",
         nextBlock: "View next block",
         noBlock: "No base running block",
-        noBlockBody: "Blocks are scheduled only on Low and High days. Use the calendar to see the next session.",
+        noBlockBody: "Blocks are scheduled on Low, High, and game days. Use the calendar to see the next session.",
         meetingTitle: "Weekly staff conversation",
         nextMeeting: "Next conversation",
         timeTbd: "Time to be confirmed by DR coaches",
@@ -1666,7 +1676,7 @@
         next: "Next",
         start: "View today’s plan",
         tour1Title: "The day’s workload is already organized",
-        tour1Body: "The calendar automatically shows whether the day is Low or High, making staff preparation faster.",
+        tour1Body: "The calendar automatically shows whether the day is Low, High, or a game day, making staff preparation faster.",
         tour1Callout: "Less preparation, more time with players",
         tour1Visual: "LOW / HIGH",
         tour2Title: "Your judgment guides the choice",
@@ -1757,7 +1767,9 @@
     const schedule = CONFIG.schedule;
 
     const scheduleByDate = Object.fromEntries(schedule.map((entry) => [entry.date, entry]));
-    const eligibleEntries = schedule.filter((entry) => entry.load);
+    function isGameDay(entry) { return entry?.type === "game" || entry?.type === "conditionalGame"; }
+    function hasBaseRunningBlock(entry) { return Boolean(entry?.load) || isGameDay(entry); }
+    const eligibleEntries = schedule.filter(hasBaseRunningBlock);
     function initialState() {
       return {
         language: "es",
@@ -1844,10 +1856,16 @@
     }
 
     function choicesFor(entry) {
-      if (!entry || !entry.load) return [];
+      if (isGameDay(entry)) return Object.keys(drills);
+      if (!entry?.load) return [];
       return Object.entries(drills)
         .filter(([, drill]) => drill.load === entry.load)
         .map(([id]) => id);
+    }
+
+    function blockMenuLabel(entry) {
+      if (isGameDay(entry)) return t("fullMenu");
+      return entry.load === "low" ? t("lightDay") : t("heavyDay");
     }
 
     function drillName(id) { return drills[id] ? drills[id][state.language] : id; }
@@ -1934,7 +1952,7 @@
       let status;
       if (entry) {
         status = eventLabel(entry);
-        if (entry.load) status += ` · ${entry.load === "low" ? t("lightDay") : t("heavyDay")}`;
+        if (hasBaseRunningBlock(entry)) status += ` · ${blockMenuLabel(entry)}`;
       } else {
         status = realToday < PROGRAM_START || realToday > PROGRAM_END ? t("outsideProgram") : t("noCalendarToday");
       }
@@ -1943,7 +1961,7 @@
 
     function renderSession() {
       const entry = scheduleByDate[selectedDate];
-      if (!entry || !entry.load) {
+      if (!hasBaseRunningBlock(entry)) {
         const event = entry ? eventLabel(entry) : t("noCalendarToday");
         sessionCard.innerHTML = `
           <header class="session-heading">
@@ -1966,6 +1984,7 @@
       const selected = state.plans[selectedDate] || "";
       const record = state.records[selectedDate];
       const choiceIds = choicesFor(entry);
+      const gameDay = isGameDay(entry);
       const choiceMarkup = choiceIds.map((id, index) => {
         const isSelected = selected === id;
         return `
@@ -2013,12 +2032,12 @@
       }
 
       sessionCard.innerHTML = `
-        <header class="session-heading ${entry.load}">
+        <header class="session-heading ${gameDay ? "game-block" : entry.load}">
           <div><p class="session-date">${escapeHtml(fullDate(selectedDate))}</p><h2>${escapeHtml(t("baseBlock"))} · ${escapeHtml(eventLabel(entry))}</h2></div>
-          <span class="load-badge">${escapeHtml(entry.load === "low" ? t("lightDay") : t("heavyDay"))}</span>
+          <span class="load-badge">${escapeHtml(blockMenuLabel(entry))}</span>
         </header>
         <div class="session-body">
-          <div class="load-explanation"><span>${escapeHtml(t("loadLocked"))}</span><p><strong>${escapeHtml(t("calendarDecision"))}</strong> ${escapeHtml(entry.load === "low" ? t("lightDefinition") : t("heavyDefinition"))}</p></div>
+          <div class="load-explanation"><span>${escapeHtml(gameDay ? t("fullMenu") : t("loadLocked"))}</span><p><strong>${escapeHtml(gameDay ? t("gameDayHeading") : t("calendarDecision"))}</strong> ${escapeHtml(gameDay ? t("gameDayDefinition") : entry.load === "low" ? t("lightDefinition") : t("heavyDefinition"))}</p></div>
           ${workflowMarkup(selected, record)}
           <p class="choice-kicker">${escapeHtml(t("chooseOne"))}</p>
           <p class="choice-instruction">${escapeHtml(t("chooseInstruction"))}</p>
@@ -2085,18 +2104,23 @@
       for (let day = 1; day <= daysInMonth; day += 1) {
         const iso = `${calendarYear}-${String(calendarMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
         const entry = scheduleByDate[iso];
+        const hasBlock = hasBaseRunningBlock(entry);
+        const gameDay = isGameDay(entry);
         const hasChat = weekdayOf(iso) === DEFAULT_CHAT_DAY && iso >= PROGRAM_START && iso <= PROGRAM_END;
         const classes = ["calendar-day"];
         if (!entry) classes.push("outside");
         if (entry?.load) classes.push(entry.load);
+        if (gameDay) classes.push("game-block");
         if (iso === realToday) classes.push("today");
         let status = "";
-        if (entry?.load && state.records[iso]) status = "complete";
-        else if (entry?.load && iso < realToday) status = "missed";
-        else if (entry?.load) status = "scheduled";
+        if (hasBlock && state.records[iso]) status = "complete";
+        else if (hasBlock && iso < realToday) status = "missed";
+        else if (hasBlock) status = "scheduled";
         if (status) classes.push(status);
         const event = entry ? `<span class="day-event">${escapeHtml(eventLabel(entry))}</span>` : "";
-        const load = entry?.load ? `<span class="day-load ${entry.load}">${escapeHtml(entry.load === "low" ? t("low") : t("high"))}</span>` : "";
+        const load = entry?.load
+          ? `<span class="day-load ${entry.load}">${escapeHtml(entry.load === "low" ? t("low") : t("high"))}</span>`
+          : gameDay ? `<span class="day-load game">${escapeHtml(t("fullMenu"))}</span>` : "";
         const statusKey = status === "complete" ? "calendarCompleted" : status === "missed" ? "calendarMissed" : "calendarScheduled";
         const statusLabel = status ? `<span class="day-status ${status}">${escapeHtml(t(statusKey))}</span>` : "";
         const chat = hasChat ? `<span class="chat-marker">● ${escapeHtml(t("weeklyChat"))}</span>` : "";
@@ -2244,7 +2268,7 @@
       const entry = scheduleByDate[date];
       const lines = [
         `⚾ ${t("shareTitle")}`,
-        `${fullDate(date)} · ${entry.load === "low" ? t("lightDay") : t("heavyDay")}`,
+        `${fullDate(date)} · ${blockMenuLabel(entry)}`,
         `${t("coach")}: ${record.coach}${record.group ? ` · ${record.group}` : ""}`,
         `${t("drill")}: ${drillName(record.drillId)}`,
         `${record.players} ${t("playersWord")} · ${record.minutes} ${t("minutesWord")}`,
@@ -2356,7 +2380,7 @@
           `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z")}`,
           `DTSTART;VALUE=DATE:${icsDate(entry.date)}`,
           `DTEND;VALUE=DATE:${icsDate(addDays(entry.date, 1))}`,
-          `SUMMARY:${icsEscape(`${t("baseBlock")} · ${entry.load === "low" ? t("lightDay") : t("heavyDay")}`)}`,
+          `SUMMARY:${icsEscape(`${t("baseBlock")} · ${blockMenuLabel(entry)}`)}`,
           `DESCRIPTION:${icsEscape(`${t("sourceChoice")}: ${choices}\n${pageUrl}`)}`,
           `URL:${pageUrl}`,
           "END:VEVENT"

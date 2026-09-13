@@ -13,8 +13,9 @@ as coming soon until its videos are available.
 
 The shared site opens schedule.html as its landing page. That page adds:
 - The September 6 through October 31 DR instructional calendar
-- A base running block on every Low and High day
+- A base running block on every Low, High, and game day
 - The full recommended drill menu for each block's Low or High workload
+- The full drill menu on every confirmed or if-necessary game day
 - A four-step first-use walkthrough that can be reopened at any time
 - A visual Choose > Run > Report progress guide on every session
 - Clear context for the Low or High workload shown by the calendar
@@ -52,8 +53,8 @@ the configuration changes so browsers fetch the latest file.
 CALENDAR SOURCE
 ---------------
 The dates and labels in schedule.html were transcribed from the supplied
-"DR Instructs 2026 Calendar" PDF. Base running blocks are assigned only to the
-dates marked Low or High in that source calendar.
+"DR Instructs 2026 Calendar" PDF. Base running blocks are assigned to the dates
+marked Low or High and to confirmed or if-necessary game dates.
 
 UPDATING VIDEO LINKS
 --------------------
