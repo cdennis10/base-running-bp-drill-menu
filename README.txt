@@ -20,6 +20,7 @@ The shared site opens schedule.html as its landing page. That page adds:
 - A visual Choose > Run > Report progress guide on every session
 - Clear context for the Low or High workload shown by the calendar
 - A brief coach completion report
+- A prefilled Outlook post-session email addressed to cdennis@cubs.com
 - A weekly-call scheduler, shareable schedule link, and downloadable .ics calendar
 - Weekly report copy and CSV export
 
@@ -33,6 +34,10 @@ form accepts anonymous responses without sign-in.
 
 The local Share, Copy, and CSV tools remain available as fallbacks. The
 centralized report URL is configured in schedule-config.js.
+
+Saving a post-session report also opens a prefilled Outlook email addressed to
+cdennis@cubs.com. The coach reviews the message and selects Send; no email
+password or mail-sending credential is stored in the public website.
 
 WEEKLY STAFF CONVERSATION
 -------------------------

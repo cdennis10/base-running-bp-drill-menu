@@ -1330,7 +1330,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="schedule-config.js?v=2026.09.13.2"></script>
+  <script src="schedule-config.js?v=2026.09.13.3"></script>
   <script>
     const CONFIG = window.DR_SCHEDULE_CONFIG;
     const SITE_TIME_ZONE = CONFIG.timeZone;
@@ -1339,7 +1339,7 @@
     const PROGRAM_START = CONFIG.programStart;
     const PROGRAM_END = CONFIG.programEnd;
     const SITE_VERSION = CONFIG.version;
-    const WEEKLY_CALL_RECIPIENT = CONFIG.weeklyCallRecipient || "cdennis@cubs.com";
+    const NOTIFICATION_RECIPIENT = CONFIG.notificationRecipient || "cdennis@cubs.com";
 
     const copy = {
       es: {
@@ -1448,6 +1448,7 @@
         openSelectedVideo: "Abrir video seleccionado",
         greenlightAction: "Ejecutar/instalar GreenLight",
         shareReminder: "Último paso: comparte contexto con el staff.",
+        emailReportReminder: "Envía el reporte post-sesión por email a cdennis@cubs.com.",
         centralSubmitReminder: "Último paso: abre y envía el resumen para sumar contexto al registro compartido.",
         todayPrefix: "Hoy en RD",
         noCalendarToday: "no hay actividad en el calendario",
@@ -1461,7 +1462,11 @@
         selectedDrill: "Drill seleccionado",
         markComplete: "Marcar bloque terminado",
         completed: "Actualización registrada",
-        shareUpdate: "Compartir reporte",
+        shareUpdate: "Compartir de otra forma",
+        emailReport: "Enviar reporte por email",
+        emailReportSubject: "Reporte post-sesión de corrido de bases",
+        emailOpening: "Abriendo el reporte en Outlook…",
+        savedAndEmail: "Reporte guardado. Outlook está abriendo el email listo para enviar.",
         editReport: "Editar reporte",
         nextBlock: "Ver próximo bloque",
         noBlock: "No hay bloque de corrido de bases",
@@ -1634,6 +1639,7 @@
         openSelectedVideo: "Open selected video",
         greenlightAction: "Run/Install GreenLight",
         shareReminder: "Final step: share context with the staff.",
+        emailReportReminder: "Email the post-session report to cdennis@cubs.com.",
         centralSubmitReminder: "Final step: open and submit the summary to add context to the shared record.",
         todayPrefix: "Today in the DR",
         noCalendarToday: "no calendar activity",
@@ -1647,7 +1653,11 @@
         selectedDrill: "Selected drill",
         markComplete: "Mark block complete",
         completed: "Update logged",
-        shareUpdate: "Share report",
+        shareUpdate: "Share another way",
+        emailReport: "Email report",
+        emailReportSubject: "Base running post-session report",
+        emailOpening: "Opening the report in Outlook…",
+        savedAndEmail: "Report saved. Outlook is opening the email ready to send.",
         editReport: "Edit report",
         nextBlock: "View next block",
         noBlock: "No base running block",
@@ -2038,9 +2048,10 @@
           <div class="complete-card">
             <strong>✓ ${escapeHtml(t("completed"))}</strong>
             <p>${escapeHtml(record.coach)} · ${escapeHtml(record.players)} ${escapeHtml(t("playersWord"))} · ${escapeHtml(record.minutes)} ${escapeHtml(t("minutesWord"))} · ${escapeHtml(executionLabel(record.execution))}${note}</p>
-            <p class="complete-prompt">${escapeHtml(t(isSafeHttpUrl(CONFIG.centralReportUrl) ? "centralSubmitReminder" : "shareReminder"))}</p>
+            <p class="complete-prompt">${escapeHtml(t("emailReportReminder"))}</p>
             <div class="complete-actions">
-              <button class="btn btn-primary" type="button" data-share-record>${escapeHtml(t("shareUpdate"))}</button>
+              <button class="btn btn-primary" type="button" data-email-record>${escapeHtml(t("emailReport"))}</button>
+              <button class="btn" type="button" data-share-record>${escapeHtml(t("shareUpdate"))}</button>
               ${centralAction}
               <button class="btn" type="button" data-edit-record>${escapeHtml(t("editReport"))}</button>
             </div>
@@ -2085,6 +2096,7 @@
       sessionCard.querySelector("[data-run-video]")?.addEventListener("click", (event) => openVideo(event.currentTarget.dataset.runVideo, event.currentTarget));
       sessionCard.querySelector("[data-complete]")?.addEventListener("click", (event) => openCompletion(selectedDate, event.currentTarget));
       sessionCard.querySelector("[data-edit-record]")?.addEventListener("click", (event) => openCompletion(selectedDate, event.currentTarget));
+      sessionCard.querySelector("[data-email-record]")?.addEventListener("click", () => emailRecord(selectedDate));
       sessionCard.querySelector("[data-share-record]")?.addEventListener("click", () => shareRecord(selectedDate));
     }
 
@@ -2318,6 +2330,27 @@
       showToast(t("copied"));
     }
 
+    function openOutlookUrl(url) {
+      const link = document.createElement("a");
+      link.href = url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+
+    function emailRecord(date, showMessage = true) {
+      const record = state.records[date];
+      if (!record) return;
+      const mailUrl = new URL("https://outlook.office.com/mail/deeplink/compose");
+      mailUrl.searchParams.set("to", NOTIFICATION_RECIPIENT);
+      mailUrl.searchParams.set("subject", `${t("emailReportSubject")} · ${shortDate(date)} · ${record.coach}`);
+      mailUrl.searchParams.set("body", recordText(date));
+      openOutlookUrl(mailUrl.href);
+      if (showMessage) showToast(t("emailOpening"));
+    }
+
     function reportText() {
       const filter = reportWeek.value || "all";
       const entries = entriesForFilter();
@@ -2384,14 +2417,8 @@
       outlookUrl.searchParams.set("startdt", start.toISOString());
       outlookUrl.searchParams.set("enddt", end.toISOString());
       outlookUrl.searchParams.set("body", agenda);
-      outlookUrl.searchParams.set("to", WEEKLY_CALL_RECIPIENT);
-      const link = document.createElement("a");
-      link.href = outlookUrl.href;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      outlookUrl.searchParams.set("to", NOTIFICATION_RECIPIENT);
+      openOutlookUrl(outlookUrl.href);
       showToast(t("outlookOpening"));
     }
 
@@ -2627,9 +2654,10 @@
       state.settings.coach = state.records[completionDate].coach;
       state.settings.group = state.records[completionDate].group;
       saveState();
+      emailRecord(completionDate, false);
       closeCompletion();
       renderEverything();
-      showToast(t("saved"));
+      showToast(t("savedAndEmail"));
     });
 
     document.getElementById("completionClose").addEventListener("click", closeCompletion);
