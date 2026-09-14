@@ -933,7 +933,9 @@
     .tour-modal .tour-close { color: #fff; background: rgba(255,255,255,.1); }
     .tour-topline { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 27px 29px 13px; }
     .tour-eyebrow { margin: 0; color: #f6d36b; font-size: .7rem; font-weight: 900; letter-spacing: .13em; }
-    #tourCounter { padding-right: 38px; color: #9eb5d2; font-size: .78rem; font-weight: 800; }
+    .tour-header-actions { display: flex; align-items: center; gap: 12px; padding-right: 38px; }
+    #tourCounter { color: #9eb5d2; font-size: .78rem; font-weight: 800; white-space: nowrap; }
+    .tour-language-toggle .language-button { min-height: 32px; padding: 5px 10px; font-size: .72rem; }
     .tour-progress { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; padding: 0 29px; }
     .tour-progress span { height: 4px; background: rgba(255,255,255,.15); border-radius: 999px; }
     .tour-progress span.done { background: #f6d36b; }
@@ -1042,8 +1044,8 @@
       <button class="help-button" id="openTour" type="button"><span aria-hidden="true">?</span><span data-i18n="guide">Guía</span></button>
       <a class="menu-link" id="menuLink" href="drills.html" data-i18n="drillLibrary">Menú de drills</a>
       <div class="language-toggle" role="group" aria-label="Language / Idioma">
-        <button class="language-button" type="button" data-language="es" aria-selected="true">ES</button>
-        <button class="language-button" type="button" data-language="en" aria-selected="false">EN</button>
+        <button class="language-button" type="button" data-language="es" aria-selected="true">ESP</button>
+        <button class="language-button" type="button" data-language="en" aria-selected="false">ENG</button>
       </div>
     </div>
   </nav>
@@ -1262,7 +1264,13 @@
       <button class="modal-close tour-close" id="tourClose" type="button" aria-label="Cerrar">×</button>
       <div class="tour-topline">
         <p class="tour-eyebrow" data-i18n="tourEyebrow">GUÍA RÁPIDA PARA COACHES</p>
-        <span id="tourCounter">1 / 4</span>
+        <div class="tour-header-actions">
+          <div class="language-toggle tour-language-toggle" role="group" aria-label="Language / Idioma">
+            <button class="language-button" type="button" data-language="es" aria-selected="true">ESP</button>
+            <button class="language-button" type="button" data-language="en" aria-selected="false">ENG</button>
+          </div>
+          <span id="tourCounter">1 / 4</span>
+        </div>
       </div>
       <div class="tour-progress" id="tourProgress" aria-hidden="true"></div>
       <div class="tour-content" id="tourContent"></div>

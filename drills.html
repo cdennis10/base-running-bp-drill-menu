@@ -42,7 +42,7 @@
       top: 0;
       z-index: 20;
       display: flex;
-      justify-content: center;
+      justify-content: flex-end;
       gap: 6px;
       padding: 10px 16px;
       background: rgba(8, 26, 53, .96);
@@ -285,6 +285,21 @@
 
     .modal h2 { margin: 0 28px 10px; color: var(--navy-deep); font-size: 1.45rem; }
     .modal p { margin: 0; color: var(--muted); line-height: 1.55; }
+    .modal-language-toggle {
+      position: absolute;
+      top: 13px;
+      right: 13px;
+      display: flex;
+      gap: 4px;
+    }
+    .modal-language-toggle .language-button {
+      min-width: 0;
+      padding: 6px 10px;
+      color: var(--navy);
+      border-color: rgba(14,42,82,.25);
+      font-size: .72rem;
+    }
+    .modal-language-toggle .language-button[aria-selected="true"] { color: #fff; background: var(--navy); }
     .greenlight-actions {
       display: none;
       grid-template-columns: 1fr 1fr;
@@ -321,7 +336,7 @@
     .modal-close {
       position: absolute;
       top: 13px;
-      right: 13px;
+      left: 13px;
       display: grid;
       place-items: center;
       width: 36px;
@@ -339,8 +354,8 @@
       .mark { display: none; }
       .menu-grid { grid-template-columns: 1fr; }
       main { width: min(100% - 24px, 600px); padding-top: 36px; }
-      .language-bar { justify-content: stretch; }
-      .language-button { flex: 1; min-width: 0; }
+      .language-bar { justify-content: flex-end; }
+      .language-bar .language-button { min-width: 74px; }
       .drill-list { padding-inline: 18px; }
       .card-header { padding-inline: 20px; }
       .greenlight-actions { grid-template-columns: 1fr; }
@@ -355,8 +370,8 @@
 </head>
 <body>
   <nav class="language-bar" aria-label="Language / Idioma">
-    <button class="language-button" type="button" data-language="es" aria-selected="true">Español</button>
-    <button class="language-button" type="button" data-language="en" aria-selected="false">English</button>
+    <button class="language-button" type="button" data-language="es" aria-selected="true">ESP</button>
+    <button class="language-button" type="button" data-language="en" aria-selected="false">ENG</button>
   </nav>
 
   <main>
@@ -462,6 +477,10 @@
   <div class="modal-backdrop" id="videoModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal" id="modalPanel">
       <button class="modal-close" type="button" aria-label="Cerrar">×</button>
+      <div class="modal-language-toggle" role="group" aria-label="Language / Idioma">
+        <button class="language-button" type="button" data-language="es" aria-selected="true">ESP</button>
+        <button class="language-button" type="button" data-language="en" aria-selected="false">ENG</button>
+      </div>
       <div class="modal-symbol" id="modalSymbol" aria-hidden="true">▶</div>
       <h2 id="modalTitle">Video disponible próximamente</h2>
       <p id="modalMessage">La demostración y explicación de este drill se agregarán aquí.</p>
@@ -582,8 +601,15 @@
       });
       modalClose.setAttribute("aria-label", copy[language].close);
       document.getElementById("scheduleLink").href = `schedule.html?lang=${language}`;
-      modalTitle.textContent = copy[language].modalTitle;
-      modalMessage.textContent = copy[language].modalMessage;
+      if (modal.classList.contains("open") && greenlightActions.classList.contains("active")) {
+        modalTitle.textContent = copy[language].greenlightTitle;
+        modalMessage.textContent = copy[language].greenlightMessage;
+      } else if (modal.classList.contains("open") && videoStage.classList.contains("active") && lastTrigger) {
+        modalTitle.textContent = lastTrigger.querySelector(".drill-name").textContent;
+      } else {
+        modalTitle.textContent = copy[language].modalTitle;
+        modalMessage.textContent = copy[language].modalMessage;
+      }
     }
 
     document.querySelectorAll(".language-button").forEach((button) => {
