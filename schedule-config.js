@@ -6,13 +6,15 @@
   Weekdays use JavaScript numbering: 0=Sunday, 1=Monday, 3=Wednesday.
 */
 window.DR_SCHEDULE_CONFIG = {
-  version: "2026.09.13.7",
-  updatedDate: "2026-09-13",
+  version: "2026.09.16.1",
+  updatedDate: "2026-09-16",
   timeZone: "America/Santo_Domingo",
   timeZoneLabel: "AST / UTC−4",
   programStart: "2026-09-06",
   programEnd: "2026-10-31",
   defaultChatDay: 3,
+  weeklyMeetingTime: "15:00",
+  weeklyMeetingDuration: 30,
 
   // Public recipient for Outlook meeting invitations and post-session reports; this is not a secret.
   notificationRecipient: "cdennis@cubs.com",

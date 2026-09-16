@@ -448,6 +448,8 @@
     .field.full { grid-column: 1 / -1; }
     .weekly-call-form { margin-top: 16px; padding: 16px; background: var(--soft); border: 1px solid var(--line); border-radius: 14px; }
     .weekly-call-form > .full { grid-column: 1 / -1; }
+    .meeting-choice-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+    .meeting-default-note { margin: 12px 0 0; padding: 12px 14px; color: #174f40; background: #e4f5ee; border: 1px solid #b9dfcf; border-radius: 12px; font-size: .84rem; font-weight: 760; line-height: 1.45; }
     .modal-actions { display: flex; justify-content: flex-end; gap: 9px; margin-top: 19px; }
     .video-stage { overflow: hidden; margin-top: 18px; aspect-ratio: 16 / 9; background: #050b14; border-radius: 13px; }
     .video-stage iframe, .video-stage video { width: 100%; height: 100%; border: 0; }
@@ -507,6 +509,7 @@
       .choice-grid, .sidebar, .report-grid, .two-fields, .form-grid { grid-template-columns: 1fr; }
       .choice-card { min-height: 0; }
       .field.full { grid-column: auto; }
+      .meeting-choice-actions { grid-template-columns: 1fr; }
       .calendar-shell { padding: 12px; }
       .calendar-day { min-height: 94px; padding: 6px; }
       .weekday { font-size: .62rem; }
@@ -1167,9 +1170,14 @@
         </section>
 
         <section class="surface report-card">
-          <h2 data-i18n="availabilityTitle">Programar llamada semanal</h2>
-          <p class="section-copy" data-i18n="availabilityIntro">Elige la fecha y la hora en República Dominicana. Outlook abrirá una invitación lista para revisar y enviar.</p>
+          <h2 data-i18n="availabilityTitle">Confirmar llamada semanal</h2>
+          <p class="section-copy" data-i18n="availabilityIntro">La llamada semanal está programada para las 3:00 p. m. en República Dominicana. Confirma tu asistencia o propón otra fecha y hora.</p>
+          <p class="meeting-default-note" data-i18n="meetingDefaultNote">Hora predeterminada: 3:00 p. m. en República Dominicana (AST / UTC−4).</p>
           <form class="form-grid weekly-call-form" id="weeklyCallForm">
+            <div class="field full">
+              <label for="weeklyCallCoach" data-i18n="coachName">Nombre del coach</label>
+              <input id="weeklyCallCoach" name="callCoach" type="text" autocomplete="name" required>
+            </div>
             <div class="field">
               <label for="weeklyCallDate" data-i18n="callDate">Fecha</label>
               <input id="weeklyCallDate" name="callDate" type="date" required>
@@ -1186,13 +1194,16 @@
                 <option value="60">60 min</option>
               </select>
             </div>
-            <button class="btn btn-primary full" type="submit" data-i18n="scheduleWeeklyCall">Programar llamada semanal</button>
+            <div class="meeting-choice-actions full">
+              <button class="btn btn-primary" id="confirmWeeklyAttendance" type="button" data-i18n="confirmAttendance">Confirmar asistencia</button>
+              <button class="btn" type="submit" data-i18n="proposeNewTime">Proponer otra fecha/hora</button>
+            </div>
           </form>
           <div class="side-actions top-gap">
             <button class="btn btn-block" id="copyScheduleLink" type="button" data-i18n="copyScheduleLink">Copiar enlace del calendario</button>
             <button class="btn btn-block" id="downloadCalendar" type="button" data-i18n="downloadCalendar">Descargar calendario (.ics)</button>
           </div>
-          <p class="setup-note" data-i18n="availabilityNote">La invitación incluirá a cdennis@cubs.com. Al seleccionar Enviar en Outlook, el correo se enviará automáticamente.</p>
+          <p class="setup-note" data-i18n="availabilityNote">Outlook abrirá un mensaje dirigido a cdennis@cubs.com. El coach debe seleccionar Enviar para confirmar o proponer el cambio.</p>
         </section>
       </div>
     </section>
@@ -1283,12 +1294,14 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="schedule-config.js?v=2026.09.13.7"></script>
+  <script src="schedule-config.js?v=2026.09.16.1"></script>
   <script>
     const CONFIG = window.DR_SCHEDULE_CONFIG;
     const SITE_TIME_ZONE = CONFIG.timeZone;
     const STORAGE_KEY = "dr-base-running-schedule-v1";
     const DEFAULT_CHAT_DAY = CONFIG.defaultChatDay;
+    const WEEKLY_MEETING_TIME = CONFIG.weeklyMeetingTime || "15:00";
+    const WEEKLY_MEETING_DURATION = Number(CONFIG.weeklyMeetingDuration || 30);
     const PROGRAM_START = CONFIG.programStart;
     const PROGRAM_END = CONFIG.programEnd;
     const SITE_VERSION = CONFIG.version;
@@ -1340,20 +1353,27 @@
         drill: "Drill",
         playersShort: "Jug.",
         minutesShort: "Min.",
-        availabilityTitle: "Programar llamada semanal",
-        availabilityIntro: "Elige la fecha y la hora en República Dominicana. Outlook abrirá una invitación lista para revisar y enviar.",
+        availabilityTitle: "Confirmar llamada semanal",
+        availabilityIntro: "La llamada semanal está programada para las 3:00 p. m. en República Dominicana. Confirma tu asistencia o propón otra fecha y hora.",
+        meetingDefaultNote: "Hora predeterminada: 3:00 p. m. en República Dominicana (AST / UTC−4).",
         drCoachesAction: "Acción para los coaches en RD",
         availabilityBody: "Envíen su disponibilidad y expresen la hora propuesta en hora de República Dominicana (AST / UTC−4). El staff fuera de RD debe convertir desde esa zona horaria.",
         chicagoTime: "Chicago · CDT · UTC−5",
         arizonaTime: "Arizona · MST · UTC−7",
         copyAvailability: "Programar llamada semanal",
-        scheduleWeeklyCall: "Programar llamada semanal",
+        scheduleWeeklyCall: "Confirmar o cambiar la reunión",
+        confirmAttendance: "Confirmar asistencia",
+        proposeNewTime: "Proponer otra fecha/hora",
+        attendanceSubject: "Asistencia confirmada · Conversación semanal del staff",
+        attendanceConfirmedFor: "Asistencia confirmada para",
+        proposedBy: "Cambio propuesto por",
+        attendanceOpening: "Abriendo la confirmación en Outlook…",
         callDate: "Fecha",
         callTime: "Hora en RD (AST)",
         callDuration: "Duración",
         outlookOpening: "Abriendo la invitación en Outlook…",
         copyScheduleLink: "Copiar enlace del calendario",
-        availabilityNote: "La invitación incluirá a cdennis@cubs.com. Al seleccionar Enviar en Outlook, el correo se enviará automáticamente.",
+        availabilityNote: "Outlook abrirá un mensaje dirigido a cdennis@cubs.com. El coach debe seleccionar Enviar para confirmar o proponer el cambio.",
         day: "Día",
         downloadCalendar: "Descargar calendario (.ics)",
         staffLinkNote: "El enlace compartido incluye la configuración de la conversación, no los reportes privados guardados en el teléfono.",
@@ -1424,8 +1444,8 @@
         noBlockBody: "Los bloques se programan en días Low, High y de juego. Usa el calendario para ver la próxima sesión.",
         meetingTitle: "Conversación semanal del staff",
         nextMeeting: "Próxima conversación",
-        timeTbd: "Hora por confirmar por coaches RD",
-        drTimeOwner: "Los coaches en RD suministran la hora según su disponibilidad.",
+        timeTbd: "3:00 p. m.",
+        drTimeOwner: "La llamada está fijada para las 3:00 p. m. Los coaches pueden confirmar o proponer otra fecha y hora.",
         setMeeting: "Configurar en Reporte",
         joinMeeting: "Entrar a la conversación",
         addMeeting: "Añadir conversación al calendario",
@@ -1525,20 +1545,27 @@
         drill: "Drill",
         playersShort: "Players",
         minutesShort: "Min.",
-        availabilityTitle: "Schedule weekly call",
-        availabilityIntro: "Choose the date and time in the Dominican Republic. Outlook will open a meeting invitation ready to review and send.",
+        availabilityTitle: "Confirm weekly call",
+        availabilityIntro: "The weekly call is scheduled for 3:00 PM in the Dominican Republic. Confirm attendance or propose a different date and time.",
+        meetingDefaultNote: "Default time: 3:00 PM in the Dominican Republic (AST / UTC−4).",
         drCoachesAction: "Action for DR coaches",
         availabilityBody: "Send your availability and state the proposed time in Dominican Republic time (AST / UTC−4). Staff outside the DR should convert from that time zone.",
         chicagoTime: "Chicago · CDT · UTC−5",
         arizonaTime: "Arizona · MST · UTC−7",
         copyAvailability: "Schedule weekly call",
-        scheduleWeeklyCall: "Schedule weekly call",
+        scheduleWeeklyCall: "Confirm or change meeting",
+        confirmAttendance: "Confirm attendance",
+        proposeNewTime: "Propose another date/time",
+        attendanceSubject: "Attendance confirmed · Weekly staff conversation",
+        attendanceConfirmedFor: "Attendance confirmed for",
+        proposedBy: "Change proposed by",
+        attendanceOpening: "Opening the confirmation in Outlook…",
         callDate: "Date",
         callTime: "Time in the DR (AST)",
         callDuration: "Duration",
         outlookOpening: "Opening the invitation in Outlook…",
         copyScheduleLink: "Copy schedule link",
-        availabilityNote: "The invitation will include cdennis@cubs.com. When you select Send in Outlook, the email invitation is sent automatically.",
+        availabilityNote: "Outlook will open a message addressed to cdennis@cubs.com. The coach must select Send to confirm or propose the change.",
         day: "Day",
         downloadCalendar: "Download calendar (.ics)",
         staffLinkNote: "The shared link includes the conversation setup, not the private reports saved on the phone.",
@@ -1609,8 +1636,8 @@
         noBlockBody: "Blocks are scheduled on Low, High, and game days. Use the calendar to see the next session.",
         meetingTitle: "Weekly staff conversation",
         nextMeeting: "Next conversation",
-        timeTbd: "Time to be confirmed by DR coaches",
-        drTimeOwner: "DR coaches supply the time based on their availability.",
+        timeTbd: "3:00 PM",
+        drTimeOwner: "The call is set for 3:00 PM. Coaches can confirm or propose another date and time.",
         setMeeting: "Set up in Report",
         joinMeeting: "Join conversation",
         addMeeting: "Add conversation to calendar",
@@ -1793,6 +1820,7 @@
     const videoBackdrop = document.getElementById("videoBackdrop");
     const completionForm = document.getElementById("completionForm");
     const weeklyCallForm = document.getElementById("weeklyCallForm");
+    const weeklyCallCoach = document.getElementById("weeklyCallCoach");
     const weeklyCallDate = document.getElementById("weeklyCallDate");
     const weeklyCallTime = document.getElementById("weeklyCallTime");
     const reportWeek = document.getElementById("reportWeek");
@@ -1824,6 +1852,16 @@
     function fullDate(iso) { return dateLabel(iso, { weekday: "long", month: "long", day: "numeric", year: "numeric" }); }
     function shortDate(iso) { return dateLabel(iso, { month: "short", day: "numeric" }); }
     function weekdayOf(iso) { return dateObject(iso).getUTCDay(); }
+    function meetingTimeLabel(time) {
+      const [hour, minute] = time.split(":").map(Number);
+      const locale = state.language === "es" ? "es-DO" : "en-US";
+      return new Intl.DateTimeFormat(locale, { hour: "numeric", minute: "2-digit", timeZone: "UTC" }).format(new Date(Date.UTC(2026, 0, 1, hour, minute)));
+    }
+    function drDateTimeToUtc(date, time) {
+      const [year, month, day] = date.split("-").map(Number);
+      const [hour, minute] = time.split(":").map(Number);
+      return new Date(Date.UTC(year, month - 1, day, hour + 4, minute));
+    }
 
     function eventLabel(entry) {
       if (!entry) return "";
@@ -2307,6 +2345,8 @@
       weeklyCallDate.min = PROGRAM_START;
       weeklyCallDate.max = PROGRAM_END;
       if (!weeklyCallDate.value) weeklyCallDate.value = nextChatDate(realToday);
+      if (!weeklyCallTime.value) weeklyCallTime.value = WEEKLY_MEETING_TIME;
+      if (!weeklyCallCoach.value) weeklyCallCoach.value = state.settings.coach || "";
     }
 
     function openCallScheduler() {
@@ -2319,24 +2359,41 @@
     function scheduleWeeklyCall(event) {
       event.preventDefault();
       const form = new FormData(weeklyCallForm);
+      const coach = String(form.get("callCoach") || "").trim();
       const date = String(form.get("callDate") || "");
       const time = String(form.get("callTime") || "");
       const duration = Number(form.get("callDuration") || 30);
-      const [year, month, day] = date.split("-").map(Number);
-      const [hour, minute] = time.split(":").map(Number);
-      const start = new Date(Date.UTC(year, month - 1, day, hour + 4, minute));
+      state.settings.coach = coach;
+      saveState();
+      const start = drDateTimeToUtc(date, time);
       const end = new Date(start.getTime() + duration * 60 * 1000);
-      const agenda = `1. ${t("agenda1")}\n2. ${t("agenda2")}\n3. ${t("agenda3")}\n\n${CONFIG.timeZoneLabel}`;
+      const agenda = `${t("proposedBy")}: ${coach}\n${fullDate(date)} · ${meetingTimeLabel(time)} · ${CONFIG.timeZoneLabel}\n\n1. ${t("agenda1")}\n2. ${t("agenda2")}\n3. ${t("agenda3")}`;
       const outlookUrl = new URL("https://outlook.office.com/calendar/0/deeplink/compose");
       outlookUrl.searchParams.set("path", "/calendar/action/compose");
       outlookUrl.searchParams.set("rru", "addevent");
-      outlookUrl.searchParams.set("subject", t("meetingTitle"));
+      outlookUrl.searchParams.set("subject", `${t("meetingTitle")} · ${shortDate(date)} · ${coach}`);
       outlookUrl.searchParams.set("startdt", start.toISOString());
       outlookUrl.searchParams.set("enddt", end.toISOString());
       outlookUrl.searchParams.set("body", agenda);
       outlookUrl.searchParams.set("to", NOTIFICATION_RECIPIENT);
       openOutlookUrl(outlookUrl.href);
       showToast(t("outlookOpening"));
+    }
+
+    function confirmWeeklyAttendance() {
+      if (!weeklyCallForm.reportValidity()) return;
+      const form = new FormData(weeklyCallForm);
+      const coach = String(form.get("callCoach") || "").trim();
+      const date = String(form.get("callDate") || "");
+      const time = String(form.get("callTime") || WEEKLY_MEETING_TIME);
+      state.settings.coach = coach;
+      saveState();
+      const mailUrl = new URL("https://outlook.office.com/mail/deeplink/compose");
+      mailUrl.searchParams.set("to", NOTIFICATION_RECIPIENT);
+      mailUrl.searchParams.set("subject", `${t("attendanceSubject")} · ${shortDate(date)} · ${coach}`);
+      mailUrl.searchParams.set("body", `${t("coach")}: ${coach}\n${t("attendanceConfirmedFor")}: ${fullDate(date)} · ${meetingTimeLabel(time)} · ${CONFIG.timeZoneLabel}`);
+      openOutlookUrl(mailUrl.href);
+      showToast(t("attendanceOpening"));
     }
 
     function copyScheduleLink() {
@@ -2363,6 +2420,7 @@
     }
 
     function icsDate(iso) { return iso.replace(/-/g, ""); }
+    function icsUtcDateTime(date) { return date.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z"); }
     function chatDates() {
       const dates = [];
       let date = PROGRAM_START;
@@ -2391,12 +2449,14 @@
         );
       });
       chatDates().forEach((date) => {
+        const start = drDateTimeToUtc(date, WEEKLY_MEETING_TIME);
+        const end = new Date(start.getTime() + WEEKLY_MEETING_DURATION * 60 * 1000);
         lines.push(
           "BEGIN:VEVENT",
           `UID:coach-chat-${date}@dr-instructs`,
           `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z")}`,
-          `DTSTART;VALUE=DATE:${icsDate(date)}`,
-          `DTEND;VALUE=DATE:${icsDate(addDays(date, 1))}`,
+          `DTSTART:${icsUtcDateTime(start)}`,
+          `DTEND:${icsUtcDateTime(end)}`,
           `SUMMARY:${icsEscape(t("chatCalendarName"))}`,
           `DESCRIPTION:${icsEscape(`${t("drTimeOwner")} ${CONFIG.timeZoneLabel}\n${t("agenda1")}\n${t("agenda2")}\n${t("agenda3")}\n${pageUrl}`)}`,
           `URL:${pageUrl}`,
@@ -2553,6 +2613,7 @@
     document.getElementById("downloadCalendarTop").addEventListener("click", downloadCalendar);
     document.getElementById("copyScheduleLink").addEventListener("click", copyScheduleLink);
     weeklyCallForm.addEventListener("submit", scheduleWeeklyCall);
+    document.getElementById("confirmWeeklyAttendance").addEventListener("click", confirmWeeklyAttendance);
 
     completionForm.addEventListener("submit", (event) => {
       event.preventDefault();
