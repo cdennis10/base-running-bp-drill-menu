@@ -39,6 +39,10 @@ Saving a post-session report also opens a prefilled Outlook email addressed to
 cdennis@cubs.com. The coach reviews the message and selects Send; no email
 password or mail-sending credential is stored in the public website.
 
+Saved reports can be deleted from the Update logged card on the device where
+they were entered. Deleting a local report does not recall an email already
+sent or remove a response already submitted through the central Microsoft Form.
+
 WEEKLY STAFF CONVERSATION
 -------------------------
 The conversation recurs every Friday at 3:00 PM Dominican Republic time

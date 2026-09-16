@@ -6,7 +6,7 @@
   Weekdays use JavaScript numbering: 0=Sunday, 1=Monday, 5=Friday.
 */
 window.DR_SCHEDULE_CONFIG = {
-  version: "2026.09.16.2",
+  version: "2026.09.16.3",
   updatedDate: "2026-09-16",
   timeZone: "America/Santo_Domingo",
   timeZoneLabel: "AST / UTC−4",

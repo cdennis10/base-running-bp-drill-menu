@@ -312,6 +312,8 @@
     .btn:hover { border-color: var(--blue); }
     .btn-primary { color: #fff; background: var(--navy); border-color: var(--navy); }
     .btn-red { color: #fff; background: var(--red); border-color: var(--red); }
+    .btn-delete { color: #9b1c1c; background: #fff; border-color: #d69a9a; }
+    .btn-delete:hover { color: #fff; background: #9b1c1c; border-color: #9b1c1c; }
     .btn-block { width: 100%; }
     .btn:disabled { cursor: not-allowed; opacity: .56; }
     .choice-actions .btn { flex: 1; padding-inline: 9px; font-size: .84rem; }
@@ -1294,7 +1296,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="schedule-config.js?v=2026.09.16.2"></script>
+  <script src="schedule-config.js?v=2026.09.16.3"></script>
   <script>
     const CONFIG = window.DR_SCHEDULE_CONFIG;
     const SITE_TIME_ZONE = CONFIG.timeZone;
@@ -1439,6 +1441,9 @@
         emailOpening: "Abriendo el reporte en Outlook…",
         savedAndEmail: "Reporte guardado. Outlook está abriendo el email listo para enviar.",
         editReport: "Editar reporte",
+        deleteReport: "Eliminar reporte",
+        deleteReportConfirm: "¿Eliminar este reporte guardado de este dispositivo? Esto no puede retirar un email ya enviado ni eliminar una respuesta del formulario central.",
+        reportDeleted: "Reporte eliminado. Ya puedes ingresar el reporte correcto.",
         nextBlock: "Ver próximo bloque",
         noBlock: "No hay bloque de corrido de bases",
         noBlockBody: "Los bloques se programan en días Low, High y de juego. Usa el calendario para ver la próxima sesión.",
@@ -1631,6 +1636,9 @@
         emailOpening: "Opening the report in Outlook…",
         savedAndEmail: "Report saved. Outlook is opening the email ready to send.",
         editReport: "Edit report",
+        deleteReport: "Delete report",
+        deleteReportConfirm: "Delete this saved report from this device? This cannot recall an email already sent or delete a central-form response.",
+        reportDeleted: "Report deleted. You can now enter the correct report.",
         nextBlock: "View next block",
         noBlock: "No base running block",
         noBlockBody: "Blocks are scheduled on Low, High, and game days. Use the calendar to see the next session.",
@@ -2030,6 +2038,7 @@
               <button class="btn" type="button" data-share-record>${escapeHtml(t("shareUpdate"))}</button>
               ${centralAction}
               <button class="btn" type="button" data-edit-record>${escapeHtml(t("editReport"))}</button>
+              <button class="btn btn-delete" type="button" data-delete-record>${escapeHtml(t("deleteReport"))}</button>
             </div>
           </div>`;
       } else if (selected) {
@@ -2074,6 +2083,7 @@
       sessionCard.querySelector("[data-edit-record]")?.addEventListener("click", (event) => openCompletion(selectedDate, event.currentTarget));
       sessionCard.querySelector("[data-email-record]")?.addEventListener("click", () => emailRecord(selectedDate));
       sessionCard.querySelector("[data-share-record]")?.addEventListener("click", () => shareRecord(selectedDate));
+      sessionCard.querySelector("[data-delete-record]")?.addEventListener("click", () => deleteRecord(selectedDate));
     }
 
     function nextChatDate(fromDate) {
@@ -2310,6 +2320,14 @@
       mailUrl.searchParams.set("body", recordText(date));
       openOutlookUrl(mailUrl.href);
       if (showMessage) showToast(t("emailOpening"));
+    }
+
+    function deleteRecord(date) {
+      if (!state.records[date] || !window.confirm(t("deleteReportConfirm"))) return;
+      delete state.records[date];
+      saveState();
+      renderEverything();
+      showToast(t("reportDeleted"));
     }
 
     function reportText() {
