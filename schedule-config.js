@@ -3,16 +3,16 @@
   Edit this file to update the program dates, Low/High workloads, weekly conversation
   day, site version, or the shared-report destination.
 
-  Weekdays use JavaScript numbering: 0=Sunday, 1=Monday, 3=Wednesday.
+  Weekdays use JavaScript numbering: 0=Sunday, 1=Monday, 5=Friday.
 */
 window.DR_SCHEDULE_CONFIG = {
-  version: "2026.09.16.1",
+  version: "2026.09.16.2",
   updatedDate: "2026-09-16",
   timeZone: "America/Santo_Domingo",
   timeZoneLabel: "AST / UTC−4",
   programStart: "2026-09-06",
   programEnd: "2026-10-31",
-  defaultChatDay: 3,
+  defaultChatDay: 5,
   weeklyMeetingTime: "15:00",
   weeklyMeetingDuration: 30,
 

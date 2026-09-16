@@ -41,18 +41,18 @@ password or mail-sending credential is stored in the public website.
 
 WEEKLY STAFF CONVERSATION
 -------------------------
-The conversation recurs every Wednesday at 3:00 PM Dominican Republic time
+The conversation recurs every Friday at 3:00 PM Dominican Republic time
 (AST / UTC-4). In the Report view, a coach enters their name and can either
 confirm attendance or propose a different date and time. The site opens a
 prefilled Outlook confirmation email or meeting invitation addressed to
 cdennis@cubs.com; Outlook sends it when the coach reviews it and selects Send.
 No mail credentials are stored in this public site. The .ics download includes
-the Wednesday conversations as timed 30-minute meetings.
+the Friday conversations as timed 30-minute meetings.
 
 UPDATING THE PROGRAM
 --------------------
 Edit schedule-config.js to change the program dates, Low/High workloads,
-default Wednesday setting, displayed version, or centralized report URL.
+default Friday setting, displayed version, or centralized report URL.
 Increment the version and update the script version in schedule.html whenever
 the configuration changes so browsers fetch the latest file.
 
