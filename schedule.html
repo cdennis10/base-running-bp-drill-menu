@@ -1296,7 +1296,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="schedule-config.js?v=2026.09.16.3"></script>
+  <script src="schedule-config.js?v=2026.09.22.1"></script>
   <script>
     const CONFIG = window.DR_SCHEDULE_CONFIG;
     const SITE_TIME_ZONE = CONFIG.timeZone;
@@ -1437,8 +1437,11 @@
         completed: "Actualización registrada",
         shareUpdate: "Compartir de otra forma",
         emailReport: "Enviar reporte por email",
+        emailApp: "Usar otra aplicación de email",
         emailReportSubject: "Reporte post-sesión de corrido de bases",
         emailOpening: "Abriendo el reporte en Outlook…",
+        emailAppOpening: "Abriendo tu aplicación de email… Si no abre, usa Copiar reporte.",
+        reportCopied: "Reporte copiado. Abre un email nuevo, pega el reporte y envíalo a cdennis@cubs.com.",
         savedAndEmail: "Reporte guardado. Outlook está abriendo el email listo para enviar.",
         editReport: "Editar reporte",
         deleteReport: "Eliminar reporte",
@@ -1632,8 +1635,11 @@
         completed: "Update logged",
         shareUpdate: "Share another way",
         emailReport: "Email report",
+        emailApp: "Use another email app",
         emailReportSubject: "Base running post-session report",
         emailOpening: "Opening the report in Outlook…",
+        emailAppOpening: "Opening your email app… If it does not open, use Copy report.",
+        reportCopied: "Report copied. Open a new email, paste the report, and send it to cdennis@cubs.com.",
         savedAndEmail: "Report saved. Outlook is opening the email ready to send.",
         editReport: "Edit report",
         deleteReport: "Delete report",
@@ -2035,6 +2041,8 @@
             <p class="complete-prompt">${escapeHtml(t("emailReportReminder"))}</p>
             <div class="complete-actions">
               <button class="btn btn-primary" type="button" data-email-record>${escapeHtml(t("emailReport"))}</button>
+              <button class="btn" type="button" data-email-app>${escapeHtml(t("emailApp"))}</button>
+              <button class="btn" type="button" data-copy-record>${escapeHtml(t("copyReport"))}</button>
               <button class="btn" type="button" data-share-record>${escapeHtml(t("shareUpdate"))}</button>
               ${centralAction}
               <button class="btn" type="button" data-edit-record>${escapeHtml(t("editReport"))}</button>
@@ -2082,6 +2090,8 @@
       sessionCard.querySelector("[data-complete]")?.addEventListener("click", (event) => openCompletion(selectedDate, event.currentTarget));
       sessionCard.querySelector("[data-edit-record]")?.addEventListener("click", (event) => openCompletion(selectedDate, event.currentTarget));
       sessionCard.querySelector("[data-email-record]")?.addEventListener("click", () => emailRecord(selectedDate));
+      sessionCard.querySelector("[data-email-app]")?.addEventListener("click", () => emailRecordWithApp(selectedDate));
+      sessionCard.querySelector("[data-copy-record]")?.addEventListener("click", () => copyRecord(selectedDate));
       sessionCard.querySelector("[data-share-record]")?.addEventListener("click", () => shareRecord(selectedDate));
       sessionCard.querySelector("[data-delete-record]")?.addEventListener("click", () => deleteRecord(selectedDate));
     }
@@ -2320,6 +2330,21 @@
       mailUrl.searchParams.set("body", recordText(date));
       openOutlookUrl(mailUrl.href);
       if (showMessage) showToast(t("emailOpening"));
+    }
+
+    function emailRecordWithApp(date) {
+      const record = state.records[date];
+      if (!record) return;
+      const subject = `${t("emailReportSubject")} · ${shortDate(date)} · ${record.coach}`;
+      const mailUrl = `mailto:${NOTIFICATION_RECIPIENT}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(recordText(date))}`;
+      window.location.href = mailUrl;
+      showToast(t("emailAppOpening"));
+    }
+
+    async function copyRecord(date) {
+      if (!state.records[date]) return;
+      await copyText(recordText(date));
+      showToast(t("reportCopied"));
     }
 
     function deleteRecord(date) {

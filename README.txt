@@ -21,6 +21,8 @@ The shared site opens schedule.html as its landing page. That page adds:
 - Clear context for the Low or High workload shown by the calendar
 - A brief coach completion report
 - A prefilled Outlook post-session email addressed to cdennis@cubs.com
+- A second email-app option and a one-tap Copy report backup for mailboxes
+  that cannot use the Outlook web compose link
 - A weekly-call scheduler, shareable schedule link, and downloadable .ics calendar
 - Weekly report copy and CSV export
 
@@ -38,6 +40,11 @@ centralized report URL is configured in schedule-config.js.
 Saving a post-session report also opens a prefilled Outlook email addressed to
 cdennis@cubs.com. The coach reviews the message and selects Send; no email
 password or mail-sending credential is stored in the public website.
+
+If a coach's organizational mailbox redirects the Outlook draft to an Inbox,
+they can select Use another email app or Copy report. Copy report places the
+complete bilingual report text on the clipboard so it can be pasted into a new
+message in the coach's normal webmail.
 
 Saved reports can be deleted from the Update logged card on the device where
 they were entered. Deleting a local report does not recall an email already
