@@ -335,6 +335,8 @@
     .complete-card strong { display: block; margin-bottom: 5px; }
     .complete-card p { margin: 0; line-height: 1.45; font-size: .88rem; }
     .complete-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .email-fallback { display: flex; flex: 1 0 100%; flex-wrap: wrap; align-items: center; gap: 8px; margin: 3px 0; padding: 10px 12px; background: rgba(255,255,255,.58); border: 1px solid rgba(20,54,94,.14); border-radius: 11px; }
+    .complete-card .email-fallback p { flex: 1 1 290px; color: var(--navy-deep); font-weight: 750; }
 
     .empty-session { padding: 28px 24px 30px; text-align: center; }
     .empty-symbol { display: grid; place-items: center; width: 58px; height: 58px; margin: 0 auto 14px; color: var(--navy); background: var(--soft); border-radius: 17px; font-size: 1.5rem; }
@@ -1296,7 +1298,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="schedule-config.js?v=2026.09.22.1"></script>
+  <script src="schedule-config.js?v=2026.09.23.1"></script>
   <script>
     const CONFIG = window.DR_SCHEDULE_CONFIG;
     const SITE_TIME_ZONE = CONFIG.timeZone;
@@ -1438,6 +1440,7 @@
         shareUpdate: "Compartir de otra forma",
         emailReport: "Enviar reporte por email",
         emailApp: "Usar otra aplicación de email",
+        emailFallbackHelp: "Si el envío del email no funciona, puedes usar esta opción:",
         emailReportSubject: "Reporte post-sesión de corrido de bases",
         emailOpening: "Abriendo el reporte en Outlook…",
         emailAppOpening: "Abriendo tu aplicación de email… Si no abre, usa Copiar reporte.",
@@ -1636,6 +1639,7 @@
         shareUpdate: "Share another way",
         emailReport: "Email report",
         emailApp: "Use another email app",
+        emailFallbackHelp: "If sending the email isn't working, you can use this option:",
         emailReportSubject: "Base running post-session report",
         emailOpening: "Opening the report in Outlook…",
         emailAppOpening: "Opening your email app… If it does not open, use Copy report.",
@@ -2042,7 +2046,10 @@
             <div class="complete-actions">
               <button class="btn btn-primary" type="button" data-email-record>${escapeHtml(t("emailReport"))}</button>
               <button class="btn" type="button" data-email-app>${escapeHtml(t("emailApp"))}</button>
-              <button class="btn" type="button" data-copy-record>${escapeHtml(t("copyReport"))}</button>
+              <div class="email-fallback">
+                <p>${escapeHtml(t("emailFallbackHelp"))}</p>
+                <button class="btn" type="button" data-copy-record>${escapeHtml(t("copyReport"))}</button>
+              </div>
               <button class="btn" type="button" data-share-record>${escapeHtml(t("shareUpdate"))}</button>
               ${centralAction}
               <button class="btn" type="button" data-edit-record>${escapeHtml(t("editReport"))}</button>
