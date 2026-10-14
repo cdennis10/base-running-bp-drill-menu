@@ -20,7 +20,8 @@ The shared site opens schedule.html as its landing page. That page adds:
 - A visual Choose > Run > Report progress guide on every session
 - Clear context for the Low or High workload shown by the calendar
 - A brief coach completion report
-- A prefilled Outlook post-session email addressed to cdennis@cubs.com
+- A prefilled WhatsApp post-session message addressed to the configured staff number
+- A prefilled Outlook post-session email addressed to cdennis@cubs.com as a backup
 - A second email-app option and a one-tap Copy report backup for mailboxes
   that cannot use the Outlook web compose link
 - A weekly-call scheduler, shareable schedule link, and downloadable .ics calendar
@@ -37,9 +38,11 @@ form accepts anonymous responses without sign-in.
 The local Share, Copy, and CSV tools remain available as fallbacks. The
 centralized report URL is configured in schedule-config.js.
 
-Saving a post-session report also opens a prefilled Outlook email addressed to
-cdennis@cubs.com. The coach reviews the message and selects Send; no email
-password or mail-sending credential is stored in the public website.
+Saving a post-session report opens a prefilled WhatsApp message addressed to
+the configured staff number. The coach reviews the message and taps Send;
+WhatsApp does not allow a public website to send it automatically. Email and
+copy options remain available as backups. No messaging or email credentials
+are stored in the public website.
 
 If a coach's organizational mailbox redirects the Outlook draft to an Inbox,
 they can select Use another email app or Copy report. Copy report places the

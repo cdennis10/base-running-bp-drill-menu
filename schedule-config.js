@@ -6,8 +6,8 @@
   Weekdays use JavaScript numbering: 0=Sunday, 1=Monday, 5=Friday.
 */
 window.DR_SCHEDULE_CONFIG = {
-  version: "2026.09.23.1",
-  updatedDate: "2026-09-23",
+  version: "2026.10.14.1",
+  updatedDate: "2026-10-14",
   timeZone: "America/Santo_Domingo",
   timeZoneLabel: "AST / UTC−4",
   programStart: "2026-09-06",
@@ -18,6 +18,9 @@ window.DR_SCHEDULE_CONFIG = {
 
   // Public recipient for Outlook meeting invitations and post-session reports; this is not a secret.
   notificationRecipient: "cdennis@cubs.com",
+
+  // Public WhatsApp destination for post-session reports. Digits only, including country code.
+  whatsappRecipient: "17406448155",
 
   // Public Microsoft Form used as the staff's shared record; no sign-in required.
   centralReportUrl: "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=RuumN88yyUG9MLIz_mc-rDw-v2Vf9XBGmurfIGVhBEhUOE5NNUozUTZNUTZBSFRJT0tZVVBXRFhFNS4u",
