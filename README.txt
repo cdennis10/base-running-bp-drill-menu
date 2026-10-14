@@ -16,6 +16,7 @@ The shared site opens schedule.html as its landing page. That page adds:
 - A base running block on every Low, High, and game day
 - The full recommended drill menu for each block's Low or High workload
 - The full drill menu on every confirmed or if-necessary game day
+- An Add base running block option on unscheduled dates for recording ad-hoc work
 - A four-step first-use walkthrough that can be reopened at any time
 - A visual Choose > Run > Report progress guide on every session
 - Clear context for the Low or High workload shown by the calendar

@@ -342,6 +342,7 @@
     .empty-symbol { display: grid; place-items: center; width: 58px; height: 58px; margin: 0 auto 14px; color: var(--navy); background: var(--soft); border-radius: 17px; font-size: 1.5rem; }
     .empty-session h2 { margin: 0 0 8px; color: var(--navy-deep); }
     .empty-session p { max-width: 520px; margin: 0 auto 18px; color: var(--muted); line-height: 1.52; }
+    .empty-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
 
     .sidebar { display: grid; gap: 16px; }
     .side-card { padding: 20px; }
@@ -1130,7 +1131,7 @@
         </ul>
         <div class="calendar-rule">
           <span aria-hidden="true">!</span>
-          <div><strong data-i18n="calendarRuleTitle">¿Cuándo hacemos corrido de bases?</strong><p data-i18n="calendarRuleBody">En las fechas con etiqueta Low o High y en los días de juego. Los Camp Days y días libres no generan un bloque.</p></div>
+          <div><strong data-i18n="calendarRuleTitle">¿Cuándo hacemos corrido de bases?</strong><p data-i18n="calendarRuleBody">Se programa automáticamente en fechas Low, High y días de juego. Los coaches pueden añadir un bloque no programado a cualquier fecha.</p></div>
         </div>
         <div class="calendar-grid" id="calendarGrid"></div>
         <p class="calendar-caption" data-i18n="calendarCaption">Toca cualquier fecha para ver sus detalles. Los días Low y High usan su menú correspondiente; los días de juego muestran el menú completo.</p>
@@ -1298,7 +1299,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="schedule-config.js?v=2026.10.14.1"></script>
+  <script src="schedule-config.js?v=2026.10.14.2"></script>
   <script>
     const CONFIG = window.DR_SCHEDULE_CONFIG;
     const SITE_TIME_ZONE = CONFIG.timeZone;
@@ -1332,8 +1333,8 @@
         heavyDay: "Día medio / fuerte",
         weeklyChat: "Conversación semanal del staff",
         calendarRuleTitle: "¿Cuándo hacemos corrido de bases?",
-        calendarRuleBody: "En las fechas con etiqueta Low o High y en los días de juego. Los Camp Days y días libres no generan un bloque.",
-        calendarCaption: "Toca cualquier fecha para ver sus detalles. Los días Low y High usan su menú correspondiente; los días de juego muestran el menú completo.",
+        calendarRuleBody: "Se programa automáticamente en fechas Low, High y días de juego. Los coaches pueden añadir un bloque no programado a cualquier fecha.",
+        calendarCaption: "Toca cualquier fecha para ver sus detalles. Los bloques añadidos y los días de juego muestran el menú completo.",
         calendarScheduled: "Programado",
         calendarCompleted: "Registrado",
         calendarMissed: "No reportado",
@@ -1455,7 +1456,13 @@
         reportDeleted: "Reporte eliminado. Ya puedes ingresar el reporte correcto.",
         nextBlock: "Ver próximo bloque",
         noBlock: "No hay bloque de corrido de bases",
-        noBlockBody: "Los bloques se programan en días Low, High y de juego. Usa el calendario para ver la próxima sesión.",
+        noBlockBody: "No hay un bloque programado para esta fecha. Si el grupo tuvo tiempo para trabajar, añade un bloque y registra la sesión.",
+        addBlock: "Añadir bloque de corrido de bases",
+        addedBlockEvent: "Bloque añadido",
+        addedBlockMenu: "Bloque añadido · Menú completo",
+        addedBlockHeading: "Bloque añadido por el coach.",
+        addedBlockDefinition: "Elige cualquier drill según el trabajo que pudo realizar el grupo.",
+        blockAdded: "Bloque añadido. Elige el drill que trabajó el grupo.",
         meetingTitle: "Conversación semanal del staff",
         nextMeeting: "Próxima conversación",
         timeTbd: "3:00 p. m.",
@@ -1533,8 +1540,8 @@
         heavyDay: "Medium / heavy day",
         weeklyChat: "Weekly staff conversation",
         calendarRuleTitle: "When do we run a base running block?",
-        calendarRuleBody: "On dates labeled Low or High and on game days. Camp Days and team off-days do not generate a block.",
-        calendarCaption: "Tap any date to see its details. Low and High days use their matching menu; game days show the full menu.",
+        calendarRuleBody: "Blocks are scheduled automatically on Low, High, and game days. Coaches can add an unscheduled block to any date.",
+        calendarCaption: "Tap any date to see its details. Added blocks and game days show the full menu.",
         calendarScheduled: "Scheduled",
         calendarCompleted: "Logged",
         calendarMissed: "Not reported",
@@ -1656,7 +1663,13 @@
         reportDeleted: "Report deleted. You can now enter the correct report.",
         nextBlock: "View next block",
         noBlock: "No base running block",
-        noBlockBody: "Blocks are scheduled on Low, High, and game days. Use the calendar to see the next session.",
+        noBlockBody: "No block was scheduled for this date. If the group found time to work, add a block and record the session.",
+        addBlock: "Add base running block",
+        addedBlockEvent: "Added block",
+        addedBlockMenu: "Added block · Full menu",
+        addedBlockHeading: "Block added by the coach.",
+        addedBlockDefinition: "Choose any drill based on the work the group was able to complete.",
+        blockAdded: "Block added. Choose the drill the group worked on.",
         meetingTitle: "Weekly staff conversation",
         nextMeeting: "Next conversation",
         timeTbd: "3:00 PM",
@@ -1791,12 +1804,13 @@
 
     const scheduleByDate = Object.fromEntries(schedule.map((entry) => [entry.date, entry]));
     function isGameDay(entry) { return entry?.type === "game" || entry?.type === "conditionalGame"; }
-    function hasBaseRunningBlock(entry) { return Boolean(entry?.load) || isGameDay(entry); }
+    function hasBaseRunningBlock(entry) { return Boolean(entry?.adHoc || entry?.load) || isGameDay(entry); }
     const eligibleEntries = schedule.filter(hasBaseRunningBlock);
     function initialState() {
       return {
         language: "es",
         onboardingSeen: false,
+        addedBlocks: {},
         plans: {},
         records: {},
         settings: { coach: "", group: "" }
@@ -1812,6 +1826,7 @@
         return {
           ...fallback,
           ...saved,
+          addedBlocks: saved.addedBlocks || {},
           plans: saved.plans || {},
           records: saved.records || {},
           settings
@@ -1888,12 +1903,27 @@
 
     function eventLabel(entry) {
       if (!entry) return "";
+      if (entry.adHoc && !entry.type) return t("addedBlockEvent");
       if (entry.detail) return entry.detail;
       return t(entry.type);
     }
 
+    function entryForDate(date) {
+      const scheduled = scheduleByDate[date];
+      if (!state.addedBlocks[date] || hasBaseRunningBlock(scheduled)) return scheduled;
+      return { ...(scheduled || { date }), date, adHoc: true };
+    }
+
+    function allBlockEntries() {
+      const entries = new Map(eligibleEntries.map((entry) => [entry.date, entry]));
+      Object.entries(state.addedBlocks).forEach(([date, added]) => {
+        if (added) entries.set(date, entryForDate(date));
+      });
+      return [...entries.values()].filter(Boolean).sort((a, b) => a.date.localeCompare(b.date));
+    }
+
     function choicesFor(entry) {
-      if (isGameDay(entry)) return Object.keys(drills);
+      if (entry?.adHoc || isGameDay(entry)) return Object.keys(drills);
       if (!entry?.load) return [];
       return Object.entries(drills)
         .filter(([, drill]) => drill.load === entry.load)
@@ -1901,6 +1931,7 @@
     }
 
     function blockMenuLabel(entry) {
+      if (entry?.adHoc) return t("addedBlockMenu");
       if (isGameDay(entry)) return t("fullMenu");
       return entry.load === "low" ? t("lightDay") : t("heavyDay");
     }
@@ -1983,7 +2014,7 @@
     }
 
     function renderTodayStatus() {
-      const entry = scheduleByDate[realToday];
+      const entry = entryForDate(realToday);
       let status;
       if (entry) {
         status = eventLabel(entry);
@@ -1995,7 +2026,7 @@
     }
 
     function renderSession() {
-      const entry = scheduleByDate[selectedDate];
+      const entry = entryForDate(selectedDate);
       if (!hasBaseRunningBlock(entry)) {
         const event = entry ? eventLabel(entry) : t("noCalendarToday");
         sessionCard.innerHTML = `
@@ -2006,8 +2037,17 @@
             <div class="empty-symbol" aria-hidden="true">◇</div>
             <h2>${escapeHtml(t("noBlock"))}</h2>
             <p>${escapeHtml(t("noBlockBody"))}</p>
-            <button class="btn btn-primary" type="button" data-next-block>${escapeHtml(t("nextBlock"))}</button>
+            <div class="empty-actions">
+              <button class="btn btn-primary" type="button" data-add-block>${escapeHtml(t("addBlock"))}</button>
+              <button class="btn" type="button" data-next-block>${escapeHtml(t("nextBlock"))}</button>
+            </div>
           </div>`;
+        sessionCard.querySelector("[data-add-block]").addEventListener("click", () => {
+          state.addedBlocks[selectedDate] = true;
+          saveState();
+          renderEverything();
+          showToast(t("blockAdded"));
+        });
         const nextButton = sessionCard.querySelector("[data-next-block]");
         nextButton.addEventListener("click", () => {
           const next = eligibleEntries.find((item) => item.date > selectedDate) || eligibleEntries[0];
@@ -2020,6 +2060,7 @@
       const record = state.records[selectedDate];
       const choiceIds = choicesFor(entry);
       const gameDay = isGameDay(entry);
+      const addedBlock = Boolean(entry.adHoc);
       const choiceMarkup = choiceIds.map((id, index) => {
         const isSelected = selected === id;
         return `
@@ -2075,12 +2116,12 @@
       }
 
       sessionCard.innerHTML = `
-        <header class="session-heading ${gameDay ? "game-block" : entry.load}">
+        <header class="session-heading ${gameDay || addedBlock ? "game-block" : entry.load}">
           <div><p class="session-date">${escapeHtml(fullDate(selectedDate))}</p><h2>${escapeHtml(t("baseBlock"))} · ${escapeHtml(eventLabel(entry))}</h2></div>
           <span class="load-badge">${escapeHtml(blockMenuLabel(entry))}</span>
         </header>
         <div class="session-body">
-          <div class="load-explanation"><span>${escapeHtml(gameDay ? t("fullMenu") : t("loadLocked"))}</span><p><strong>${escapeHtml(gameDay ? t("gameDayHeading") : t("calendarDecision"))}</strong> ${escapeHtml(gameDay ? t("gameDayDefinition") : entry.load === "low" ? t("lightDefinition") : t("heavyDefinition"))}</p></div>
+          <div class="load-explanation"><span>${escapeHtml(gameDay || addedBlock ? t("fullMenu") : t("loadLocked"))}</span><p><strong>${escapeHtml(addedBlock ? t("addedBlockHeading") : gameDay ? t("gameDayHeading") : t("calendarDecision"))}</strong> ${escapeHtml(addedBlock ? t("addedBlockDefinition") : gameDay ? t("gameDayDefinition") : entry.load === "low" ? t("lightDefinition") : t("heavyDefinition"))}</p></div>
           ${workflowMarkup(selected, record)}
           <p class="choice-kicker">${escapeHtml(t("chooseOne"))}</p>
           <p class="choice-instruction">${escapeHtml(t("chooseInstruction"))}</p>
@@ -2149,24 +2190,26 @@
       for (let i = 0; i < firstWeekday; i += 1) cells.push(`<div class="calendar-day outside" aria-hidden="true"></div>`);
       for (let day = 1; day <= daysInMonth; day += 1) {
         const iso = `${calendarYear}-${String(calendarMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-        const entry = scheduleByDate[iso];
+        const scheduledEntry = scheduleByDate[iso];
+        const entry = entryForDate(iso);
         const hasBlock = hasBaseRunningBlock(entry);
         const gameDay = isGameDay(entry);
         const hasChat = weekdayOf(iso) === DEFAULT_CHAT_DAY && iso >= PROGRAM_START && iso <= PROGRAM_END;
         const classes = ["calendar-day"];
         if (!entry) classes.push("outside");
         if (entry?.load) classes.push(entry.load);
-        if (gameDay) classes.push("game-block");
+        if (gameDay || entry?.adHoc) classes.push("game-block");
         if (iso === realToday) classes.push("today");
         let status = "";
         if (hasBlock && state.records[iso]) status = "complete";
         else if (hasBlock && iso < realToday) status = "missed";
         else if (hasBlock) status = "scheduled";
         if (status) classes.push(status);
-        const event = entry ? `<span class="day-event">${escapeHtml(eventLabel(entry))}</span>` : "";
+        const eventEntry = scheduledEntry || entry;
+        const event = eventEntry ? `<span class="day-event">${escapeHtml(eventLabel(eventEntry))}</span>` : "";
         const load = entry?.load
           ? `<span class="day-load ${entry.load}">${escapeHtml(entry.load === "low" ? t("low") : t("high"))}</span>`
-          : gameDay ? `<span class="day-load game">${escapeHtml(t("fullMenu"))}</span>` : "";
+          : gameDay || entry?.adHoc ? `<span class="day-load game">${escapeHtml(entry?.adHoc ? t("addedBlockEvent") : t("fullMenu"))}</span>` : "";
         const statusKey = status === "complete" ? "calendarCompleted" : status === "missed" ? "calendarMissed" : "calendarScheduled";
         const statusLabel = status ? `<span class="day-status ${status}">${escapeHtml(t(statusKey))}</span>` : "";
         const chat = hasChat ? `<span class="chat-marker">● ${escapeHtml(t("weeklyChat"))}</span>` : "";
@@ -2199,7 +2242,7 @@
 
     function renderReportControls() {
       const previousValue = reportWeek.value || "all";
-      const weeks = [...new Set(eligibleEntries.map((entry) => weekStart(entry.date)))];
+      const weeks = [...new Set(allBlockEntries().map((entry) => weekStart(entry.date)))];
       reportWeek.innerHTML = `<option value="all">${escapeHtml(t("allWeeks"))}</option>` + weeks.map((start) => `<option value="${start}">${escapeHtml(t("weekOf"))} ${escapeHtml(shortDate(start))}</option>`).join("");
       reportWeek.value = weeks.includes(previousValue) || previousValue === "all" ? previousValue : "all";
     }
@@ -2213,7 +2256,7 @@
 
     function entriesForFilter() {
       const filter = reportWeek.value || "all";
-      return eligibleEntries.filter((entry) => filter === "all" || weekStart(entry.date) === filter);
+      return allBlockEntries().filter((entry) => filter === "all" || weekStart(entry.date) === filter);
     }
 
     function renderReport() {
@@ -2299,7 +2342,7 @@
     function recordText(date) {
       const record = state.records[date];
       if (!record) return "";
-      const entry = scheduleByDate[date];
+      const entry = entryForDate(date);
       const lines = [
         `⚾ ${t("shareTitle")}`,
         `${fullDate(date)} · ${blockMenuLabel(entry)}`,
@@ -2499,7 +2542,7 @@
     function buildIcs() {
       const pageUrl = window.location.href.split(/[?#]/)[0];
       const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//DR Base Running//Instructional 2026//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH", `X-WR-CALNAME:${icsEscape(t("programCalendarName"))}`];
-      eligibleEntries.forEach((entry) => {
+      allBlockEntries().forEach((entry) => {
         const choices = choicesFor(entry).map(drillName).join(" / ");
         lines.push(
           "BEGIN:VEVENT",
