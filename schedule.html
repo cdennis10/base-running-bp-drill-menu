@@ -1299,7 +1299,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="schedule-config.js?v=2026.10.14.2"></script>
+  <script src="schedule-config.js?v=2026.10.14.3"></script>
   <script>
     const CONFIG = window.DR_SCHEDULE_CONFIG;
     const SITE_TIME_ZONE = CONFIG.timeZone;
@@ -1312,6 +1312,14 @@
     const SITE_VERSION = CONFIG.version;
     const NOTIFICATION_RECIPIENT = CONFIG.notificationRecipient || "cdennis@cubs.com";
     const WHATSAPP_RECIPIENT = String(CONFIG.whatsappRecipient || "").replace(/\D/g, "");
+    function isPhoneUserAgent(userAgent) {
+      return /iPhone|iPod|Android.+Mobile|Windows Phone|IEMobile|Opera Mini/i.test(userAgent || "");
+    }
+    function isPhoneDevice() {
+      if (typeof navigator.userAgentData?.mobile === "boolean") return navigator.userAgentData.mobile;
+      return isPhoneUserAgent(navigator.userAgent);
+    }
+    const PHONE_DEVICE = isPhoneDevice();
 
     const copy = {
       es: {
@@ -1425,7 +1433,8 @@
         openSelectedVideo: "Abrir video seleccionado",
         greenlightAction: "Ejecutar/instalar GreenLight",
         shareReminder: "Último paso: comparte contexto con el staff.",
-        emailReportReminder: "Envía el reporte post-sesión por WhatsApp. Las opciones de email y copia siguen disponibles.",
+        phoneReportReminder: "Detectamos un teléfono. WhatsApp es la opción principal; email y copia siguen disponibles.",
+        computerReportReminder: "Detectamos una computadora. Outlook es la opción principal; WhatsApp y copia siguen disponibles.",
         centralSubmitReminder: "Último paso: abre y envía el resumen para sumar contexto al registro compartido.",
         todayPrefix: "Hoy en RD",
         noCalendarToday: "no hay actividad en el calendario",
@@ -1450,6 +1459,7 @@
         emailAppOpening: "Abriendo tu aplicación de email… Si no abre, usa Copiar reporte.",
         reportCopied: "Reporte copiado. Abre un email nuevo, pega el reporte y envíalo a cdennis@cubs.com.",
         savedAndWhatsApp: "Reporte guardado. WhatsApp está abriendo el mensaje listo para enviar.",
+        savedAndOutlook: "Reporte guardado. Outlook está abriendo el email listo para enviar.",
         editReport: "Editar reporte",
         deleteReport: "Eliminar reporte",
         deleteReportConfirm: "¿Eliminar este reporte guardado de este dispositivo? Esto no puede retirar un email ya enviado ni eliminar una respuesta del formulario central.",
@@ -1632,7 +1642,8 @@
         openSelectedVideo: "Open selected video",
         greenlightAction: "Run/Install GreenLight",
         shareReminder: "Final step: share context with the staff.",
-        emailReportReminder: "Send the post-session report by WhatsApp. Email and copy options remain available.",
+        phoneReportReminder: "Phone detected. WhatsApp is the primary option; email and copy remain available.",
+        computerReportReminder: "Computer detected. Outlook is the primary option; WhatsApp and copy remain available.",
         centralSubmitReminder: "Final step: open and submit the summary to add context to the shared record.",
         todayPrefix: "Today in the DR",
         noCalendarToday: "no calendar activity",
@@ -1657,6 +1668,7 @@
         emailAppOpening: "Opening your email app… If it does not open, use Copy report.",
         reportCopied: "Report copied. Open a new email, paste the report, and send it to cdennis@cubs.com.",
         savedAndWhatsApp: "Report saved. WhatsApp is opening the message ready to send.",
+        savedAndOutlook: "Report saved. Outlook is opening the email ready to send.",
         editReport: "Edit report",
         deleteReport: "Delete report",
         deleteReportConfirm: "Delete this saved report from this device? This cannot recall an email already sent or delete a central-form response.",
@@ -2084,14 +2096,19 @@
         const centralAction = isSafeHttpUrl(CONFIG.centralReportUrl)
           ? `<a class="btn" href="${escapeHtml(CONFIG.centralReportUrl)}" target="_blank" rel="noopener">${escapeHtml(t("centralReadyAction"))}</a>`
           : "";
+        const reportPrompt = PHONE_DEVICE ? t("phoneReportReminder") : t("computerReportReminder");
+        const preferredReportActions = PHONE_DEVICE
+          ? `<button class="btn btn-primary" type="button" data-whatsapp-record>${escapeHtml(t("whatsappReport"))}</button>
+             <button class="btn" type="button" data-email-record>${escapeHtml(t("emailReport"))}</button>`
+          : `<button class="btn btn-primary" type="button" data-email-record>${escapeHtml(t("emailReport"))}</button>
+             <button class="btn" type="button" data-whatsapp-record>${escapeHtml(t("whatsappReport"))}</button>`;
         actionMarkup = `
           <div class="complete-card">
             <strong>✓ ${escapeHtml(t("completed"))}</strong>
             <p>${escapeHtml(record.coach)} · ${escapeHtml(record.players)} ${escapeHtml(t("playersWord"))} · ${escapeHtml(record.minutes)} ${escapeHtml(t("minutesWord"))}${note}</p>
-            <p class="complete-prompt">${escapeHtml(t("emailReportReminder"))}</p>
+            <p class="complete-prompt">${escapeHtml(reportPrompt)}</p>
             <div class="complete-actions">
-              <button class="btn btn-primary" type="button" data-whatsapp-record>${escapeHtml(t("whatsappReport"))}</button>
-              <button class="btn" type="button" data-email-record>${escapeHtml(t("emailReport"))}</button>
+              ${preferredReportActions}
               <button class="btn" type="button" data-email-app>${escapeHtml(t("emailApp"))}</button>
               <div class="email-fallback">
                 <p>${escapeHtml(t("emailFallbackHelp"))}</p>
@@ -2395,6 +2412,15 @@
       whatsappUrl.searchParams.set("text", recordText(date));
       openExternalUrl(whatsappUrl.href);
       if (showMessage) showToast(t("whatsappOpening"));
+    }
+
+    function sendPreferredRecord(date) {
+      if (PHONE_DEVICE) {
+        whatsappRecord(date, false);
+        return t("savedAndWhatsApp");
+      }
+      emailRecord(date, false);
+      return t("savedAndOutlook");
     }
 
     function emailRecordWithApp(date) {
@@ -2739,10 +2765,10 @@
       state.settings.coach = state.records[completionDate].coach;
       state.settings.group = state.records[completionDate].group;
       saveState();
-      whatsappRecord(completionDate, false);
+      const savedMessage = sendPreferredRecord(completionDate);
       closeCompletion();
       renderEverything();
-      showToast(t("savedAndWhatsApp"));
+      showToast(savedMessage);
     });
 
     document.getElementById("completionClose").addEventListener("click", closeCompletion);

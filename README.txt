@@ -39,11 +39,12 @@ form accepts anonymous responses without sign-in.
 The local Share, Copy, and CSV tools remain available as fallbacks. The
 centralized report URL is configured in schedule-config.js.
 
-Saving a post-session report opens a prefilled WhatsApp message addressed to
-the configured staff number. The coach reviews the message and taps Send;
-WhatsApp does not allow a public website to send it automatically. Email and
-copy options remain available as backups. No messaging or email credentials
-are stored in the public website.
+Saving a post-session report detects the device type. Phones open a prefilled
+WhatsApp message addressed to the configured staff number; computers open a
+prefilled Outlook draft addressed to cdennis@cubs.com. The coach reviews the
+message and selects Send because neither service allows a public website to
+send automatically. WhatsApp, email, and copy buttons remain available as
+manual backups. No messaging or email credentials are stored in the website.
 
 If a coach's organizational mailbox redirects the Outlook draft to an Inbox,
 they can select Use another email app or Copy report. Copy report places the
