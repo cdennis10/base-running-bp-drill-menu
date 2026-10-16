@@ -21,6 +21,8 @@ The shared site opens schedule.html as its landing page. That page adds:
 - A visual Choose > Run > Report progress guide on every session
 - Clear context for the Low or High workload shown by the calendar
 - A brief coach completion report
+- An Off Menu Drill choice on every active block, with required fields for the
+  drill name and why the coach chose it
 - A prefilled WhatsApp post-session message addressed to the configured staff number
 - A prefilled Outlook post-session email addressed to cdennis@cubs.com as a backup
 - A second email-app option and a one-tap Copy report backup for mailboxes
@@ -39,12 +41,12 @@ form accepts anonymous responses without sign-in.
 The local Share, Copy, and CSV tools remain available as fallbacks. The
 centralized report URL is configured in schedule-config.js.
 
-Saving a post-session report detects the device type. Phones open a prefilled
-WhatsApp message addressed to the configured staff number; computers open a
-prefilled Outlook draft addressed to cdennis@cubs.com. The coach reviews the
-message and selects Send because neither service allows a public website to
-send automatically. WhatsApp, email, and copy buttons remain available as
-manual backups. No messaging or email credentials are stored in the website.
+Saving a post-session report opens a prefilled WhatsApp message addressed to the
+configured staff number on every device. The coach reviews the message and selects
+Send because WhatsApp does not allow a public website to press Send automatically.
+A prefilled Outlook email draft addressed to cdennis@cubs.com remains available
+as an option after the report is saved, along with the other email, copy, and share
+fallbacks. No messaging or email credentials are stored in the website.
 
 If a coach's organizational mailbox redirects the Outlook draft to an Inbox,
 they can select Use another email app or Copy report. Copy report places the

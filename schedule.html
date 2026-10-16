@@ -1216,6 +1216,30 @@
     <footer data-i18n="footer">Calendario transcrito de “DR Instructs 2026 Calendar”. Zona horaria de las conversaciones: República Dominicana (AST / UTC-4).</footer>
   </main>
 
+  <div class="modal-backdrop" id="customDrillBackdrop" role="dialog" aria-modal="true" aria-labelledby="customDrillTitle" hidden>
+    <div class="modal">
+      <button class="modal-close" id="customDrillClose" type="button" aria-label="Cerrar">×</button>
+      <h2 id="customDrillTitle" data-i18n="offMenuTitle">Drill fuera del menú</h2>
+      <p class="modal-intro" data-i18n="offMenuIntro">Describe el drill y por qué es la mejor opción para el grupo hoy.</p>
+      <form id="customDrillForm">
+        <div class="form-grid">
+          <div class="field full">
+            <label for="customDrillName" data-i18n="customDrillNameLabel">Nombre del drill</label>
+            <input id="customDrillName" name="customDrillName" type="text" data-i18n-placeholder="customDrillNamePlaceholder" placeholder="Ej.: Lectura de primera a tercera" required>
+          </div>
+          <div class="field full">
+            <label for="customDrillReason" data-i18n="customDrillReasonLabel">¿Qué es y por qué lo eligieron?</label>
+            <textarea id="customDrillReason" name="customDrillReason" data-i18n-placeholder="customDrillReasonPlaceholder" placeholder="Describe brevemente el trabajo y la razón para hacerlo hoy." required></textarea>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button class="btn" id="cancelCustomDrill" type="button" data-i18n="cancel">Cancelar</button>
+          <button class="btn btn-primary" type="submit" data-i18n="saveChooseCustom">Guardar y elegir</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <div class="modal-backdrop" id="completionBackdrop" role="dialog" aria-modal="true" aria-labelledby="completionTitle" hidden>
     <div class="modal">
       <button class="modal-close" id="completionClose" type="button" aria-label="Cerrar">×</button>
@@ -1299,7 +1323,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="schedule-config.js?v=2026.10.14.3"></script>
+  <script src="schedule-config.js?v=2026.10.15.1"></script>
   <script>
     const CONFIG = window.DR_SCHEDULE_CONFIG;
     const SITE_TIME_ZONE = CONFIG.timeZone;
@@ -1312,15 +1336,6 @@
     const SITE_VERSION = CONFIG.version;
     const NOTIFICATION_RECIPIENT = CONFIG.notificationRecipient || "cdennis@cubs.com";
     const WHATSAPP_RECIPIENT = String(CONFIG.whatsappRecipient || "").replace(/\D/g, "");
-    function isPhoneUserAgent(userAgent) {
-      return /iPhone|iPod|Android.+Mobile|Windows Phone|IEMobile|Opera Mini/i.test(userAgent || "");
-    }
-    function isPhoneDevice() {
-      if (typeof navigator.userAgentData?.mobile === "boolean") return navigator.userAgentData.mobile;
-      return isPhoneUserAgent(navigator.userAgent);
-    }
-    const PHONE_DEVICE = isPhoneDevice();
-
     const copy = {
       es: {
         seasonLabel: "INSTRUCTIVA · 2026",
@@ -1401,6 +1416,17 @@
         notesPlaceholder: "¿Qué viste? ¿Qué ajustaste? ¿Qué apoyo sería útil?",
         cancel: "Cancelar",
         saveComplete: "Guardar como terminado",
+        offMenuTitle: "Drill fuera del menú",
+        offMenuIntro: "Describe el drill y por qué es la mejor opción para el grupo hoy.",
+        customDrillNameLabel: "Nombre del drill",
+        customDrillNamePlaceholder: "Ej.: Lectura de primera a tercera",
+        customDrillReasonLabel: "¿Qué es y por qué lo eligieron?",
+        customDrillReasonPlaceholder: "Describe brevemente el trabajo y la razón para hacerlo hoy.",
+        saveChooseCustom: "Guardar y elegir",
+        defineDrill: "Definir drill",
+        editDrillDetails: "Editar detalles",
+        offMenuReason: "Razón del drill fuera del menú",
+        customDrillSaved: "Drill fuera del menú guardado y seleccionado.",
         install1: "Toca Instalar GreenLight.",
         install2: "Si Edge muestra una advertencia, elige Conservar y luego Conservar de todas formas.",
         install3: "Abre GreenLight_Player_Setup.exe y permite Ejecutar de todas formas si Windows lo solicita.",
@@ -1433,8 +1459,7 @@
         openSelectedVideo: "Abrir video seleccionado",
         greenlightAction: "Ejecutar/instalar GreenLight",
         shareReminder: "Último paso: comparte contexto con el staff.",
-        phoneReportReminder: "Detectamos un teléfono. WhatsApp es la opción principal; email y copia siguen disponibles.",
-        computerReportReminder: "Detectamos una computadora. Outlook es la opción principal; WhatsApp y copia siguen disponibles.",
+        reportSendReminder: "Envía el reporte por WhatsApp. También puedes abrir un email con el mensaje ya escrito.",
         centralSubmitReminder: "Último paso: abre y envía el resumen para sumar contexto al registro compartido.",
         todayPrefix: "Hoy en RD",
         noCalendarToday: "no hay actividad en el calendario",
@@ -1610,6 +1635,17 @@
         notesPlaceholder: "What did you see? What did you adjust? What support would help?",
         cancel: "Cancel",
         saveComplete: "Save as complete",
+        offMenuTitle: "Off Menu Drill",
+        offMenuIntro: "Describe the drill and why it is the best choice for the group today.",
+        customDrillNameLabel: "Drill name",
+        customDrillNamePlaceholder: "Example: First-to-third reads",
+        customDrillReasonLabel: "What is it, and why did you choose it?",
+        customDrillReasonPlaceholder: "Briefly describe the work and the reason for doing it today.",
+        saveChooseCustom: "Save and choose",
+        defineDrill: "Define drill",
+        editDrillDetails: "Edit details",
+        offMenuReason: "Off-menu drill reason",
+        customDrillSaved: "Off Menu Drill saved and selected.",
         install1: "Select Install GreenLight.",
         install2: "If Edge displays a warning, choose Keep, then Keep anyway.",
         install3: "Open GreenLight_Player_Setup.exe and allow Run anyway if Windows asks.",
@@ -1642,8 +1678,7 @@
         openSelectedVideo: "Open selected video",
         greenlightAction: "Run/Install GreenLight",
         shareReminder: "Final step: share context with the staff.",
-        phoneReportReminder: "Phone detected. WhatsApp is the primary option; email and copy remain available.",
-        computerReportReminder: "Computer detected. Outlook is the primary option; WhatsApp and copy remain available.",
+        reportSendReminder: "Send the report by WhatsApp. You can also open an email with the message already written.",
         centralSubmitReminder: "Final step: open and submit the summary to add context to the shared record.",
         todayPrefix: "Today in the DR",
         noCalendarToday: "no calendar activity",
@@ -1809,6 +1844,13 @@
         focusEn: "Live decision against the pitcher's move",
         videoEs: "https://youtu.be/OqeEnS2jLuY",
         videoEn: "https://youtu.be/_Ve_ZuajkRk"
+      },
+      offMenu: {
+        custom: true,
+        es: "Drill fuera del menú",
+        en: "Off Menu Drill",
+        focusEs: "Define el trabajo y por qué responde a lo que necesita el grupo.",
+        focusEn: "Define the work and why it fits what the group needs."
       }
     };
 
@@ -1823,6 +1865,7 @@
         language: "es",
         onboardingSeen: false,
         addedBlocks: {},
+        customDrills: {},
         plans: {},
         records: {},
         settings: { coach: "", group: "" }
@@ -1839,6 +1882,7 @@
           ...fallback,
           ...saved,
           addedBlocks: saved.addedBlocks || {},
+          customDrills: saved.customDrills || {},
           plans: saved.plans || {},
           records: saved.records || {},
           settings
@@ -1858,6 +1902,7 @@
     let calendarMonthIndex = Math.max(0, programMonths.indexOf(selectedDate.slice(0, 7)));
     let activePanel = "today";
     let completionDate = null;
+    let customDrillDate = null;
     let lastModalTrigger = null;
     let tourTrigger = null;
     let toastTimer = null;
@@ -1867,8 +1912,10 @@
     const sessionCard = document.getElementById("sessionCard");
     const chatCard = document.getElementById("chatCard");
     const completionBackdrop = document.getElementById("completionBackdrop");
+    const customDrillBackdrop = document.getElementById("customDrillBackdrop");
     const videoBackdrop = document.getElementById("videoBackdrop");
     const completionForm = document.getElementById("completionForm");
+    const customDrillForm = document.getElementById("customDrillForm");
     const weeklyCallForm = document.getElementById("weeklyCallForm");
     const weeklyCallCoach = document.getElementById("weeklyCallCoach");
     const weeklyCallDate = document.getElementById("weeklyCallDate");
@@ -1937,9 +1984,10 @@
     function choicesFor(entry) {
       if (entry?.adHoc || isGameDay(entry)) return Object.keys(drills);
       if (!entry?.load) return [];
-      return Object.entries(drills)
+      const recommended = Object.entries(drills)
         .filter(([, drill]) => drill.load === entry.load)
         .map(([id]) => id);
+      return [...recommended, "offMenu"];
     }
 
     function blockMenuLabel(entry) {
@@ -1948,8 +1996,23 @@
       return entry.load === "low" ? t("lightDay") : t("heavyDay");
     }
 
-    function drillName(id) { return drills[id] ? drills[id][state.language] : id; }
-    function drillFocus(id) { return drills[id] ? drills[id][state.language === "es" ? "focusEs" : "focusEn"] : ""; }
+    function customDrill(date) { return state.customDrills[date] || null; }
+    function drillName(id, date = selectedDate) {
+      if (id === "offMenu" && customDrill(date)?.name) return customDrill(date).name;
+      return drills[id] ? drills[id][state.language] : id;
+    }
+    function drillFocus(id, date = selectedDate) {
+      if (id === "offMenu" && customDrill(date)) {
+        return `${customDrill(date).name} · ${customDrill(date).reason}`;
+      }
+      return drills[id] ? drills[id][state.language === "es" ? "focusEs" : "focusEn"] : "";
+    }
+    function recordDrillName(record, date) {
+      return record.customName || drillName(record.drillId, date);
+    }
+    function recordCustomReason(record, date) {
+      return record.customReason || (record.drillId === "offMenu" ? customDrill(date)?.reason || "" : "");
+    }
 
     function drillSymbol(id) {
       return ({
@@ -1959,7 +2022,8 @@
         oneMomentum: "1v1",
         tennisBall: "REACT",
         twoBase: "2B",
-        liveReturns: "LIVE"
+        liveReturns: "LIVE",
+        offMenu: "OTHER"
       })[id] || "BR";
     }
 
@@ -2005,6 +2069,7 @@
       });
       document.getElementById("menuLink").href = `drills.html?lang=${language}`;
       document.getElementById("siteVersion").textContent = `${t("updated")} ${dateLabel(CONFIG.updatedDate, { month: "short", day: "numeric" })} · v${SITE_VERSION}`;
+      document.getElementById("customDrillClose").setAttribute("aria-label", t("cancel"));
       document.getElementById("completionClose").setAttribute("aria-label", t("cancel"));
       document.getElementById("videoClose").setAttribute("aria-label", t("cancel"));
       document.getElementById("tourClose").setAttribute("aria-label", t("cancel"));
@@ -2075,17 +2140,27 @@
       const addedBlock = Boolean(entry.adHoc);
       const choiceMarkup = choiceIds.map((id, index) => {
         const isSelected = selected === id;
+        const isCustom = id === "offMenu";
+        const customDetails = customDrill(selectedDate);
+        const displayedName = isCustom ? t("offMenuTitle") : drillName(id, selectedDate);
+        const displayedFocus = isCustom && customDetails
+          ? `${customDetails.name} · ${customDetails.reason}`
+          : drillFocus(id, selectedDate);
+        const choiceActions = isCustom
+          ? `<button class="btn" type="button" data-custom-drill ${record ? "disabled" : ""}>${escapeHtml(customDetails ? t("editDrillDetails") : t("defineDrill"))}</button>
+             <button class="btn${isSelected ? " btn-primary" : ""}" type="button" data-custom-drill ${record ? "disabled" : ""}>${escapeHtml(isSelected ? t("chosen") : t("choose"))}</button>`
+          : `<button class="btn" type="button" data-watch="${id}">${escapeHtml(drills[id].greenlight ? t("greenlightAction") : t("watch"))}</button>
+             <button class="btn${isSelected ? " btn-primary" : ""}" type="button" data-choose="${id}" ${record ? "disabled" : ""}>${escapeHtml(isSelected ? t("chosen") : t("choose"))}</button>`;
         return `
           <article class="choice-card${isSelected ? " selected" : ""}">
             <div class="choice-top">
               <span class="choice-number">${escapeHtml(t("option"))} ${String.fromCharCode(65 + index)}</span>
               <span class="drill-symbol" aria-hidden="true">${escapeHtml(drillSymbol(id))}</span>
             </div>
-            <h3>${escapeHtml(drillName(id))}</h3>
-            <p>${escapeHtml(drillFocus(id))}</p>
+            <h3>${escapeHtml(displayedName)}</h3>
+            <p>${escapeHtml(displayedFocus)}</p>
             <div class="choice-actions">
-              <button class="btn" type="button" data-watch="${id}">${escapeHtml(drills[id].greenlight ? t("greenlightAction") : t("watch"))}</button>
-              <button class="btn${isSelected ? " btn-primary" : ""}" type="button" data-choose="${id}" ${record ? "disabled" : ""}>${escapeHtml(isSelected ? t("chosen") : t("choose"))}</button>
+              ${choiceActions}
             </div>
           </article>`;
       }).join("");
@@ -2096,12 +2171,9 @@
         const centralAction = isSafeHttpUrl(CONFIG.centralReportUrl)
           ? `<a class="btn" href="${escapeHtml(CONFIG.centralReportUrl)}" target="_blank" rel="noopener">${escapeHtml(t("centralReadyAction"))}</a>`
           : "";
-        const reportPrompt = PHONE_DEVICE ? t("phoneReportReminder") : t("computerReportReminder");
-        const preferredReportActions = PHONE_DEVICE
-          ? `<button class="btn btn-primary" type="button" data-whatsapp-record>${escapeHtml(t("whatsappReport"))}</button>
-             <button class="btn" type="button" data-email-record>${escapeHtml(t("emailReport"))}</button>`
-          : `<button class="btn btn-primary" type="button" data-email-record>${escapeHtml(t("emailReport"))}</button>
-             <button class="btn" type="button" data-whatsapp-record>${escapeHtml(t("whatsappReport"))}</button>`;
+        const reportPrompt = t("reportSendReminder");
+        const preferredReportActions = `<button class="btn btn-primary" type="button" data-whatsapp-record>${escapeHtml(t("whatsappReport"))}</button>
+             <button class="btn" type="button" data-email-record>${escapeHtml(t("emailReport"))}</button>`;
         actionMarkup = `
           <div class="complete-card">
             <strong>✓ ${escapeHtml(t("completed"))}</strong>
@@ -2121,13 +2193,16 @@
             </div>
           </div>`;
       } else if (selected) {
+        const selectedAction = selected === "offMenu"
+          ? `<button class="btn" type="button" data-edit-custom>${escapeHtml(t("editDrillDetails"))}</button>`
+          : `<button class="btn" type="button" data-run-video="${escapeHtml(selected)}">${escapeHtml(drills[selected].greenlight ? t("greenlightAction") : t("openSelectedVideo"))}</button>`;
         actionMarkup = `
           <div class="run-brief">
             <span class="run-number" aria-hidden="true">02</span>
-            <div><span>${escapeHtml(t("upNext"))}</span><strong>${escapeHtml(drillName(selected))}</strong><p>${escapeHtml(t("runSelectedBody"))}</p></div>
+            <div><span>${escapeHtml(t("upNext"))}</span><strong>${escapeHtml(drillName(selected, selectedDate))}</strong><p>${escapeHtml(selected === "offMenu" ? drillFocus(selected, selectedDate) : t("runSelectedBody"))}</p></div>
           </div>
           <div class="run-actions">
-            <button class="btn" type="button" data-run-video="${escapeHtml(selected)}">${escapeHtml(drills[selected].greenlight ? t("greenlightAction") : t("openSelectedVideo"))}</button>
+            ${selectedAction}
             <button class="btn btn-red" type="button" data-complete>${escapeHtml(t("markComplete"))}</button>
           </div>`;
       }
@@ -2157,6 +2232,10 @@
       sessionCard.querySelectorAll("[data-watch]").forEach((button) => {
         button.addEventListener("click", () => openVideo(button.dataset.watch, button));
       });
+      sessionCard.querySelectorAll("[data-custom-drill]").forEach((button) => {
+        button.addEventListener("click", () => openCustomDrill(selectedDate, button));
+      });
+      sessionCard.querySelector("[data-edit-custom]")?.addEventListener("click", (event) => openCustomDrill(selectedDate, event.currentTarget));
       sessionCard.querySelector("[data-run-video]")?.addEventListener("click", (event) => openVideo(event.currentTarget.dataset.runVideo, event.currentTarget));
       sessionCard.querySelector("[data-complete]")?.addEventListener("click", (event) => openCompletion(selectedDate, event.currentTarget));
       sessionCard.querySelector("[data-edit-record]")?.addEventListener("click", (event) => openCompletion(selectedDate, event.currentTarget));
@@ -2295,7 +2374,7 @@
         <tr>
           <td>${escapeHtml(shortDate(date))}</td>
           <td>${escapeHtml(record.coach)}</td>
-          <td>${escapeHtml(drillName(record.drillId))}</td>
+          <td>${escapeHtml(recordDrillName(record, date))}</td>
           <td>${escapeHtml(record.players)}</td>
           <td>${escapeHtml(record.minutes)}</td>
         </tr>`).join("");
@@ -2334,12 +2413,29 @@
       renderCalendar();
     }
 
+    function openCustomDrill(date, trigger) {
+      customDrillDate = date;
+      lastModalTrigger = trigger;
+      const details = customDrill(date);
+      document.getElementById("customDrillName").value = details?.name || "";
+      document.getElementById("customDrillReason").value = details?.reason || "";
+      customDrillBackdrop.hidden = false;
+      document.body.style.overflow = "hidden";
+      setTimeout(() => document.getElementById("customDrillName").focus(), 0);
+    }
+
+    function closeCustomDrill() {
+      customDrillBackdrop.hidden = true;
+      document.body.style.overflow = "";
+      lastModalTrigger?.focus();
+    }
+
     function openCompletion(date, trigger) {
       completionDate = date;
       lastModalTrigger = trigger;
       const record = state.records[date];
       const drillId = state.plans[date];
-      document.getElementById("completionIntro").textContent = `${fullDate(date)} · ${drillName(drillId)}`;
+      document.getElementById("completionIntro").textContent = `${fullDate(date)} · ${drillName(drillId, date)}`;
       document.getElementById("coachName").value = record?.coach || state.settings.coach || "";
       document.getElementById("groupName").value = record?.group || state.settings.group || "";
       document.getElementById("playerCount").value = record?.players || "";
@@ -2361,12 +2457,14 @@
       if (!record) return "";
       const entry = entryForDate(date);
       const lines = [
-        `⚾ ${t("shareTitle")}`,
+        t("shareTitle"),
         `${fullDate(date)} · ${blockMenuLabel(entry)}`,
         `${t("coach")}: ${record.coach}${record.group ? ` · ${record.group}` : ""}`,
-        `${t("drill")}: ${drillName(record.drillId)}`,
+        `${t("drill")}: ${recordDrillName(record, date)}`,
         `${record.players} ${t("playersWord")} · ${record.minutes} ${t("minutesWord")}`
       ];
+      const customReason = recordCustomReason(record, date);
+      if (customReason) lines.push(`${t("offMenuReason")}: ${customReason}`);
       if (record.notes) lines.push(`${t("notesWord")}: ${record.notes}`);
       return lines.join("\n");
     }
@@ -2414,15 +2512,6 @@
       if (showMessage) showToast(t("whatsappOpening"));
     }
 
-    function sendPreferredRecord(date) {
-      if (PHONE_DEVICE) {
-        whatsappRecord(date, false);
-        return t("savedAndWhatsApp");
-      }
-      emailRecord(date, false);
-      return t("savedAndOutlook");
-    }
-
     function emailRecordWithApp(date) {
       const record = state.records[date];
       if (!record) return;
@@ -2453,7 +2542,9 @@
       const title = filter === "all" ? t("shareTitle") : `${t("shareTitle")} · ${t("weekOf")} ${shortDate(filter)}`;
       const lines = [title, `${t("completedStat")}: ${records.length}/${entries.length}`];
       records.forEach(([date, record]) => {
-        lines.push(`• ${shortDate(date)} · ${record.coach} · ${drillName(record.drillId)} · ${record.players} ${t("playersWord")}`);
+        lines.push(`• ${shortDate(date)} · ${record.coach} · ${recordDrillName(record, date)} · ${record.players} ${t("playersWord")}`);
+        const customReason = recordCustomReason(record, date);
+        if (customReason) lines.push(`  ${t("offMenuReason")}: ${customReason}`);
       });
       if (!records.length) lines.push(t("noReports"));
       lines.push(t("reportGenerated"));
@@ -2542,8 +2633,8 @@
     }
 
     function downloadCsv() {
-      const headers = [t("date"), t("coach"), t("groupName"), t("drill"), t("playersShort"), t("minutesShort"), t("notes")];
-      const rows = recordsForFilter().map(([date, record]) => [date, record.coach, record.group, drillName(record.drillId), record.players, record.minutes, record.notes]);
+      const headers = [t("date"), t("coach"), t("groupName"), t("drill"), t("offMenuReason"), t("playersShort"), t("minutesShort"), t("notes")];
+      const rows = recordsForFilter().map(([date, record]) => [date, record.coach, record.group, recordDrillName(record, date), recordCustomReason(record, date), record.players, record.minutes, record.notes]);
       const csv = "\uFEFF" + [headers, ...rows].map((row) => row.map(csvEscape).join(",")).join("\r\n");
       downloadBlob(csv, `dr-base-running-report-${reportWeek.value || "all"}.csv`, "text/csv;charset=utf-8");
       showToast(t("downloadReady"));
@@ -2569,7 +2660,7 @@
       const pageUrl = window.location.href.split(/[?#]/)[0];
       const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//DR Base Running//Instructional 2026//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH", `X-WR-CALNAME:${icsEscape(t("programCalendarName"))}`];
       allBlockEntries().forEach((entry) => {
-        const choices = choicesFor(entry).map(drillName).join(" / ");
+        const choices = choicesFor(entry).map((id) => id === "offMenu" ? t("offMenuTitle") : drillName(id, entry.date)).join(" / ");
         lines.push(
           "BEGIN:VEVENT",
           `UID:base-running-${entry.date}@dr-instructs`,
@@ -2620,6 +2711,10 @@
 
     function openVideo(id, trigger) {
       const drill = drills[id];
+      if (drill?.custom) {
+        openCustomDrill(selectedDate, trigger);
+        return;
+      }
       lastModalTrigger = trigger;
       document.getElementById("videoTitle").textContent = drillName(id);
       const videoStage = document.getElementById("videoStage");
@@ -2755,6 +2850,8 @@
       const drillId = state.plans[completionDate];
       state.records[completionDate] = {
         drillId,
+        customName: drillId === "offMenu" ? customDrill(completionDate)?.name || "" : "",
+        customReason: drillId === "offMenu" ? customDrill(completionDate)?.reason || "" : "",
         coach: String(form.get("coach") || "").trim(),
         group: String(form.get("group") || "").trim(),
         players: Number(form.get("players")),
@@ -2765,12 +2862,29 @@
       state.settings.coach = state.records[completionDate].coach;
       state.settings.group = state.records[completionDate].group;
       saveState();
-      const savedMessage = sendPreferredRecord(completionDate);
+      whatsappRecord(completionDate, false);
       closeCompletion();
       renderEverything();
-      showToast(savedMessage);
+      showToast(t("savedAndWhatsApp"));
     });
 
+    customDrillForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const form = new FormData(customDrillForm);
+      state.customDrills[customDrillDate] = {
+        name: String(form.get("customDrillName") || "").trim(),
+        reason: String(form.get("customDrillReason") || "").trim()
+      };
+      state.plans[customDrillDate] = "offMenu";
+      saveState();
+      closeCustomDrill();
+      renderEverything();
+      showToast(t("customDrillSaved"));
+    });
+
+    document.getElementById("customDrillClose").addEventListener("click", closeCustomDrill);
+    document.getElementById("cancelCustomDrill").addEventListener("click", closeCustomDrill);
+    customDrillBackdrop.addEventListener("click", (event) => { if (event.target === customDrillBackdrop) closeCustomDrill(); });
     document.getElementById("completionClose").addEventListener("click", closeCompletion);
     document.getElementById("cancelCompletion").addEventListener("click", closeCompletion);
     completionBackdrop.addEventListener("click", (event) => { if (event.target === completionBackdrop) closeCompletion(); });
@@ -2800,6 +2914,7 @@
     });
     document.addEventListener("keydown", (event) => {
       if (event.key !== "Escape") return;
+      if (!customDrillBackdrop.hidden) closeCustomDrill();
       if (!completionBackdrop.hidden) closeCompletion();
       if (!videoBackdrop.hidden) closeVideo();
       if (!tourBackdrop.hidden) closeTour(true);
